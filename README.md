@@ -1,7 +1,7 @@
 # Hello Paint: brand system
 
-The brand system I designed and built for Hello Paint, my own custom
-paint-by-number shop. Live at
+The brand system I designed and built for Hello Paint, an Etsy shop selling
+custom paint-by-number kits. Live at
 **[hellopaint.megan-warren.com](https://hellopaint.megan-warren.com)**.
 
 Designed and built by [Megan Warren](https://megan-warren.com).
