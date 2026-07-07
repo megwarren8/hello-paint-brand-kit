@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" width="1080" height="1080">
+  <rect width="1080" height="1080" fill="#FBF4E8"/>
+  <!-- confetti dots -->
+  <g opacity="0.16">
+    <circle cx="120" cy="150" r="11" fill="#E64C81"/><circle cx="980" cy="120" r="9" fill="#15A39A"/>
+    <circle cx="940" cy="940" r="12" fill="#F6C744"/><circle cx="150" cy="930" r="10" fill="#5BA86B"/>
+    <circle cx="540" cy="90" r="8" fill="#15A39A"/><circle cx="90" cy="540" r="9" fill="#FBD0DD"/>
+    <circle cx="990" cy="540" r="10" fill="#E64C81"/><circle cx="540" cy="990" r="8" fill="#5BA86B"/>
+  </g>
+  <!-- HEADLINE (EDITABLE: two short lines) -->
+  <text x="540" y="470" text-anchor="middle" font-family="'Fraunces',Georgia,serif" font-weight="600" font-size="96" letter-spacing="-2.5" fill="#E64C81">your headline</text>
+  <text x="540" y="580" text-anchor="middle" font-family="'Fraunces',Georgia,serif" font-style="italic" font-weight="500" font-size="72" letter-spacing="-1.5" fill="#312B3D">on two short lines</text>
+  <!-- smile mark -->
+  <g transform="translate(496 720) scale(0.9)">
+    <path d="M21 49 Q50 80 79 49" fill="none" stroke="#E64C81" stroke-width="14" stroke-linecap="round"/>
+    <path d="M47 36 Q61 28 75 30" fill="none" stroke="#15A39A" stroke-width="5.4" stroke-linecap="round"/>
+    <path d="M81 16 L83.4 19.6 L87 22 L83.4 24.4 L81 28 L78.6 24.4 L75 22 L78.6 19.6 Z" fill="#F6C744"/>
+  </g>
+  <!-- wordmark -->
+  <text x="540" y="960" text-anchor="middle" font-family="'Nunito Sans','Trebuchet MS',sans-serif" font-weight="800" font-size="56" letter-spacing="-1.68"><tspan fill="#E64C81">hello</tspan><tspan fill="#312B3D" dx="14.56">paint</tspan></text>
+</svg>

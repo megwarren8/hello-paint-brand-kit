@@ -1,0 +1,43 @@
+0 / 30
+
+PRODUCTION DESK
+
+open items on the kit-maker app
+
+the kit-maker app (the photo → kit flow) had a full design audit in june 2026. these are the items still open, in priority order, for megan to assign, and for whoever builds next to pick up. ticking here is for tracking only; the work happens in the codebase.
+
+✓
+P1
+§B · internal names leak into customer copy
+eyebrows and labels still show pipeline vocabulary, “Part I · image_o → image size”, “colour clusters (k)”, raw “.png/.pdf” names. every current → proposed rewrite is already written in COPY-SHEET.md; this is a paste-level fix with the biggest off-brand payoff.
+✓
+P1
+§A · the flow asks for the crop twice
+upload has a cropper, then the size screen crops again with different words. needs megan’s call between the two consolidation options in FINDINGS §A first, then one screen owns the crop. the chosen crop must still reach the engine.
+✓
+P1
+§I · the effects preview shows the opposite of the truth
+“blur” previews as a blurry photo, but blur-before-trace actually makes the kit cleaner. the fix: preview with a real posterized render (the adjust screen already does this) so people see the cleaner kit they’re choosing.
+✓
+P2
+§C + §E · voice and spelling sweep
+lowercase friendly voice everywhere (no “Proceed” / “Continue to…”), and one spelling of “colour” app-wide. mechanical, same files as §B, do them in the same pass.
+✓
+P2
+§D · the same button appears twice
+several screens show the primary action in the decision gate and again in the bottom bar. one primary per screen; the phase-nav stays the single “where am i”.
+✓
+P3
+§G + §H + §J · polish round
+print-quality choice overload (§H), small layout dust (§G), and tuning the new wood “drawing table” surface to sit better with cream/raspberry/teal (§J).
+✓
+OWNER CALL
+§F · the flow is long and the review steps are thin
+an information-architecture question, not a styling one, don’t silently restructure. raise it with megan, get a decision, then build.
+where the handoff files live
+uploads/STATUS.md, start here, what shipped, what’s open, the priority queue
+uploads/FINDINGS.md + uploads/COPY-SHEET.md, every finding with severity, and every rewrite ready to paste
+design_handoff_round3/, round-3 redlines with annotated screenshots
+design_handoff_hello_paint_round2/wireframes/, the v4 wireframes, the agreed target for every screen
+
+these live in the project folder next to this file, they’re working documents for the next builder, so they stay outside the system on purpose.

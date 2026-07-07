@@ -1,0 +1,53 @@
+07 - TEMPLATES & TOOLKIT (GAP LIST)
+===================================
+This folder is now populated with editable templates. See README.txt for the
+full list and how to edit each one. This note tracks only what still needs a
+source you have to make yourself.
+
+
+DONE (added June 2026)
+----------------------
+  - email-signature.html   editable, copy-paste signature for Gmail / Apple Mail
+  - email-signature.svg    the signature as a flat image
+  - kit-insert-card.svg    welcome card, fill-in name + kit number
+  - thank-you-card-template.svg   thank-you card, fill-in note lines
+  - how-to-guide-insert.svg   one-page 4-step "how to paint" kit insert
+  - box-label-template.svg   shipping / box label, fill-in number + ship-to
+  - letterhead-template.svg   letterhead with an editable body block
+  - etsy-listing-template.svg   listing tile with a photo drop frame
+  - social-post-template.svg   1080x1080 post starter
+  - social-story-template.svg   1080x1920 story starter
+  - README.txt, _contact-sheet.html
+
+
+STILL TO ADD (needs you, no source file exists yet)
+---------------------------------------------------
+  - Canva starter links. If you rebuild any of these SVGs as a Canva template,
+    drop the share link here as a plain-text line, e.g.
+        kit-insert  https://www.canva.com/...   (edit access)
+    so the team always opens the live version, not a copy.
+
+  - Figma starter file link, same idea, if you keep a Figma working file.
+
+  - A printable kit checklist / packing slip, if you want one separate from the
+    box label. No source exists; build from box-label-template.svg as a start.
+
+  - Product mockups (a kit on a table, a framed finished painting). These are
+    photos, not vector templates, so they are not here. Shoot them, then store
+    the masters in 05-asset-library and any editable overlay here.
+
+
+NOTE
+----
+  Static, finished versions of the cards, labels, posts, and stories live in:
+    05-asset-library/03-social-templates/      (posts, stories, listing tile)
+    05-asset-library/07-stationery-and-packaging/   (cards, label, letterhead)
+  The files in 07 are the editable working versions with fill-in fields.
+
+
+KEY
+---
+  "file.svg"     The exact name of a file.
+  [bracket text] A blank to fill inside a template.
+  Hyphen "-"     Used in place of a dash on purpose (no em dashes; they read as
+                 minus signs in STEM contexts).

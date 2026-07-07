@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="560" viewBox="0 0 920 560" role="img" aria-label="Hello Paint color system">
+  <rect width="920" height="560" fill="#FBF4E8"/>
+  <text x="48" y="62" font-family="Georgia, 'Times New Roman', serif" font-size="34" font-weight="700" fill="#312B3D">Hello Paint color system</text>
+  <text x="48" y="92" font-family="Helvetica, Arial, sans-serif" font-size="15" fill="#6E6576">Core palette. No orange, on purpose.</text>
+
+  <!-- Row 1: core brights + ink -->
+  <g font-family="Helvetica, Arial, sans-serif">
+    <!-- Raspberry -->
+    <rect x="48" y="120" width="180" height="110" rx="14" fill="#E64C81"/>
+    <text x="64" y="206" font-size="15" font-weight="700" fill="#FFFDF8">Raspberry</text>
+    <text x="64" y="224" font-size="13" fill="#FFFDF8" opacity="0.9">#E64C81</text>
+    <!-- Teal -->
+    <rect x="244" y="120" width="180" height="110" rx="14" fill="#15A39A"/>
+    <text x="260" y="206" font-size="15" font-weight="700" fill="#FFFDF8">Teal</text>
+    <text x="260" y="224" font-size="13" fill="#FFFDF8" opacity="0.9">#15A39A</text>
+    <!-- Sunshine -->
+    <rect x="440" y="120" width="180" height="110" rx="14" fill="#F6C744"/>
+    <text x="456" y="206" font-size="15" font-weight="700" fill="#312B3D">Sunshine</text>
+    <text x="456" y="224" font-size="13" fill="#312B3D" opacity="0.85">#F6C744</text>
+    <!-- Leaf -->
+    <rect x="636" y="120" width="180" height="110" rx="14" fill="#5BA86B"/>
+    <text x="652" y="206" font-size="15" font-weight="700" fill="#FFFDF8">Leaf</text>
+    <text x="652" y="224" font-size="13" fill="#FFFDF8" opacity="0.9">#5BA86B</text>
+  </g>
+
+  <!-- Row 2: sky, plum ink, cream, off-white -->
+  <g font-family="Helvetica, Arial, sans-serif">
+    <!-- Sky -->
+    <rect x="48" y="250" width="180" height="110" rx="14" fill="#BFE6F2"/>
+    <text x="64" y="336" font-size="15" font-weight="700" fill="#312B3D">Sky</text>
+    <text x="64" y="354" font-size="13" fill="#312B3D" opacity="0.85">#BFE6F2</text>
+    <!-- Plum ink -->
+    <rect x="244" y="250" width="180" height="110" rx="14" fill="#312B3D"/>
+    <text x="260" y="336" font-size="15" font-weight="700" fill="#FBF4E8">Plum ink</text>
+    <text x="260" y="354" font-size="13" fill="#FBF4E8" opacity="0.9">#312B3D</text>
+    <!-- Cream -->
+    <rect x="440" y="250" width="180" height="110" rx="14" fill="#FBF4E8" stroke="#ECE0CF" stroke-width="1.5"/>
+    <text x="456" y="336" font-size="15" font-weight="700" fill="#312B3D">Cream</text>
+    <text x="456" y="354" font-size="13" fill="#6E6576">#FBF4E8</text>
+    <!-- Off-white -->
+    <rect x="636" y="250" width="180" height="110" rx="14" fill="#FFFDF8" stroke="#ECE0CF" stroke-width="1.5"/>
+    <text x="652" y="336" font-size="15" font-weight="700" fill="#312B3D">Off-white</text>
+    <text x="652" y="354" font-size="13" fill="#6E6576">#FFFDF8</text>
+  </g>
+
+  <!-- Row 3: blush + text-safe deepers -->
+  <g font-family="Helvetica, Arial, sans-serif">
+    <!-- Blush -->
+    <rect x="48" y="380" width="180" height="110" rx="14" fill="#FBD0DD"/>
+    <text x="64" y="466" font-size="15" font-weight="700" fill="#312B3D">Blush</text>
+    <text x="64" y="484" font-size="13" fill="#312B3D" opacity="0.85">#FBD0DD</text>
+    <!-- Deep berry (text-safe) -->
+    <rect x="244" y="380" width="180" height="110" rx="14" fill="#B83A66"/>
+    <text x="260" y="460" font-size="15" font-weight="700" fill="#FFFDF8">Deep berry</text>
+    <text x="260" y="478" font-size="13" fill="#FFFDF8" opacity="0.9">#B83A66</text>
+    <!-- Deep teal (text-safe) -->
+    <rect x="440" y="380" width="180" height="110" rx="14" fill="#0F756D"/>
+    <text x="456" y="460" font-size="15" font-weight="700" fill="#FFFDF8">Deep teal</text>
+    <text x="456" y="478" font-size="13" fill="#FFFDF8" opacity="0.9">#0F756D</text>
+    <!-- Label card for text-safe -->
+    <rect x="636" y="380" width="180" height="110" rx="14" fill="#FFFDF8" stroke="#ECE0CF" stroke-width="1.5"/>
+    <text x="652" y="424" font-size="13" font-weight="700" fill="#312B3D">Text-safe deepers</text>
+    <text x="652" y="446" font-size="12.5" fill="#6E6576">Use for colored text</text>
+    <text x="652" y="464" font-size="12.5" fill="#6E6576">on a light background.</text>
+  </g>
+
+  <text x="48" y="528" font-family="Helvetica, Arial, sans-serif" font-size="12.5" fill="#6E6576">Body text is plum ink on cream. Brights are for headlines, shapes, and the logo. See color-spec.txt for contrast ratios.</text>
+</svg>

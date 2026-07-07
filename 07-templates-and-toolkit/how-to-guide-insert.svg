@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1050 1485" width="1050" height="1485">
+  <rect width="1050" height="1485" fill="#FBF4E8"/>
+  <!-- header -->
+  <text x="525" y="160" text-anchor="middle" font-family="'Fraunces',Georgia,serif" font-weight="600" font-size="70" letter-spacing="-2" fill="#E64C81">how to paint</text>
+  <text x="525" y="225" text-anchor="middle" font-family="'Fraunces',Georgia,serif" font-style="italic" font-weight="500" font-size="36" fill="#312B3D">your kit, one number at a time</text>
+  <line x1="120" y1="270" x2="930" y2="270" stroke="#EADCC6" stroke-width="2"/>
+
+  <!-- STEP 1 -->
+  <circle cx="180" cy="400" r="50" fill="#BFE6F2" stroke="#312B3D" stroke-width="3"/>
+  <text x="180" y="418" text-anchor="middle" font-family="'Nunito Sans','Trebuchet MS',sans-serif" font-weight="800" font-size="48" fill="#312B3D">1</text>
+  <text x="270" y="385" font-family="'Nunito Sans','Trebuchet MS',sans-serif" font-weight="800" font-size="40" fill="#312B3D">Set up</text>
+  <text x="270" y="435" font-family="'Nunito Sans','Trebuchet MS',sans-serif" font-weight="400" font-size="28" fill="#6E6576">Lay out the outline, the swatch card, a cup of water,</text>
+  <text x="270" y="472" font-family="'Nunito Sans','Trebuchet MS',sans-serif" font-weight="400" font-size="28" fill="#6E6576">and a paper towel. Good light helps.</text>
+
+  <!-- STEP 2 -->
+  <circle cx="180" cy="600" r="50" fill="#F6C744" stroke="#312B3D" stroke-width="3"/>
+  <text x="180" y="618" text-anchor="middle" font-family="'Nunito Sans','Trebuchet MS',sans-serif" font-weight="800" font-size="48" fill="#312B3D">2</text>
+  <text x="270" y="585" font-family="'Nunito Sans','Trebuchet MS',sans-serif" font-weight="800" font-size="40" fill="#312B3D">Match the number</text>
+  <text x="270" y="635" font-family="'Nunito Sans','Trebuchet MS',sans-serif" font-weight="400" font-size="28" fill="#6E6576">Each color has a number. Find every spot with that</text>
+  <text x="270" y="672" font-family="'Nunito Sans','Trebuchet MS',sans-serif" font-weight="400" font-size="28" fill="#6E6576">number and paint them all before you switch colors.</text>
+
+  <!-- STEP 3 -->
+  <circle cx="180" cy="800" r="50" fill="#5BA86B" stroke="#312B3D" stroke-width="3"/>
+  <text x="180" y="818" text-anchor="middle" font-family="'Nunito Sans','Trebuchet MS',sans-serif" font-weight="800" font-size="48" fill="#FFFFFF">3</text>
+  <text x="270" y="785" font-family="'Nunito Sans','Trebuchet MS',sans-serif" font-weight="800" font-size="40" fill="#312B3D">Work light to dark</text>
+  <text x="270" y="835" font-family="'Nunito Sans','Trebuchet MS',sans-serif" font-weight="400" font-size="28" fill="#6E6576">Start with the palest colors, finish with the darkest.</text>
+  <text x="270" y="872" font-family="'Nunito Sans','Trebuchet MS',sans-serif" font-weight="400" font-size="28" fill="#6E6576">Rinse the brush between colors.</text>
+
+  <!-- STEP 4 -->
+  <circle cx="180" cy="1000" r="50" fill="#E64C81"/>
+  <text x="180" y="1018" text-anchor="middle" font-family="'Nunito Sans','Trebuchet MS',sans-serif" font-weight="800" font-size="48" fill="#FFFFFF">4</text>
+  <text x="270" y="985" font-family="'Nunito Sans','Trebuchet MS',sans-serif" font-weight="800" font-size="40" fill="#312B3D">Let it dry</text>
+  <text x="270" y="1035" font-family="'Nunito Sans','Trebuchet MS',sans-serif" font-weight="400" font-size="28" fill="#6E6576">The light guide lines disappear under the paint.</text>
+  <text x="270" y="1072" font-family="'Nunito Sans','Trebuchet MS',sans-serif" font-weight="400" font-size="28" fill="#6E6576">Touch up any thin spots once it is dry.</text>
+
+  <line x1="120" y1="1180" x2="930" y2="1180" stroke="#EADCC6" stroke-width="2"/>
+  <text x="525" y="1260" text-anchor="middle" font-family="'Fraunces',Georgia,serif" font-style="italic" font-weight="500" font-size="34" fill="#312B3D">no drawing needed, ever.</text>
+  <text x="525" y="1360" text-anchor="middle" font-family="'Nunito Sans','Trebuchet MS',sans-serif" font-weight="800" font-size="42" letter-spacing="-1.26"><tspan fill="#E64C81">hello</tspan><tspan fill="#312B3D" dx="10.92">paint</tspan></text>
+  <text x="525" y="1408" text-anchor="middle" font-family="'Nunito Sans','Trebuchet MS',sans-serif" font-weight="700" font-size="24" fill="#6E6576">stuck? hello@hellopaint.studio</text>
+</svg>

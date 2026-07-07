@@ -1,0 +1,78 @@
+HELLO PAINT - COLOR SPECIFICATION
+=================================
+The exact brand palette, pulled from the brand book CSS. The palette avoids
+orange and terracotta on purpose, so the brand reads as warm and human-made.
+
+
+CORE PALETTE
+------------
+  Name        Hex        Role
+  Raspberry   #E64C81    The "hello." Headlines, shapes, the logo. Not body text.
+  Teal        #15A39A    Eye-catching accent. Headlines, shapes, the logo.
+  Sunshine    #F6C744    Warm pop. Accents and number tiles.
+  Leaf        #5BA86B    Secondary accent. Number tiles and shapes.
+  Sky         #BFE6F2    Soft fill. Backgrounds inside marks and tiles.
+  Plum ink    #312B3D    The dark. Body text and outlines. Use instead of black.
+  Cream       #FBF4E8    Primary background. Lead layouts with it so brights pop.
+  Off-white   #FFFDF8    Card and surface fill on top of cream.
+  Blush       #FBD0DD    Soft warmth, tints, and dividers.
+
+
+TEXT-SAFE DEEPER VARIANTS
+-------------------------
+For colored TEXT on a light background, use the deeper variants so it stays
+legible. Bright raspberry and teal are for headlines, shapes, and the logo,
+never for paragraphs.
+
+  Name        Hex        Role
+  Deep berry  #B83A66    Berry-colored text on cream.
+  Deep teal   #0F756D    Links and teal text on cream.
+
+
+SUPPORTING LINE COLORS (from the brand book)
+--------------------------------------------
+  Name        Hex        Role
+  Muted ink   #6E6576    Secondary / muted text.
+  Line        #ECE0CF    Hairline borders and section rules.
+  Line 2      #F3EAD9    Lighter inner borders and table rows.
+
+
+CONTRAST REFERENCE (text on background)
+---------------------------------------
+Contrast ratios are WCAG values. 4.5 is the AA threshold for normal text;
+3.0 is the AA threshold for large text (about 24 px or 19 px bold).
+
+  Text on background       Ratio    Use
+  Plum ink on cream        12.44    Body text
+  Cream on plum ink        12.44    Reversed body
+  Deep teal on cream        5.07    Links, teal text
+  Deep berry on cream       5.01    Berry text
+  Raspberry on cream        3.36    Headlines only (large text)
+
+
+QUICK RULES
+-----------
+  - Body text is plum ink on cream.
+  - One bright accent leads at a time; do not crowd brights together.
+  - Never add orange or terracotta.
+  - Keep "hello" raspberry and "paint" plum ink in the wordmark.
+
+
+KEY (how this file is written)
+------------------------------
+  UPPERCASE HEADINGS   Section breaks.
+  Indented rows        Exact values to copy: names, hex codes, ratios.
+  Hyphen "-"           Used in place of a dash on purpose, so it never reads
+                       as a minus sign.
+
+
+GLOSSARY
+--------
+  Hex          A six-digit color code, like #E64C81, used in web and design tools.
+  Contrast     How readable text is against its background. Higher is clearer.
+  WCAG         Web Content Accessibility Guidelines, the standard for contrast.
+  AA           The common accessibility pass level for everyday text.
+  Reversed     A light treatment made to sit on a dark fill.
+
+
+Source: 01-brand-book.html (CSS :root variables and the color section).
