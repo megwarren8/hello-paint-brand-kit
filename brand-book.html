@@ -93,7 +93,10 @@
   .ramprow .bar{display:grid;grid-template-columns:repeat(4,1fr);border-radius:11px;overflow:hidden;border:1px solid var(--line);}
   .ramprow .bar div{height:46px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;}
   .balance{display:flex;height:34px;border-radius:9px;overflow:hidden;border:1px solid var(--line);margin:8px 0 4px;}
-  .balance div{display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;}
+  .balance div{display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;overflow:hidden;white-space:nowrap;}
+  .balance-legend{display:none;flex-wrap:wrap;gap:8px 16px;margin:12px 0 4px;font-size:12.5px;font-weight:700;}
+  .balance-legend span{display:inline-flex;align-items:center;gap:6px;}
+  .balance-legend i{width:11px;height:11px;border-radius:999px;display:block;flex:none;}
 
   table{width:100%;border-collapse:collapse;margin:14px 0 4px;font-size:14.5px;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;}
   th,td{padding:10px 14px;border-bottom:1px solid var(--line2);text-align:left;}
@@ -162,6 +165,14 @@
   .foot{color:var(--muted);font-size:13px;padding-top:30px;line-height:1.7;}
   .note{background:#FCEAF0;border:1px solid #F4C9D9;border-radius:14px;padding:16px 20px;font-size:14.5px;color:#5a3344;}
   .note b{color:var(--deepberry);}
+
+  @media(max-width:560px){
+    .wrap{padding:0 18px 80px;}
+    .cover{padding:56px 0 40px;}
+    section{padding:40px 0;}
+    .balance div{font-size:0;}
+    .balance-legend{display:flex;}
+  }
 </style>
 </head>
 <body>
@@ -348,6 +359,14 @@
       <div style="width:8%;background:#15A39A;color:#fff">teal 8</div>
       <div style="width:5%;background:#F6C744;color:#312B3D">sun</div>
       <div style="width:5%;background:#5BA86B;color:#fff">leaf</div>
+    </div>
+    <div class="balance-legend">
+      <span><i style="background:#FBF4E8;box-shadow:inset 0 0 0 1px #EADCC6"></i>cream 50%</span>
+      <span><i style="background:#312B3D"></i>ink 20%</span>
+      <span><i style="background:#E64C81"></i>berry 12%</span>
+      <span><i style="background:#15A39A"></i>teal 8%</span>
+      <span><i style="background:#F6C744"></i>sun 5%</span>
+      <span><i style="background:#5BA86B"></i>leaf 5%</span>
     </div>
 
     <h4 style="font-size:17px;margin:30px 0 4px;font-family:'Nunito Sans';font-weight:800;">Contrast &amp; accessibility</h4>

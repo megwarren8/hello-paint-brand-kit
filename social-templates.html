@@ -38,6 +38,7 @@ h1,h2,h3{font-family:"Fraunces",Georgia,serif;font-weight:600;letter-spacing:-0.
 .devframe.story{aspect-ratio:9/16;width:100%;max-width:200px;border-radius:26px;border:6px solid #211C29;}
 .devframe.wide169{aspect-ratio:16/9;width:100%;max-width:340px;}
 .devframe.wide2{aspect-ratio:1200/630;width:100%;max-width:340px;}
+.devframe.pin{aspect-ratio:1000/1500;width:100%;max-width:220px;border-radius:20px;}
 .devframe img,.devframe svg{width:100%;height:100%;display:block;object-fit:cover;}
 .devcap{text-align:center;}
 .devcap b{display:block;font-size:14.5px;font-weight:800;}
@@ -163,7 +164,7 @@ h1,h2,h3{font-family:"Fraunces",Georgia,serif;font-weight:600;letter-spacing:-0.
   }
 
   var GROUPS = { feed: groups[0].items, 'video-review': groups[1].items, stories: groups[2].items, taglines: groups[3].items };
-  var frameClass = { feed: ['square', 'wide169', 'square'], 'video-review': ['wide169', 'square', 'wide2'] };
+  var frameClass = { feed: ['square', 'pin', 'square'], 'video-review': ['wide169', 'square', 'wide2'] };
 
   var total = 0;
   Object.keys(GROUPS).forEach(function (key) {
