@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>hello paint · social template showcase</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="_kit/kit-chrome.css">
+<style>
+:root{--paper:#FBF4E8;--card:#FFFDF8;--ink:#312B3D;--muted:#6E6576;--berry:#E64C81;--teal:#15A39A;--sun:#F6C744;--leaf:#5BA86B;--sky:#BFE6F2;--deepteal:#0F756D;--deepberry:#B83A66;--line:#EADCC6;--line2:#F3EAD9;}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Nunito Sans",system-ui,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:1280px;margin:0 auto;padding:0 28px 100px;}
+h1,h2,h3{font-family:"Fraunces",Georgia,serif;font-weight:600;letter-spacing:-0.01em;margin:0;}
+.hero{text-align:center;padding:64px 0 34px;border-bottom:1px solid var(--line);position:relative;overflow:hidden;}
+.hero .kick{font-weight:900;font-size:12px;letter-spacing:0.22em;text-transform:uppercase;color:var(--berry);}
+.hero h1{font-size:clamp(34px,6.2vw,64px);margin:16px 0 0;}
+.hero p{max-width:66ch;margin:16px auto 0;color:var(--muted);font-size:17.5px;}
+.hero .dots{display:flex;gap:10px;justify-content:center;margin-top:24px;}
+.hero .dots i{width:14px;height:14px;border-radius:999px;display:block;}
+.hero .count{font-weight:800;color:var(--ink);}
+
+.catnav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:28px;}
+.catnav a{font-weight:800;font-size:12.5px;text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:9px 16px;background:var(--card);}
+.catnav a:hover{background:var(--berry);color:#fff;border-color:var(--berry);}
+
+.cat{padding:60px 0 10px;border-bottom:1px solid var(--line);}
+.cat .kicker{font-weight:800;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--berry);margin:0 0 8px;}
+.cat h2{font-size:clamp(26px,3.8vw,40px);margin-bottom:6px;}
+.cat .intro{color:var(--muted);max-width:74ch;margin:0 0 32px;font-size:16px;}
+.cat .zipall{display:inline-flex;align-items:center;gap:8px;margin-bottom:32px;font-family:"Nunito Sans";font-weight:800;font-size:12.5px;color:#fff;background:var(--berry);border:none;border-radius:999px;padding:10px 18px;cursor:pointer;}
+.cat .zipall:hover{background:var(--deepberry);}
+
+.showgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:28px;}
+.showgrid.wide{grid-template-columns:repeat(auto-fit,minmax(320px,1fr));}
+.showgrid.stories{grid-template-columns:repeat(auto-fit,minmax(190px,1fr));}
+
+.showcard{display:flex;flex-direction:column;align-items:center;gap:14px;}
+.devframe{position:relative;border-radius:20px;overflow:hidden;box-shadow:0 18px 46px rgba(49,43,61,0.16);background:#000;}
+.devframe.square{aspect-ratio:1/1;width:100%;max-width:280px;border-radius:20px;}
+.devframe.story{aspect-ratio:9/16;width:100%;max-width:200px;border-radius:26px;border:6px solid #211C29;}
+.devframe.wide169{aspect-ratio:16/9;width:100%;max-width:340px;}
+.devframe.wide2{aspect-ratio:1200/630;width:100%;max-width:340px;}
+.devframe img,.devframe svg{width:100%;height:100%;display:block;object-fit:cover;}
+.devcap{text-align:center;}
+.devcap b{display:block;font-size:14.5px;font-weight:800;}
+.devcap span{display:block;font-size:12px;color:var(--muted);font-family:ui-monospace,Menlo,monospace;margin-top:2px;}
+.dl{display:flex;gap:6px;margin-top:8px;justify-content:center;flex-wrap:wrap;}
+.dl .dlb{font-family:"Nunito Sans",sans-serif;font-weight:800;font-size:11px;letter-spacing:0.03em;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 13px;cursor:pointer;text-decoration:none;}
+.dl .dlb:hover{background:var(--berry);color:#fff;border-color:var(--berry);}
+.dl .dlb:disabled{opacity:.6;cursor:default;}
+
+.colorstrip{display:flex;gap:9px;justify-content:center;margin:26px 0 6px;}
+.colorstrip i{width:26px;height:26px;border-radius:999px;box-shadow:inset 0 0 0 1px rgba(49,43,61,.15);}
+
+.foot{color:var(--muted);font-size:13px;padding-top:34px;line-height:1.7;text-align:center;}
+</style></head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <div class="kick">the showcase</div>
+  <h1>social templates,<br>styled in context.</h1>
+  <p>Every post, story, pin, and card the shop needs, dropped into real device frames so you can see exactly how it lands on a feed. <span class="count" id="tpl-count">20 templates</span> across four groups, every colour on brand, every tile downloads as an editable SVG or a native-size PNG.</p>
+  <div class="dots"><i style="background:#E64C81"></i><i style="background:#15A39A"></i><i style="background:#F6C744"></i><i style="background:#5BA86B"></i></div>
+  <nav class="catnav">
+    <a href="#feed">feed &amp; pins</a><a href="#video-review">video, review &amp; link share</a><a href="#stories">stories</a><a href="#taglines">tagline posts</a>
+  </nav>
+</header>
+
+<section class="cat" id="feed">
+  <p class="kicker">01 · feed &amp; pins</p>
+  <h2>The three that carry the shop.</h2>
+  <p class="intro">The Instagram post, the Pinterest pin, and the Etsy listing tile: the three templates that do the most work, each built around the same dashed drop zone for a real before &amp; after photo.</p>
+  <button class="zipall" data-zipgroup="feed">Download all three (.zip)</button>
+  <div class="showgrid wide" id="feed-grid"></div>
+</section>
+
+<section class="cat" id="video-review">
+  <p class="kicker">02 · video, review &amp; link share</p>
+  <h2>For YouTube, reviews, and every link you drop.</h2>
+  <p class="intro">A YouTube thumbnail sized for the safe area, a five-star review card ready for a real customer quote, and an Open Graph card so any link to the shop looks designed.</p>
+  <button class="zipall" data-zipgroup="video-review">Download all three (.zip)</button>
+  <div class="showgrid wide" id="video-review-grid"></div>
+</section>
+
+<section class="cat" id="stories">
+  <p class="kicker">03 · instagram stories</p>
+  <h2>One story per brand colour.</h2>
+  <p class="intro">Seven full-bleed story frames, each with its own eyebrow line and before/after drop zone, so the shop never posts the same background twice in a row.</p>
+  <div class="colorstrip"><i style="background:#FBF4E8"></i><i style="background:#E64C81"></i><i style="background:#312B3D"></i><i style="background:#F6C744"></i><i style="background:#5BA86B"></i><i style="background:#BFE6F2"></i><i style="background:#15A39A"></i></div>
+  <button class="zipall" data-zipgroup="stories">Download all seven (.zip)</button>
+  <div class="showgrid stories" id="stories-grid"></div>
+</section>
+
+<section class="cat" id="taglines" style="border-bottom:none;">
+  <p class="kicker">04 · tagline posts</p>
+  <h2>Seven feed posts, seven taglines, one voice.</h2>
+  <p class="intro">Two-line tagline cards for the days there's no photo to post yet, one per brand colour, so the feed always has something warm and on-voice ready to go.</p>
+  <button class="zipall" data-zipgroup="taglines">Download all seven (.zip)</button>
+  <div class="showgrid stories" id="taglines-grid"></div>
+</section>
+
+<p class="foot">hello paint · social template showcase · pulled from the same asset library as every other download in the kit, so a change to the brand marks updates everywhere at once · see the <a href="asset-library.html#templates" style="color:var(--deepteal);">full asset library</a> for headers, avatars, stickers, and everything else.</p>
+</div>
+
+<script src="js/marks.js"></script>
+<script src="js/icons.js"></script>
+<script src="js/data.js"></script>
+<script>
+(function () {
+  var HP = window.HP;
+  var tplSection = HP.SECTIONS.find(function (s) { return s.id === 'templates'; });
+  var groups = tplSection.groups; // [feed&pins, video/review/link, stories, taglines]
+  var FONT_CSS_URL = 'fonts/fonts.css';
+  var _fontCSS;
+  function abToB64(buf) { var bytes = new Uint8Array(buf), bin = '', CH = 0x8000; for (var i = 0; i < bytes.length; i += CH) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + CH)); return btoa(bin); }
+  async function embeddedFontCSS() {
+    if (_fontCSS !== undefined) return _fontCSS;
+    try {
+      var css = await (await fetch(FONT_CSS_URL)).text();
+      var blocks = css.match(/@font-face\s*\{[^}]*\}/g) || [];
+      var keep = blocks.filter(function (b) { return !/unicode-range/.test(b) || /U\+0000-00FF/.test(b); });
+      var out = '';
+      for (var i = 0; i < keep.length; i++) {
+        var m = keep[i].match(/url\(["']?(fonts\/[^)"']+\.woff2|[A-Za-z-]+\/[^)"']+\.woff2)["']?\)/);
+        if (!m) { out += keep[i]; continue; }
+        var rel = m[1].indexOf('fonts/') === 0 ? m[1] : 'fonts/' + m[1];
+        var buf = await (await fetch(rel)).arrayBuffer();
+        out += keep[i].replace(m[1], 'data:font/woff2;base64,' + abToB64(buf));
+      }
+      _fontCSS = out;
+    } catch (e) { _fontCSS = null; }
+    return _fontCSS;
+  }
+  async function svgToPngBlob(svg, w, h) {
+    var css = await embeddedFontCSS();
+    var doc = css ? svg.replace(/(<svg[^>]*>)/, '$1<defs><style>' + css + '</style></defs>') : svg;
+    var url = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(doc);
+    return await new Promise(function (res, rej) {
+      var img = new Image();
+      img.onload = function () { var cv = document.createElement('canvas'); cv.width = w; cv.height = h; cv.getContext('2d').drawImage(img, 0, 0, w, h); cv.toBlob(res, 'image/png'); };
+      img.onerror = rej; img.src = url;
+    });
+  }
+  function saveBlob(blob, name) {
+    var url = URL.createObjectURL(blob), a = document.createElement('a');
+    a.href = url; a.download = name; document.body.appendChild(a); a.click();
+    setTimeout(function () { URL.revokeObjectURL(url); a.remove(); }, 1500);
+    if (window.HPToast) window.HPToast('Downloaded ' + name);
+  }
+  function crc32(u8) { var t = crc32.t; if (!t) { t = crc32.t = []; for (var n = 0; n < 256; n++) { var c = n; for (var k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } } var crc = 0xFFFFFFFF; for (var i = 0; i < u8.length; i++) crc = t[(crc ^ u8[i]) & 0xFF] ^ (crc >>> 8); return (crc ^ 0xFFFFFFFF) >>> 0; }
+  function zipStore(files) {
+    var u16 = function (n) { return [n & 255, (n >> 8) & 255]; }, u32 = function (n) { return [n & 255, (n >> 8) & 255, (n >> 16) & 255, (n >> 24) & 255]; };
+    var enc = new TextEncoder(), parts = [], central = [], off = 0;
+    files.forEach(function (f) {
+      var name = enc.encode(f.name), data = f.data, crc = crc32(data);
+      var lh = new Uint8Array([].concat([80, 75, 3, 4], u16(20), u16(0), u16(0), u16(0), u16(0), u32(crc), u32(data.length), u32(data.length), u16(name.length), u16(0)));
+      parts.push(lh, name, data);
+      var ch = new Uint8Array([].concat([80, 75, 1, 2], u16(20), u16(20), u16(0), u16(0), u16(0), u16(0), u32(crc), u32(data.length), u32(data.length), u16(name.length), u16(0), u16(0), u16(0), u16(0), u32(0), u32(off)));
+      central.push(ch, name); off += lh.length + name.length + data.length;
+    });
+    var cs = 0; central.forEach(function (c) { cs += c.length; });
+    var end = new Uint8Array([].concat([80, 75, 5, 6], u16(0), u16(0), u16(files.length), u16(files.length), u32(cs), u32(off), u16(0)));
+    return new Blob(parts.concat(central, [end]), { type: 'application/zip' });
+  }
+
+  var GROUPS = { feed: groups[0].items, 'video-review': groups[1].items, stories: groups[2].items, taglines: groups[3].items };
+  var frameClass = { feed: ['square', 'wide169', 'square'], 'video-review': ['wide169', 'square', 'wide2'] };
+
+  var total = 0;
+  Object.keys(GROUPS).forEach(function (key) {
+    var grid = document.getElementById(key + '-grid');
+    GROUPS[key].forEach(function (it, i) {
+      total++;
+      var isStory = key === 'stories';
+      var cls = isStory ? 'story' : (key === 'taglines' ? 'square' : (frameClass[key] ? frameClass[key][i] : 'square'));
+      var card = document.createElement('div'); card.className = 'showcard';
+      card.innerHTML =
+        '<div class="devframe ' + cls + '">' + it.svg + '</div>' +
+        '<div class="devcap"><b>' + it.name + '</b><span>' + it.sub + '</span></div>' +
+        '<div class="dl"><button class="dlb" data-act="svg">SVG</button><button class="dlb" data-act="png">PNG</button></div>';
+      var dlBtns = card.querySelectorAll('.dlb');
+      dlBtns[0].addEventListener('click', function () {
+        saveBlob(new Blob([it.svg], { type: 'image/svg+xml;charset=utf-8' }), it.file + '.svg');
+      });
+      dlBtns[1].addEventListener('click', async function () {
+        var b = dlBtns[1], label = b.textContent; b.textContent = '…'; b.disabled = true;
+        try { saveBlob(await svgToPngBlob(it.svg, it.w, it.h), it.file + '.png'); }
+        catch (e) { alert('PNG export failed, the SVG download still works.'); }
+        b.textContent = label; b.disabled = false;
+      });
+      grid.appendChild(card);
+    });
+  });
+  document.getElementById('tpl-count').textContent = total + ' templates';
+
+  document.addEventListener('click', async function (e) {
+    var b = e.target.closest('[data-zipgroup]'); if (!b) return;
+    var key = b.dataset.zipgroup, items = GROUPS[key];
+    var label = b.textContent; b.textContent = 'zipping…'; b.disabled = true;
+    try {
+      var enc = new TextEncoder(), files = [];
+      for (var i = 0; i < items.length; i++) {
+        var it = items[i];
+        files.push({ name: 'svg/' + it.file + '.svg', data: enc.encode(it.svg) });
+        var pb = await svgToPngBlob(it.svg, it.w, it.h);
+        files.push({ name: 'png/' + it.file + '.png', data: new Uint8Array(await pb.arrayBuffer()) });
+      }
+      saveBlob(zipStore(files), 'hello-paint-' + key + '.zip');
+    } catch (err) { alert('Zip failed, the individual buttons still work.'); }
+    b.textContent = label; b.disabled = false;
+  });
+
+  window.HP_APP = { svgToPngBlob: svgToPngBlob };
+  window.HP_ASSET_REG = Object.keys(GROUPS).reduce(function (acc, k) { return acc.concat(GROUPS[k]); }, []);
+  if (window.HPKit && window.HPKit.onContentReady) window.HPKit.onContentReady();
+})();
+</script>
+<script src="_kit/kit-chrome.js"></script>
+</body></html>

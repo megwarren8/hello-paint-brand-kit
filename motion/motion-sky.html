@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>hello paint · light blue motion</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+<style>
+  :root{--paper:#FBF4E8;--ink:#312B3D;--sun:#F6C744;}
+  *{box-sizing:border-box;}html,body{margin:0;height:100%;}
+  body{background:#211C29;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;font-family:"Nunito Sans",sans-serif;padding:24px;}
+  #stage{position:relative;width:min(86vmin,640px);aspect-ratio:1/1;}
+  .framewrap{border-radius:28px;overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,0.4);}
+  #stage svg{display:block;width:100%;height:100%;}
+  .controls{display:flex;gap:10px;align-items:center;}
+  button{font-family:"Nunito Sans",sans-serif;font-weight:800;font-size:13px;color:var(--ink);background:var(--paper);border:none;border-radius:999px;padding:10px 18px;cursor:pointer;}
+  button:hover{background:var(--sun);}
+  .cap{color:#9a93a3;font-size:12.5px;font-weight:700;letter-spacing:0.04em;}
+</style></head>
+<body>
+  <div id="stage"><div class="framewrap">
+    <svg id="reel" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
+      <rect width="1000" height="1000" fill="#BFE6F2"/>
+      <g id="pol" opacity="0" transform="translate(500 460) rotate(-4)">
+        <rect x="-190" y="-220" width="380" height="470" rx="14" fill="#FFFDF8" stroke="#312B3D" stroke-width="7"/>
+        <rect x="-150" y="-180" width="300" height="300" fill="#312B3D"/>
+        <g id="photo" opacity="0">
+          <rect x="-150" y="-180" width="300" height="300" fill="#BFE6F2"/>
+          <circle cx="-70" cy="-100" r="40" fill="#F6C744"/>
+          <path d="M-150 30 Q-30 -60 60 10 Q110 50 150 20 L150 120 L-150 120 Z" fill="#5BA86B"/>
+        </g>
+        <text x="0" y="210" text-anchor="middle" font-family="Nunito Sans,sans-serif" font-weight="800" font-size="44" letter-spacing="-1.2"><tspan fill="#E64C81">hello</tspan><tspan fill="#312B3D" dx="11">paint</tspan></text>
+      </g>
+    </svg>
+  </div></div>
+  <div class="controls"><button id="replay">↻ replay</button><button id="pause">❚❚ pause</button><span class="cap">brand motion · it develops</span></div>
+<script>
+(function(){var $=function(i){return document.getElementById(i);};var T=4000,GAP=800,start=null,paused=false,pausedAt=0;
+function ease(x){return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;}function eb(x){return 1+2.7*Math.pow(x-1,3)+1.7*Math.pow(x-1,2);}
+function seg(t,a,b){if(t<=a)return 0;if(t>=b)return 1;return (t-a)/(b-a);}function op(e,v){e.setAttribute('opacity',v.toFixed(3));}
+function frame(now){if(start===null)start=now;if(paused){requestAnimationFrame(frame);return;}var t=Math.min(((now-start)%(T+GAP))/T,1);var fade=1-seg(t,.95,1);
+var pv=seg(t,.04,.2);op($('pol'),(pv>0?1:0)*fade);var ps=eb(Math.min(pv,1));var dy=(1-ease(seg(t,.06,.24)))*-40;$('pol').setAttribute('transform','translate(500 '+(460+dy)+') rotate(-4) scale('+ps+')');
+op($('photo'),ease(seg(t,.32,.8))*fade);requestAnimationFrame(frame);}
+requestAnimationFrame(frame);
+$('replay').onclick=function(){start=null;paused=false;$('pause').textContent='❚❚ pause';};
+$('pause').onclick=function(){paused=!paused;this.textContent=paused?'▶ play':'❚❚ pause';if(!paused){start=performance.now()-pausedAt;}else{pausedAt=(performance.now()-start)%(T+GAP);}};})();
+</script><script src="export.js"></script>
+</body></html>

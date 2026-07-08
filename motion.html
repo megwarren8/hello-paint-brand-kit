@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>hello paint · motion gallery</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="_kit/kit-chrome.css">
+<style>
+:root{--paper:#FBF4E8;--card:#FFFDF8;--ink:#312B3D;--muted:#6E6576;--berry:#E64C81;--teal:#15A39A;--sun:#F6C744;--leaf:#5BA86B;--sky:#BFE6F2;--deepteal:#0F756D;--line:#EADCC6;--line2:#F3EAD9;}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Nunito Sans",system-ui,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:1200px;margin:0 auto;padding:0 28px 90px;}
+h1,h2{font-family:"Fraunces",Georgia,serif;font-weight:600;letter-spacing:-0.01em;margin:0;}
+.hero{text-align:center;padding:56px 0 30px;border-bottom:1px solid var(--line);}
+.hero .kick{font-weight:900;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:var(--berry);}
+.hero h1{font-size:clamp(32px,5.6vw,54px);margin:14px 0 0;}
+.hero p{max-width:64ch;margin:14px auto 0;color:var(--muted);font-size:17px;}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;padding:44px 0;}
+.asset{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--card);display:block;text-decoration:none;color:inherit;cursor:pointer;}
+.asset .stage{display:flex;align-items:center;justify-content:center;}
+.asset .stage svg{width:100%;height:auto;display:block;}
+.asset figcaption{padding:14px 16px;border-top:1px solid var(--line2);}
+.asset figcaption b{display:block;font-size:14px;font-weight:800;}
+.asset figcaption b em{font-style:normal;color:var(--berry);}
+.asset figcaption span{display:block;font-size:12px;color:var(--muted);margin-top:2px;}
+.asset .openlink{display:block;margin-top:8px;font-size:11.5px;font-weight:800;color:var(--deepteal);text-decoration:none;}
+.foot{color:var(--muted);font-size:13px;padding-top:20px;line-height:1.7;text-align:center;}
+.mm{position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;padding:24px;}
+.mm[hidden]{display:none;}
+.mm-back{position:absolute;inset:0;background:rgba(33,28,41,0.74);backdrop-filter:blur(5px);}
+.mm-card{position:relative;width:min(720px,93vw);height:min(820px,90vh);background:#211C29;border-radius:24px;overflow:hidden;box-shadow:0 30px 90px rgba(0,0,0,0.55);}
+#mm-frame{width:100%;height:100%;border:0;display:block;background:#211C29;}
+.mm-x{position:absolute;top:14px;right:14px;z-index:2;width:40px;height:40px;border:none;border-radius:999px;background:var(--card);color:var(--ink);font-size:15px;font-weight:800;cursor:pointer;line-height:1;}
+.mm-x:hover{background:var(--berry);color:#fff;}
+</style></head>
+<body>
+<div class="wrap">
+<header class="hero">
+  <div class="kick">brand motion</div>
+  <h1>fifteen looping reveals.</h1>
+  <p>Every mark, animated: a heart pops over the smile, dabs drop into the palette, the wordmark paints in stroke by stroke, one reveal on every brand colour. Click a tile to play it here, or open it on its own page to grab a WebM or a self-contained HTML export.</p>
+</header>
+<div class="gal" id="motion-gal"></div>
+<p class="foot">hello paint · motion gallery · every animation is hand-tweened SVG, no library, and exports its own WebM or offline HTML from the open page.</p>
+</div>
+
+<div id="motion-modal" class="mm" hidden>
+  <div class="mm-back" data-close></div>
+  <div class="mm-card">
+    <button class="mm-x" data-close aria-label="close motion">✕</button>
+    <iframe id="mm-frame" title="motion preview"></iframe>
+  </div>
+</div>
+
+<script src="js/marks.js"></script>
+<script src="js/motions-embed.js"></script>
+<script>
+(function () {
+  var HP = window.HP;
+  var MOTIONS = [
+    { name: 'brand-motion', sub: 'photo → painted by you', href: 'motion/brand-motion.html',
+      poster: HP.svg(360, 200, '<rect width="360" height="200" fill="#FBF4E8"/><g transform="translate(132 26) scale(0.96)">' + HP.snapshot('#312B3D') + '</g><circle cx="180" cy="150" r="22" fill="#E64C81"/><path d="M173 140 L173 160 L190 150 Z" fill="#fff"/>') },
+    { name: 'smile-wink', sub: 'logo · the smile winks', href: 'motion/logo-smile-wink.html',
+      poster: HP.svg(360, 200, '<rect width="360" height="200" fill="#FBF4E8"/><g transform="translate(130 36) scale(1.2)">' + HP.smile() + '</g><circle cx="180" cy="168" r="20" fill="#E64C81"/><path d="M173 159 L173 177 L189 168 Z" fill="#fff"/>') },
+    { name: 'palette', sub: 'logo · dabs form the dots', href: 'motion/logo-palette.html', bg: '#312B3D',
+      poster: HP.svg(360, 200, '<rect width="360" height="200" fill="#312B3D"/>' + HP.dots(126, 92, 16, 56) + '<circle cx="180" cy="160" r="20" fill="#F6C744"/><path d="M173 151 L173 169 L189 160 Z" fill="#312B3D"/>') },
+    { name: 'wordmark', sub: 'paints in stroke by stroke', href: 'motion/logo-wordmark.html',
+      poster: HP.svg(360, 200, '<rect width="360" height="200" fill="#FBF4E8"/>' + HP.wordmark({ x: 180, y: 110, size: 58, anchor: 'middle' }) + '<circle cx="180" cy="160" r="18" fill="#E64C81"/><path d="M174 152 L174 168 L188 160 Z" fill="#fff"/>') },
+    { name: 'berry · love', sub: 'a heart pops over the smile', href: 'motion/motion-berry.html', bg: '#E64C81',
+      poster: HP.svg(360, 200, '<rect width="360" height="200" fill="#E64C81"/><path d="M180 96 L165 81 C158 74 162 64 171 64 C176 64 179 68 180 71 C181 68 184 64 189 64 C198 64 202 74 195 81 Z" fill="#FFFDF8"/><circle cx="180" cy="150" r="20" fill="#F6C744"/><path d="M173 141 L173 159 L189 150 Z" fill="#312B3D"/>') },
+    { name: 'yellow · spark', sub: 'sparkles burst, wordmark lands', href: 'motion/motion-yellow.html', bg: '#F6C744',
+      poster: HP.svg(360, 200, '<rect width="360" height="200" fill="#F6C744"/><path d="M180 56 C184 84 194 94 222 98 C194 102 184 112 180 140 C176 112 166 102 138 98 C166 94 176 84 180 56 Z" fill="#312B3D"/><circle cx="180" cy="166" r="18" fill="#E64C81"/><path d="M174 158 L174 174 L188 166 Z" fill="#fff"/>') },
+    { name: 'green · brush', sub: 'a brush paints the hill', href: 'motion/motion-green.html', bg: '#5BA86B',
+      poster: HP.svg(360, 200, '<rect width="360" height="200" fill="#5BA86B"/><path d="M120 120 Q180 92 240 120 L240 150 L120 150 Z" fill="#FFFDF8"/><circle cx="180" cy="168" r="18" fill="#F6C744"/><path d="M174 160 L174 176 L188 168 Z" fill="#312B3D"/>') },
+    { name: 'light blue · develop', sub: 'a polaroid develops', href: 'motion/motion-sky.html', bg: '#BFE6F2',
+      poster: HP.svg(360, 200, '<rect width="360" height="200" fill="#BFE6F2"/><rect x="150" y="44" width="60" height="74" rx="6" fill="#FFFDF8" stroke="#312B3D" stroke-width="4"/><rect x="157" y="51" width="46" height="44" fill="#5BA86B"/><circle cx="180" cy="158" r="18" fill="#E64C81"/><path d="M174 150 L174 166 L188 158 Z" fill="#fff"/>') },
+    { name: 'teal · pop', sub: 'the bubble pops in', href: 'motion/motion-teal.html', bg: '#15A39A',
+      poster: HP.svg(360, 200, '<rect width="360" height="200" fill="#15A39A"/><g transform="translate(130 30) scale(1.0)">' + HP.bubble('#FFFDF8', '#FFFDF8', '#FFFDF8') + '</g><circle cx="180" cy="170" r="16" fill="#F6C744"/><path d="M174 162 L174 178 L188 170 Z" fill="#312B3D"/>') },
+    { name: 'ink · pop', sub: 'the bubble pops in', href: 'motion/motion-pop-ink.html', bg: '#312B3D',
+      poster: HP.svg(360, 200, '<rect width="360" height="200" fill="#312B3D"/><g transform="translate(130 30)">' + HP.bubble('#FFFDF8', '#FFFDF8', '#BFE6F2') + '</g><circle cx="180" cy="172" r="16" fill="#F6C744"/><path d="M174 164 L174 180 L188 172 Z" fill="#312B3D"/>') },
+    { name: 'berry · pop', sub: 'the bubble pops in', href: 'motion/motion-pop-berry.html', bg: '#E64C81',
+      poster: HP.svg(360, 200, '<rect width="360" height="200" fill="#E64C81"/><g transform="translate(130 30)">' + HP.bubble('#FFFDF8', '#FFFDF8', '#BFE6F2') + '</g><circle cx="180" cy="172" r="16" fill="#F6C744"/><path d="M174 164 L174 180 L188 172 Z" fill="#312B3D"/>') },
+    { name: 'yellow · pop', sub: 'the bubble pops in', href: 'motion/motion-pop-yellow.html', bg: '#F6C744',
+      poster: HP.svg(360, 200, '<rect width="360" height="200" fill="#F6C744"/><g transform="translate(130 30)">' + HP.bubble('#FFFDF8', '#312B3D', '#312B3D') + '</g><circle cx="180" cy="172" r="16" fill="#E64C81"/><path d="M174 164 L174 180 L188 172 Z" fill="#fff"/>') },
+    { name: 'green · pop', sub: 'the bubble pops in', href: 'motion/motion-pop-green.html', bg: '#5BA86B',
+      poster: HP.svg(360, 200, '<rect width="360" height="200" fill="#5BA86B"/><g transform="translate(130 30)">' + HP.bubble('#FFFDF8', '#FFFDF8', '#BFE6F2') + '</g><circle cx="180" cy="172" r="16" fill="#F6C744"/><path d="M174 164 L174 180 L188 172 Z" fill="#312B3D"/>') },
+    { name: 'light blue · pop', sub: 'the bubble pops in', href: 'motion/motion-pop-sky.html', bg: '#BFE6F2',
+      poster: HP.svg(360, 200, '<rect width="360" height="200" fill="#BFE6F2"/><g transform="translate(130 30)">' + HP.bubble('#FFFDF8', '#312B3D', '#312B3D') + '</g><circle cx="180" cy="172" r="16" fill="#E64C81"/><path d="M174 164 L174 180 L188 172 Z" fill="#fff"/>') },
+    { name: 'ink · smile wink', sub: 'the smile winks (white)', href: 'motion/motion-wink-ink.html', bg: '#312B3D',
+      poster: HP.svg(360, 200, '<rect width="360" height="200" fill="#312B3D"/><g transform="translate(130 36) scale(1.2)">' + HP.smile({ mouth: '#E64C81', eye: '#15A39A', spark: '#F6C744' }) + '</g><circle cx="180" cy="170" r="18" fill="#F6C744"/><path d="M173 161 L173 179 L189 170 Z" fill="#312B3D"/>') }
+  ];
+  var gal = document.getElementById('motion-gal');
+  MOTIONS.forEach(function (m) {
+    var fig = document.createElement('a');
+    fig.className = 'asset'; fig.href = m.href; fig.target = '_blank'; fig.rel = 'noopener';
+    fig.setAttribute('data-motion', m.href);
+    fig.innerHTML = '<div class="stage" style="background:' + (m.bg || '#FBF4E8') + '">' + m.poster + '</div>' +
+      '<figcaption><b>' + m.name + ' <em>▶</em></b><span>' + m.sub + '</span>' +
+      '<span class="openlink">Open standalone → WebM / HTML export</span></figcaption>';
+    gal.appendChild(fig);
+  });
+
+  function closeMotion() {
+    var modal = document.getElementById('motion-modal'); if (!modal) return;
+    modal.hidden = true; var f = document.getElementById('mm-frame'); if (f) f.srcdoc = '';
+  }
+  document.addEventListener('click', function (e) {
+    var open = e.target.closest('[data-motion]');
+    if (open) {
+      var href = open.getAttribute('data-motion');
+      var doc = (window.HP && HP.MOTION_HTML) ? HP.MOTION_HTML[href] : null;
+      if (doc) {
+        e.preventDefault();
+        var f = document.getElementById('mm-frame'); var modal = document.getElementById('motion-modal');
+        if (f && modal) { f.srcdoc = doc; modal.hidden = false; }
+      }
+      return;
+    }
+    if (e.target.closest('[data-close]')) closeMotion();
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMotion(); });
+
+  if (window.HPKit && window.HPKit.onContentReady) window.HPKit.onContentReady();
+})();
+</script>
+<script src="_kit/kit-chrome.js"></script>
+</body></html>
