@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>hello paint · social template showcase</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="stylesheet" href="fonts/fonts.css">
 <link rel="stylesheet" href="_kit/kit-chrome.css">
 <style>
@@ -40,6 +41,11 @@ h1,h2,h3{font-family:"Fraunces",Georgia,serif;font-weight:600;letter-spacing:-0.
 .devframe.wide2{aspect-ratio:1200/630;width:100%;max-width:340px;}
 .devframe.pin{aspect-ratio:1000/1500;width:100%;max-width:220px;border-radius:20px;}
 .devframe img,.devframe svg{width:100%;height:100%;display:block;object-fit:cover;}
+.devframe.hp-drop{cursor:pointer;}
+.devframe.hp-drop:hover{box-shadow:0 18px 46px rgba(49,43,61,0.16), inset 0 0 0 3px var(--berry);}
+.devframe.hp-drop.dragover{box-shadow:0 18px 46px rgba(49,43,61,0.16), inset 0 0 0 3px var(--berry);background:#FCEAF0;}
+.hp-drop-x{position:absolute;top:8px;right:8px;z-index:3;width:26px;height:26px;border-radius:999px;border:none;background:rgba(33,28,41,0.72);color:#fff;font-size:12px;cursor:pointer;line-height:1;}
+.hp-drop-x:hover{background:var(--berry);}
 .devcap{text-align:center;}
 .devcap b{display:block;font-size:14.5px;font-weight:800;}
 .devcap span{display:block;font-size:12px;color:var(--muted);font-family:ui-monospace,Menlo,monospace;margin-top:2px;}
@@ -166,6 +172,95 @@ h1,h2,h3{font-family:"Fraunces",Georgia,serif;font-weight:600;letter-spacing:-0.
   var GROUPS = { feed: groups[0].items, 'video-review': groups[1].items, stories: groups[2].items, taglines: groups[3].items };
   var frameClass = { feed: ['square', 'pin', 'square'], 'video-review': ['wide169', 'square', 'wide2'] };
 
+  /* ---------- real drag-and-drop: swap the dashed placeholder for the user's
+     own before/after photo, right in the rendered template ---------------- */
+  function loadImageFile(file) {
+    return new Promise(function (resolve, reject) {
+      var fr = new FileReader();
+      fr.onload = function () {
+        var img = new Image();
+        img.onload = function () { resolve(img); };
+        img.onerror = reject;
+        img.src = fr.result;
+      };
+      fr.onerror = reject;
+      fr.readAsDataURL(file);
+    });
+  }
+  function downscaleToDataURL(img, maxEdge) {
+    var w = img.naturalWidth, h = img.naturalHeight;
+    var scale = Math.min(1, maxEdge / Math.max(w, h));
+    var cw = Math.max(1, Math.round(w * scale)), ch = Math.max(1, Math.round(h * scale));
+    var cv = document.createElement('canvas'); cv.width = cw; cv.height = ch;
+    cv.getContext('2d').drawImage(img, 0, 0, cw, ch);
+    return cv.toDataURL('image/jpeg', 0.86);
+  }
+  var clipSeq = 0;
+  function applyPhotoToSvg(svgRoot, dataUrl) {
+    var rect = svgRoot.querySelector('rect[data-dropzone]');
+    if (!rect) return false;
+    var svgNS = 'http://www.w3.org/2000/svg', xlinkNS = 'http://www.w3.org/1999/xlink';
+    var x = rect.getAttribute('x'), y = rect.getAttribute('y'), w = rect.getAttribute('width'), h = rect.getAttribute('height'), rx = rect.getAttribute('rx') || 0;
+    var defs = svgRoot.querySelector('defs');
+    if (!defs) { defs = document.createElementNS(svgNS, 'defs'); svgRoot.insertBefore(defs, svgRoot.firstChild); }
+    var clipId = 'hpclip-' + (++clipSeq) + '-' + Math.random().toString(36).slice(2, 7);
+    var clip = document.createElementNS(svgNS, 'clipPath'); clip.setAttribute('id', clipId);
+    var clipRect = document.createElementNS(svgNS, 'rect');
+    clipRect.setAttribute('x', x); clipRect.setAttribute('y', y); clipRect.setAttribute('width', w); clipRect.setAttribute('height', h); clipRect.setAttribute('rx', rx);
+    clip.appendChild(clipRect); defs.appendChild(clip);
+
+    var prevImg = svgRoot.querySelector('[data-user-photo]'); if (prevImg) prevImg.remove();
+    var img = document.createElementNS(svgNS, 'image');
+    img.setAttributeNS(xlinkNS, 'href', dataUrl); img.setAttribute('href', dataUrl);
+    img.setAttribute('x', x); img.setAttribute('y', y); img.setAttribute('width', w); img.setAttribute('height', h);
+    img.setAttribute('preserveAspectRatio', 'xMidYMid slice');
+    img.setAttribute('clip-path', 'url(#' + clipId + ')');
+    img.setAttribute('data-user-photo', '1');
+    rect.parentNode.insertBefore(img, rect.nextSibling);
+
+    rect.style.display = 'none';
+    var label = svgRoot.querySelector('[data-dropzone-label]'); if (label) label.style.display = 'none';
+    return true;
+  }
+  function revertPhoto(svgRoot) {
+    var prevImg = svgRoot.querySelector('[data-user-photo]'); if (prevImg) prevImg.remove();
+    var rect = svgRoot.querySelector('rect[data-dropzone]'); if (rect) rect.style.display = '';
+    var label = svgRoot.querySelector('[data-dropzone-label]'); if (label) label.style.display = '';
+  }
+  function wireDropzone(frame, it) {
+    var svgRoot = frame.querySelector('svg');
+    if (!svgRoot || !svgRoot.querySelector('rect[data-dropzone]')) return;
+    frame.classList.add('hp-drop');
+    var fileInput = document.createElement('input');
+    fileInput.type = 'file'; fileInput.accept = 'image/*'; fileInput.style.display = 'none';
+    frame.appendChild(fileInput);
+    var removeBtn = document.createElement('button');
+    removeBtn.type = 'button'; removeBtn.className = 'hp-drop-x'; removeBtn.setAttribute('aria-label', 'Remove photo'); removeBtn.title = 'Remove photo'; removeBtn.textContent = '✕'; removeBtn.hidden = true;
+    frame.appendChild(removeBtn);
+
+    function sync() { it.svg = new XMLSerializer().serializeToString(svgRoot); }
+    function accept(file) {
+      if (!file || file.type.indexOf('image/') !== 0) { if (file && window.HPToast) window.HPToast('That is not an image file'); return; }
+      loadImageFile(file).then(function (img) {
+        applyPhotoToSvg(svgRoot, downscaleToDataURL(img, 1400));
+        sync(); removeBtn.hidden = false;
+        if (window.HPToast) window.HPToast('Photo added');
+      }).catch(function () { if (window.HPToast) window.HPToast('Could not read that image'); });
+    }
+    frame.addEventListener('click', function (e) { if (e.target !== removeBtn) fileInput.click(); });
+    fileInput.addEventListener('change', function () { accept(fileInput.files[0]); fileInput.value = ''; });
+    frame.addEventListener('dragover', function (e) { e.preventDefault(); frame.classList.add('dragover'); });
+    frame.addEventListener('dragleave', function () { frame.classList.remove('dragover'); });
+    frame.addEventListener('drop', function (e) {
+      e.preventDefault(); frame.classList.remove('dragover');
+      accept(e.dataTransfer.files && e.dataTransfer.files[0]);
+    });
+    removeBtn.addEventListener('click', function (e) {
+      e.stopPropagation(); revertPhoto(svgRoot); sync(); removeBtn.hidden = true;
+      if (window.HPToast) window.HPToast('Photo removed');
+    });
+  }
+
   var total = 0;
   Object.keys(GROUPS).forEach(function (key) {
     var grid = document.getElementById(key + '-grid');
@@ -188,6 +283,7 @@ h1,h2,h3{font-family:"Fraunces",Georgia,serif;font-weight:600;letter-spacing:-0.
         catch (e) { alert('PNG export failed, the SVG download still works.'); }
         b.textContent = label; b.disabled = false;
       });
+      wireDropzone(card.querySelector('.devframe'), it);
       grid.appendChild(card);
     });
   });

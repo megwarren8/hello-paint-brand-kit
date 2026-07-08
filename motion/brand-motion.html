@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>hello paint · brand motion</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="stylesheet" href="../fonts/fonts.css">
 <style>
   :root{--paper:#FBF4E8;--card:#FFFDF8;--ink:#312B3D;--berry:#E64C81;--teal:#15A39A;--sun:#F6C744;--leaf:#5BA86B;--sky:#BFE6F2;--muted:#6E6576;}
@@ -115,7 +116,7 @@
     op($('eye1'), (1-seg(t,.50,.56))*fade);
     op($('eye2'), seg(t,.50,.58)*fade);
 
-    // frame fades in (no transform — keeps paint + border perfectly registered)
+    // frame fades in (no transform, keeps paint + border perfectly registered)
     var fp=seg(t,.04,.12);
     op($('frame'), fp*fade);
 

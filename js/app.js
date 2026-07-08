@@ -1,7 +1,8 @@
-/* hello paint · asset library app — render cards + live SVG/PNG downloads */
+/* hello paint · asset library app: render cards + live SVG/PNG downloads */
 (function () {
   var HP = window.HP;
   var REG = [];                 // downloadable registry: {svg,w,h,file}
+  var SECTION_RANGES = {};      // section id -> [startIdx, endIdx) into REG, for "download this section" zips
   var FONT_CSS_URL = 'fonts/fonts.css';
 
   /* ---------- download helpers ----------------------------------------- */
@@ -22,7 +23,7 @@
     return btoa(bin);
   }
   // Embeds the brand fonts straight from the kit's own local /fonts folder
-  // (no network fetch, no CDN — works fully offline once the page loads).
+  // (no network fetch, no CDN, so it works fully offline once the page loads).
   async function embeddedFontCSS() {
     if (_fontCSS !== undefined) return _fontCSS;
     try {
@@ -56,7 +57,7 @@
   async function downloadPNG(svg, w, h, file, btn) {
     var label = btn.textContent; btn.textContent = '…'; btn.disabled = true;
     try { saveBlob(await svgToPngBlob(svg, w, h), file + '.png'); }
-    catch (e) { alert('PNG export failed — the SVG download still works.'); }
+    catch (e) { alert('PNG export failed, the SVG download still works.'); }
     btn.textContent = label; btn.disabled = false;
   }
 
@@ -88,8 +89,72 @@
       }
       files.push({ name: r.file + '-strip.svg', data: enc.encode(r.svg) });
       saveBlob(zipStore(files), r.file + '-0-9.zip');
-    } catch (e) { alert('Zip failed — the individual SVG/PNG buttons still work.'); }
+    } catch (e) { alert('Zip failed, the individual SVG/PNG buttons still work.'); }
     btn.textContent = label; btn.disabled = false;
+  }
+
+  // ---- "download this whole section" zip: bundles every SVG/PNG (and any
+  // per-digit children) whose REG entries fall inside a section's range ----
+  async function downloadSectionZip(secId, btn) {
+    var range = SECTION_RANGES[secId];
+    if (!range) return;
+    var label = btn.textContent; btn.textContent = 'zipping…'; btn.disabled = true;
+    try {
+      var enc = new TextEncoder(), files = [];
+      for (var i = range[0]; i < range[1]; i++) {
+        var r = REG[i];
+        files.push({ name: 'svg/' + r.file + '.svg', data: enc.encode(r.svg) });
+        var pb = await svgToPngBlob(r.svg, r.w, r.h);
+        files.push({ name: 'png/' + r.file + '.png', data: new Uint8Array(await pb.arrayBuffer()) });
+        if (r.digits) {
+          for (var j = 0; j < r.digits.length; j++) {
+            var dg = r.digits[j];
+            files.push({ name: 'svg/' + dg.file + '.svg', data: enc.encode(dg.svg) });
+            var dpb = await svgToPngBlob(dg.svg, dg.w, dg.h);
+            files.push({ name: 'png/' + dg.file + '.png', data: new Uint8Array(await dpb.arrayBuffer()) });
+          }
+        }
+      }
+      saveBlob(zipStore(files), 'hello-paint-' + secId + '.zip');
+    } catch (e) { alert('Zip failed, the individual SVG/PNG buttons still work.'); }
+    btn.textContent = label; btn.disabled = false;
+  }
+  function seczipBtn(secId) {
+    return '<button class="seczip" data-seczip="' + secId + '">Download this whole section (.zip)</button>';
+  }
+
+  /* ---------- QR: live-generated, editable link, bubble at its heart ---- */
+  var QR_DEFAULT = 'https://hellopaint.megan-warren.com';
+  function qrLoad() {
+    try { return localStorage.getItem('hp-qr-link') || QR_DEFAULT; } catch (e) { return QR_DEFAULT; }
+  }
+  function qrSave(v) { try { localStorage.setItem('hp-qr-link', v); } catch (e) {} }
+  function escAttr(s) { return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+  // builds a real, scannable QR (error correction H so the center bubble cutout
+  // never breaks a scan) sized to whatever text is given; falls back to the
+  // kit's own URL so the tile never renders empty.
+  function buildQrSvg(text, exportSize) {
+    text = (text || '').trim() || QR_DEFAULT;
+    exportSize = exportSize || 512;
+    var qr = window.qrcode(0, 'H');
+    qr.addData(text);
+    qr.make();
+    var n = qr.getModuleCount(), cell = 7, margin = 4;
+    var full = (n + margin * 2) * cell; // natural coordinate space (viewBox); scales up to exportSize on render/PNG
+    var rects = '';
+    for (var r = 0; r < n; r++) {
+      for (var c = 0; c < n; c++) {
+        if (qr.isDark(r, c)) rects += '<rect x="' + ((c + margin) * cell) + '" y="' + ((r + margin) * cell) + '" width="' + cell + '" height="' + cell + '"/>';
+      }
+    }
+    var hole = full * 0.27, hx = (full - hole) / 2;
+    var bScale = (hole * 0.86) / 100, bOff = (hole - 100 * bScale) / 2;
+    var inner = '<rect width="' + full + '" height="' + full + '" rx="' + (full * 0.065).toFixed(1) + '" fill="#FFFDF8"/>' +
+      '<g fill="#312B3D">' + rects + '</g>' +
+      '<rect x="' + hx.toFixed(1) + '" y="' + hx.toFixed(1) + '" width="' + hole.toFixed(1) + '" height="' + hole.toFixed(1) + '" rx="' + (hole * 0.16).toFixed(1) + '" fill="#FFFDF8"/>' +
+      '<g transform="translate(' + (hx + bOff).toFixed(1) + ' ' + (hx + bOff).toFixed(1) + ') scale(' + bScale.toFixed(4) + ')">' + HP.bubble() + '</g>';
+    var svg = HP.svg(full, full, inner, 'width="' + exportSize + '" height="' + exportSize + '"');
+    return { svg: svg, size: exportSize };
   }
 
   /* ---------- card builders -------------------------------------------- */
@@ -100,7 +165,7 @@
   function assetCard(it) {
     var i = REG.push({ svg: it.svg, w: it.w, h: it.h, file: it.file, digits: it.digits }) - 1;
     var dl = dlRow(i);
-    if (it.digits) dl = dl.replace('</div>', '<button class="dlb" data-i="' + i + '" data-act="zip">Zip 0–9</button></div>');
+    if (it.digits) dl = dl.replace('</div>', '<button class="dlb" data-i="' + i + '" data-act="zip">Zip 0-9</button></div>');
     return '<figure class="asset ' + (it.cls || '') + '"><div class="stage">' + it.svg + '</div>' +
       '<figcaption><b>' + it.name + '</b><span>' + it.sub + '</span>' + dl + '</figcaption></figure>';
   }
@@ -109,9 +174,11 @@
   function render() {
     var app = document.getElementById('app'), html = '';
     HP.SECTIONS.forEach(function (sec) {
+      var startIdx = REG.length;
       html += '<section class="sec" id="' + sec.id + '" data-screen-label="' + sec.title.replace(/&amp;/g, '&') + '">';
       html += '<p class="kicker">' + sec.kicker + '</p><h2>' + sec.title + '</h2>';
       html += '<p class="intro">' + sec.intro + '</p>';
+      html += seczipBtn(sec.id);
       sec.groups.forEach(function (g) {
         if (g.sub) html += '<div class="subhead">' + g.sub + '</div>';
         html += '<div class="gal ' + (g.cls || '') + '">';
@@ -119,12 +186,15 @@
         html += '</div>';
       });
       html += '</section>';
+      SECTION_RANGES[sec.id] = [startIdx, REG.length];
     });
 
     // ---- ICONS ----
+    var iconsStart = REG.length;
     html += '<section class="sec" id="icons" data-screen-label="Icons & symbols">';
     html += '<p class="kicker">10 · icons</p><h2>Icons, symbols &amp; emoji</h2>';
-    html += '<p class="intro">Sixty little marks in the hello paint hand — rounded plum line work with the four brand dabs. Use them as favicons, bullet glyphs, reaction emoji, or sticker art. Transparent on a checker.</p>';
+    html += '<p class="intro">Sixty little marks in the hello paint hand, rounded plum line work with the four brand dabs. Use them as favicons, bullet glyphs, reaction emoji, or sticker art. Transparent on a checker.</p>';
+    html += seczipBtn('icons');
     html += '<div class="gal iconset">';
     HP.ICONS.forEach(function (ic) {
       var svg = HP.svg(100, 100, ic.inner, 'width="512" height="512"');
@@ -133,16 +203,20 @@
         '<figcaption><b>' + ic.label + '</b><span>' + ic.sub + '</span>' + dlRow(i) + '</figcaption></figure>';
     });
     html += '</div></section>';
+    SECTION_RANGES.icons = [iconsStart, REG.length];
 
     // ---- EXTRAS: QR + email signature ----
-    var qrSvg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="' + HP.QR_VB + '" width="512" height="512">' + HP.QR + '</svg>';
-    var qrI = REG.push({ svg: qrSvg, w: 512, h: 512, file: 'qr-code' }) - 1;
+    var qrLink = qrLoad();
+    var qrBuilt = buildQrSvg(qrLink, 512);
+    var qrI = REG.push({ svg: qrBuilt.svg, w: qrBuilt.size, h: qrBuilt.size, file: 'qr-code' }) - 1;
     html += '<section class="sec" id="extras" data-screen-label="QR & email signature">';
     html += '<p class="kicker">11 · extras</p><h2>QR code &amp; email signature</h2>';
     html += '<p class="intro">A real, scannable QR with the bubble at its heart, and a copy-paste email signature.</p>';
     html += '<div class="gal extras">';
-    html += '<figure class="asset"><div class="stage" style="background:#FFFDF8"><div style="width:200px">' + qrSvg + '</div></div>' +
-      '<figcaption><b>qr code</b><span>scannable · bubble center</span>' + dlRow(qrI) + '</figcaption></figure>';
+    html += '<figure class="asset"><div class="stage" style="background:#FFFDF8"><div style="width:200px" id="qr-stage">' + qrBuilt.svg + '</div></div>' +
+      '<figcaption><b>qr code</b><span>scannable · bubble center · edit the link, then share</span>' +
+      '<div class="qredit"><label for="qr-url">points to</label><input id="qr-url" type="text" inputmode="url" spellcheck="false" autocomplete="off" value="' + escAttr(qrLink) + '"></div>' +
+      '<div class="dl"><button class="dlb" id="qr-copylink" type="button">Copy link</button>' + dlRow(qrI) + '</div></figcaption></figure>';
     html += '<figure class="asset"><div class="stage" id="sigwrap">' + emailSig(sigLoad(), true) + '</div>' +
       '<figcaption><b>email signature</b><span>click any field to edit, then copy</span>' +
       '<div class="dl"><button class="dlb" data-act="copysig">Copy HTML</button>' +
@@ -152,7 +226,7 @@
     // ---- MOTION ----
     html += '<section class="sec" id="motion" data-screen-label="Brand motion">';
     html += '<p class="kicker">12 · motion</p><h2>Brand motion</h2>';
-    html += '<p class="intro">Fifteen looping reveals built from the marks — at least one on every brand background. Click any tile to play it full-size in a pop-up; every motion file also opens on its own with its own WebM and HTML export buttons. <a href="motion.html">See the full motion gallery →</a></p>';
+    html += '<p class="intro">Fifteen looping reveals built from the marks, at least one on every brand background. Click any tile to play it full-size in a pop-up; every motion file also opens on its own with its own WebM and HTML export buttons. <a href="motion.html">See the full motion gallery →</a></p>';
     html += '<div class="gal motion">';
     MOTIONS.forEach(function (m) {
       html += '<a class="asset link" href="' + m.href + '" target="_blank" rel="noopener" data-motion="' + m.href + '"><div class="stage" style="background:' + (m.bg || '#FBF4E8') + '">' + m.poster + '</div>' +
@@ -166,7 +240,39 @@
     var countEl = document.getElementById('asset-count');
     if (countEl) countEl.textContent = REG.length + ' downloadable assets';
     var hl = document.getElementById('herolk'); if (hl) hl.innerHTML = HP.HERO;
+    wireQr(qrI);
     if (window.HPKit && window.HPKit.onContentReady) window.HPKit.onContentReady();
+  }
+
+  /* ---------- QR wiring: edit the link, regenerate live, copy + export -- */
+  function wireQr(qrI) {
+    var input = document.getElementById('qr-url'), stage = document.getElementById('qr-stage'), copyBtn = document.getElementById('qr-copylink');
+    if (!input || !stage) return;
+    var deb;
+    input.addEventListener('input', function () {
+      clearTimeout(deb);
+      deb = setTimeout(function () {
+        var v = input.value.trim() || QR_DEFAULT;
+        var built = buildQrSvg(v, REG[qrI].w);
+        REG[qrI].svg = built.svg;
+        stage.innerHTML = built.svg;
+        qrSave(v);
+      }, 260);
+    });
+    if (copyBtn) copyBtn.addEventListener('click', function () {
+      var v = input.value.trim() || QR_DEFAULT;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(v).then(function () { flash(copyBtn, 'Copied!'); if (window.HPToast) window.HPToast('Link copied'); }, function () { fallbackCopyText(v, copyBtn); });
+      } else fallbackCopyText(v, copyBtn);
+    });
+  }
+  function fallbackCopyText(text, btn) {
+    var ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    var ok = false; try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    ta.remove();
+    if (ok) { flash(btn, 'Copied!'); if (window.HPToast) window.HPToast('Link copied'); }
+    else if (window.HPToast) window.HPToast('Copy failed, select the text manually');
   }
 
   /* ---------- email signature (editable) ------------------------------- */
@@ -294,6 +400,8 @@
 
   /* ---------- events ---------------------------------------------------- */
   document.addEventListener('click', function (e) {
+    var secBtn = e.target.closest('[data-seczip]');
+    if (secBtn) { downloadSectionZip(secBtn.dataset.seczip, secBtn); return; }
     var b = e.target.closest('.dlb'); if (!b) return;
     var act = b.dataset.act;
     if (act === 'copysig') {

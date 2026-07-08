@@ -43,7 +43,8 @@
   function buildRail() {
     var rail = document.createElement('div'); rail.id = 'hp-kit-rail';
     var head = document.createElement('div'); head.className = 'hp-rail-head';
-    head.innerHTML = svgMark() + '<a href="index.html"><span class="hello">hello</span> paint<small>Brand kit</small></a>';
+    head.innerHTML = svgMark() + '<a href="index.html"><span class="hello">hello</span> paint<small>Brand kit</small></a>' +
+      '<button class="hp-collapse-btn" id="hp-rail-collapse-btn" aria-label="Collapse menu" title="Collapse menu">‹</button>';
     rail.appendChild(head);
 
     var search = document.createElement('div'); search.className = 'hp-search';
@@ -81,6 +82,11 @@
     burger.onclick = function () { rail.classList.toggle('open'); };
     document.body.appendChild(burger);
 
+    var reopen = document.createElement('button');
+    reopen.id = 'hp-rail-reopen'; reopen.setAttribute('aria-label', 'Show menu'); reopen.title = 'Show menu';
+    reopen.innerHTML = svgMark() + '<span>menu</span>';
+    document.body.appendChild(reopen);
+
     var toast = document.createElement('div'); toast.id = 'hp-toast';
     document.body.appendChild(toast);
     window.HPToast = function (msg) {
@@ -89,7 +95,92 @@
       window.__hpToastT = setTimeout(function () { toast.classList.remove('show'); }, 1800);
     };
 
-    return { input: search.querySelector('#hp-search-input'), results: search.querySelector('#hp-kit-results') };
+    return { input: search.querySelector('#hp-search-input'), results: search.querySelector('#hp-kit-results'), rail: rail, reopen: reopen };
+  }
+
+  /* ---------- collapse / bring back (desktop only, persisted) ---------- */
+  function initCollapse(rail, reopen) {
+    var KEY = 'hp-rail-collapsed';
+    function set(collapsed) {
+      document.body.classList.toggle('hp-rail-collapsed', collapsed);
+      try { collapsed ? localStorage.setItem(KEY, '1') : localStorage.removeItem(KEY); } catch (e) {}
+    }
+    var collapseBtn = document.getElementById('hp-rail-collapse-btn');
+    if (collapseBtn) collapseBtn.addEventListener('click', function () { set(true); });
+    reopen.addEventListener('click', function () { set(false); });
+    var was; try { was = localStorage.getItem(KEY) === '1'; } catch (e) { was = false; }
+    if (was) set(true);
+  }
+
+  /* ---------- back to top ---------- */
+  function buildBackToTop() {
+    var btn = document.createElement('button');
+    btn.id = 'hp-backtotop'; btn.setAttribute('aria-label', 'Back to top'); btn.title = 'Back to top';
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="6"/><polyline points="6 12 12 6 18 12"/></svg>';
+    btn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    document.body.appendChild(btn);
+    return btn;
+  }
+
+  /* ---------- scrollspy: highlight the nav item for the section in view --- */
+  // Polls on a short interval rather than IntersectionObserver/scroll events:
+  // both can go silent in some embedded/automated viewports (no compositor
+  // tick), so a plain getBoundingClientRect poll is what actually stays
+  // reliable everywhere, and it's cheap for a page with ~12 sections.
+  function scrollspyLinks() {
+    var links = Array.prototype.filter.call(document.querySelectorAll('#hp-kit-rail nav a'), function (a) {
+      var href = a.getAttribute('href') || '';
+      return href.split('#')[0] === HERE && href.indexOf('#') !== -1;
+    });
+    var byId = {}, targets = [];
+    links.forEach(function (a) {
+      var id = a.getAttribute('href').split('#')[1];
+      var el = document.getElementById(id);
+      if (el) { byId[id] = a; targets.push({ id: id, el: el }); }
+    });
+    return { links: links, byId: byId, targets: targets };
+  }
+
+  function startPoller(backToTopBtn) {
+    var spy = scrollspyLinks();
+    var current = null;
+    function tick() {
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      if (backToTopBtn) backToTopBtn.classList.toggle('show', (window.scrollY || document.documentElement.scrollTop || 0) > 480);
+      if (!spy.targets.length) return;
+      var bandTop = vh * 0.15, bandBottom = vh * 0.3; // "active" reading line sits in the top third
+      var hit = null;
+      for (var i = 0; i < spy.targets.length; i++) {
+        var r = spy.targets[i].el.getBoundingClientRect();
+        if (r.top <= bandTop && r.bottom >= bandBottom) { hit = spy.targets[i].id; break; }
+      }
+      if (!hit) {
+        // fallback: the last section whose top has already scrolled past the band
+        // (nothing has, e.g. we're still above section 1) leaves hit as null
+        for (var j = 0; j < spy.targets.length; j++) {
+          if (spy.targets[j].el.getBoundingClientRect().top <= bandTop) hit = spy.targets[j].id;
+        }
+      }
+      if (hit !== current) {
+        current = hit;
+        spy.links.forEach(function (a) { a.classList.remove('on'); });
+        if (hit && spy.byId[hit]) spy.byId[hit].classList.add('on');
+      }
+    }
+    tick();
+    setInterval(tick, 150);
+  }
+
+  /* ---------- footer copyright, injected after this page's own .foot ---- */
+  function addCopyright() {
+    if (document.querySelector('.hp-kit-copyright')) return;
+    var year = new Date().getFullYear();
+    var line = document.createElement('p');
+    line.className = 'hp-kit-copyright';
+    line.innerHTML = '© ' + year + ' Megan Warren &middot; hello paint';
+    var foot = document.querySelector('.foot');
+    if (foot && foot.parentNode) foot.parentNode.insertBefore(line, foot.nextSibling);
+    else (document.querySelector('.wrap') || document.body).appendChild(line);
   }
 
   /* ---------- search index: static nav map + on-page DOM scan ---------- */
@@ -153,6 +244,10 @@
   function init() {
     var ui = buildRail();
     wireSearch(ui);
+    initCollapse(ui.rail, ui.reopen);
+    var backToTopBtn = buildBackToTop();
+    startPoller(backToTopBtn);
+    addCopyright();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 

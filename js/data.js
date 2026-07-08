@@ -9,6 +9,17 @@
       DEEPBERRY = C.deepberry, LINE = C.line;
   var DROP = '#D9B79A', DROPTXT = '#b89a7e';
 
+  // a simple upload glyph (circle + up-arrow) so a drop zone reads as
+  // clickable/droppable at a glance, not just a dashed box with tiny type.
+  function dropIcon(cx, cy, r, col) {
+    col = col || DROP;
+    var sw = (r * 0.13).toFixed(1);
+    return '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="none" stroke="' + col + '" stroke-width="' + sw + '"/>' +
+      '<path d="M' + cx + ' ' + (cy + r * 0.4).toFixed(1) + ' L' + cx + ' ' + (cy - r * 0.42).toFixed(1) +
+      ' M' + (cx - r * 0.34).toFixed(1) + ' ' + (cy - r * 0.1).toFixed(1) + ' L' + cx + ' ' + (cy - r * 0.42).toFixed(1) +
+      ' L' + (cx + r * 0.34).toFixed(1) + ' ' + (cy - r * 0.1).toFixed(1) + '" fill="none" stroke="' + col + '" stroke-width="' + sw + '" stroke-linecap="round" stroke-linejoin="round"/>';
+  }
+
   function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
   function tag(x, y, s, fill, txt, anchor) {
     return '<text x="' + x + '" y="' + y + '"' + (anchor ? ' text-anchor="' + anchor + '"' : '') +
@@ -53,7 +64,7 @@
     return HP.svg(1080, 1080, inner);
   }
 
-  // smile profile pic — the smile mark centred on a brand background.
+  // smile profile pic: the smile mark centred on a brand background.
   // dark bg gets the cream mouth + sun spark treatment so it reads on ink.
   function smileAvatar(bg, dark) {
     var inner = '<rect width="1080" height="1080" rx="120" fill="' + bg + '"/>';
@@ -139,13 +150,14 @@
     var dark = col.dark, cx = 540, fg = dark ? '#FFFFFF' : INK;
     var dropFill = dark ? 'rgba(255,255,255,0.06)' : '#FFFFFF';
     var dropStroke = dark ? 'rgba(255,255,255,0.45)' : DROP;
-    var dropTxt = dark ? 'rgba(255,255,255,0.6)' : DROPTXT;
+    var dropTxt = dark ? 'rgba(255,255,255,0.82)' : MUTED;
     var inner = '<rect width="1080" height="1920" fill="' + col.bg + '"/>';
     inner += HP.confetti(1080, 1920, 30, dark ? 0.1 : 0.14, 4);
     var ebCol = (col.id === 'berry' || col.id === 'yellow') ? INK : (dark ? SUN : BERRY);
     inner += tag(cx, 360, 50, ebCol, eyebrow, 'middle');
-    inner += '<rect x="140" y="540" width="800" height="800" rx="30" fill="' + dropFill + '" stroke="' + dropStroke + '" stroke-width="3" stroke-dasharray="14 12"/>';
-    inner += '<text x="540" y="950" font-family="' + NS + '" font-weight="800" font-size="20" letter-spacing="2" fill="' + dropTxt + '" text-anchor="middle">DROP BEFORE / AFTER</text>';
+    inner += '<rect data-dropzone="1" x="140" y="540" width="800" height="800" rx="30" fill="' + dropFill + '" stroke="' + dropStroke + '" stroke-width="3" stroke-dasharray="14 12"/>';
+    inner += '<g data-dropzone-label="1">' + dropIcon(540, 892, 42, dropStroke) +
+      '<text x="540" y="982" font-family="' + NS + '" font-weight="800" font-size="26" letter-spacing="0.5" fill="' + dropTxt + '" text-anchor="middle">drop before &amp; after</text></g>';
     inner += HP.wordmark({ x: cx, y: 1640, size: 92, anchor: 'middle', paint: dark ? '#FFFFFF' : INK, hello: (col.id === 'berry') ? '#FFFFFF' : BERRY });
     inner += tag(cx, 1710, 34, dark ? SUN : MUTED, 'your photo, painted by you', 'middle');
     inner += HP.dots(cx - 84, 1790, 15, 56, dark ? '#FFFDF8' : INK);
@@ -217,7 +229,7 @@
 
   /* ====================================================================== */
   /* ---------- additional social templates (v6) -------------------------- */
-  // YouTube / video thumbnail — 1280×720, headline + finished-painting drop.
+  // YouTube / video thumbnail: 1280×720, headline + finished-painting drop.
   function youtubeThumb() {
     var inner = '<rect width="1280" height="720" fill="' + PAPER + '"/>' + HP.confetti(1280, 720, 16, 0.12, 3);
     inner += '<rect x="724" y="80" width="476" height="560" rx="30" fill="#FFFFFF" stroke="' + DROP + '" stroke-width="3" stroke-dasharray="13 11"/>';
@@ -231,7 +243,7 @@
     return HP.svg(1280, 720, inner);
   }
 
-  // Review card — 1080×1080, five stars + a customer quote (template copy).
+  // Review card: 1080×1080, five stars + a customer quote (template copy).
   function reviewCard() {
     var starP = 'M50 16 L61 40 L86 43 L67 61 L72 86 L50 73 L28 86 L33 61 L14 43 L39 40 Z';
     var inner = '<rect width="1080" height="1080" fill="' + PAPER + '"/>' + HP.confetti(1080, 1080, 22, 0.12, 12);
@@ -248,16 +260,17 @@
     return HP.svg(1080, 1080, inner);
   }
 
-  // Link-share / Open-Graph card — 1200×630, headline + before/after drop.
+  // Link-share / Open-Graph card: 1200×630, headline + before/after drop.
   function ogCard() {
     var inner = '<rect width="1200" height="630" fill="' + PAPER + '"/>' + HP.confetti(1200, 630, 14, 0.12, 6);
     inner += '<rect x="744" y="86" width="386" height="458" rx="26" fill="#FFFFFF" stroke="' + DROP + '" stroke-width="3" stroke-dasharray="12 10"/>';
-    inner += '<text x="937" y="320" font-family="' + NS + '" font-weight="800" font-size="16" letter-spacing="2" fill="' + DROPTXT + '" text-anchor="middle">YOUR BEFORE / AFTER</text>';
-    inner += '<g transform="translate(70 52) scale(0.84)">' + HP.smile() + '</g>';
-    inner += '<text x="70" y="276" font-family="' + FR + '" font-weight="600" font-size="74" letter-spacing="-2.5" fill="' + INK + '">turn your photo</text>';
-    inner += '<text x="70" y="356" font-family="' + FR + '" font-weight="600" font-size="74" letter-spacing="-2.5" fill="' + BERRY + '">into a painting.</text>';
-    inner += tag(74, 420, 32, MUTED, 'custom paint-by-number kits from your own photo');
-    inner += HP.wordmark({ x: 70, y: 552, size: 48 });
+    inner += dropIcon(937, 288, 30, DROP);
+    inner += '<text x="937" y="342" font-family="' + NS + '" font-weight="800" font-size="20" letter-spacing="0.6" fill="' + MUTED + '" text-anchor="middle">your before &amp; after</text>';
+    inner += '<g transform="translate(70 94) scale(0.8)">' + HP.smile() + '</g>';
+    inner += '<text x="70" y="266" font-family="' + FR + '" font-weight="600" font-size="74" letter-spacing="-2.5" fill="' + INK + '">turn your photo</text>';
+    inner += '<text x="70" y="346" font-family="' + FR + '" font-weight="600" font-size="74" letter-spacing="-2.5" fill="' + BERRY + '">into a painting.</text>';
+    inner += tag(74, 426, 32, MUTED, 'custom paint-by-number kits from your own photo');
+    inner += HP.wordmark({ x: 70, y: 512, size: 48 });
     return HP.svg(1200, 630, inner);
   }
 
@@ -327,7 +340,7 @@
 
     {
       id: 'avatars', num: '03', kicker: '03 · avatars', title: 'Profile pictures',
-      intro: 'The hello bubble on every brand background — ready for any platform\u2019s circle or square crop.',
+      intro: 'The hello bubble on every brand background, ready for any platform\u2019s circle or square crop.',
       groups: [{
         cls: 'avatars', items: [
           { name: 'avatar · circle', sub: '1080 · default', w: 1080, h: 1080, cls: 'square', file: 'avatar-circle', svg: avatar(PAPER, true) },
@@ -388,8 +401,9 @@
             svg: HP.svg(1080, 1080, '<rect width="1080" height="1080" fill="' + PAPER + '"/>' + HP.confetti(1080, 1080, 22, 0.13, 2) +
               '<g transform="translate(64 60) scale(0.86)">' + HP.smile() + '</g>' +
               '<text x="1010" y="118" text-anchor="end" font-family="' + NS + '" font-weight="800" font-size="34" fill="' + INK + '">@hellopaint</text>' +
-              '<rect x="90" y="210" width="900" height="590" rx="30" fill="#FFFFFF" stroke="' + DROP + '" stroke-width="3" stroke-dasharray="12 10"/>' +
-              '<text x="540" y="510" font-family="' + NS + '" font-weight="800" font-size="16" letter-spacing="2" fill="' + DROPTXT + '" text-anchor="middle">DROP YOUR BEFORE / AFTER</text>' +
+              '<rect data-dropzone="1" x="90" y="210" width="900" height="590" rx="30" fill="#FFFFFF" stroke="' + DROP + '" stroke-width="3" stroke-dasharray="12 10"/>' +
+              '<g data-dropzone-label="1">' + dropIcon(540, 463, 38, DROP) +
+              '<text x="540" y="548" font-family="' + NS + '" font-weight="800" font-size="27" letter-spacing="0.4" fill="' + MUTED + '" text-anchor="middle">drop your before &amp; after</text></g>' +
               HP.wordmark({ x: 540, y: 905, size: 78, anchor: 'middle' }) +
               tag(540, 958, 30, MUTED, 'your photo, painted by you') + HP.dots(474, 1012, 13, 44))
           },
@@ -398,8 +412,9 @@
             svg: HP.svg(1000, 1500, '<rect width="1000" height="1500" fill="' + PAPER + '"/>' + HP.confetti(1000, 1500, 20, 0.12, 7) +
               '<text x="500" y="300" text-anchor="middle" font-family="' + FR + '" font-weight="600" font-size="86" letter-spacing="-2" fill="' + INK + '">your photo,</text>' +
               '<text x="500" y="392" text-anchor="middle" font-family="' + FR + '" font-weight="600" font-size="86" letter-spacing="-2" fill="' + BERRY + '">by the numbers.</text>' +
-              '<rect x="90" y="470" width="820" height="820" rx="28" fill="#FFFFFF" stroke="' + DROP + '" stroke-width="3" stroke-dasharray="12 10"/>' +
-              '<text x="500" y="885" font-family="' + NS + '" font-weight="800" font-size="16" letter-spacing="2" fill="' + DROPTXT + '" text-anchor="middle">YOUR BEFORE / AFTER</text>' +
+              '<rect data-dropzone="1" x="90" y="470" width="820" height="820" rx="28" fill="#FFFFFF" stroke="' + DROP + '" stroke-width="3" stroke-dasharray="12 10"/>' +
+              '<g data-dropzone-label="1">' + dropIcon(500, 828, 42, DROP) +
+              '<text x="500" y="922" font-family="' + NS + '" font-weight="800" font-size="25" letter-spacing="0.4" fill="' + MUTED + '" text-anchor="middle">drop your before &amp; after</text></g>' +
               '<g transform="translate(388 1330) scale(0.78)">' + HP.smile() + '</g>' +
               HP.wordmark({ x: 448, y: 1388, size: 56 }) +
               '<text x="500" y="1452" text-anchor="middle" font-family="' + NS + '" font-weight="700" font-size="28" letter-spacing="1" fill="' + MUTED + '">hellopaint.studio</text>')
@@ -410,8 +425,9 @@
               HP.wordmark({ x: 160, y: 210, size: 90 }) +
               '<rect x="1480" y="150" width="360" height="76" rx="38" fill="' + TEAL + '"/>' +
               '<text x="1660" y="197" text-anchor="middle" font-family="' + NS + '" font-weight="800" font-size="26" letter-spacing="1" fill="#FFFFFF">24 COLORS · NO. 0042</text>' +
-              '<rect x="160" y="300" width="1680" height="1240" rx="36" fill="#FFFFFF" stroke="' + DROP + '" stroke-width="3" stroke-dasharray="12 10"/>' +
-              '<text x="1000" y="925" font-family="' + NS + '" font-weight="800" font-size="16" letter-spacing="2" fill="' + DROPTXT + '" text-anchor="middle">YOUR FINISHED PAINTING</text>' +
+              '<rect data-dropzone="1" x="160" y="300" width="1680" height="1240" rx="36" fill="#FFFFFF" stroke="' + DROP + '" stroke-width="3" stroke-dasharray="12 10"/>' +
+              '<g data-dropzone-label="1">' + dropIcon(1000, 840, 70, DROP) +
+              '<text x="1000" y="978" font-family="' + NS + '" font-weight="800" font-size="36" letter-spacing="0.5" fill="' + MUTED + '" text-anchor="middle">drop your finished painting</text></g>' +
               '<g transform="translate(160 1640) scale(2.2)">' + HP.snapshot(INK) + '</g>' +
               '<text x="430" y="1740" font-family="' + FR + '" font-weight="600" font-size="64" fill="' + INK + '">a paint-by-number kit,</text>' +
               tag(430, 1812, 48, MUTED, 'made from your own photo.') + HP.dots(1682, 1760, 16, 52))
@@ -466,7 +482,7 @@
 
     {
       id: 'stationery', num: '07', kicker: '07 · stationery', title: 'Print &amp; packaging',
-      intro: 'The unboxing that matches the feed — letterhead, cards, seals, and kit print.',
+      intro: 'The unboxing that matches the feed: letterhead, cards, seals, and kit print.',
       groups: [{
         cls: 'stationery', items: [
           {
@@ -503,7 +519,7 @@
               '<rect x="940" y="110" width="170" height="76" rx="38" fill="' + TEAL + '"/>' +
               '<text x="1025" y="160" text-anchor="middle" font-family="' + NS + '" font-weight="800" font-size="30" fill="#fff">no. 0042</text>' +
               '<g transform="translate(320 300) scale(5.6)">' + HP.snapshot(INK) + '</g>' +
-              tag(600, 1010, 46, INK, 'your kit — turn the page and start at 1', 'middle') + HP.dots(528, 1090, 14, 48))
+              tag(600, 1010, 46, INK, 'your kit: turn the page and start at 1', 'middle') + HP.dots(528, 1090, 14, 48))
           },
           {
             name: 'thank-you card', sub: '1500×1050', w: 1500, h: 1050, file: 'thank-you-card',

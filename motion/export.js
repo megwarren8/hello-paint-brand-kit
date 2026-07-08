@@ -1,4 +1,4 @@
-/* hello paint · motion export — adds WebM + HTML download buttons to any
+/* hello paint · motion export: adds WebM + HTML download buttons to any
    motion page that has an <svg id="reel"> and a .controls bar.
    WebM: re-draws the live SVG onto a canvas each frame and records ~one loop
    with MediaRecorder. HTML: saves the page itself (self-contained, loops). */
@@ -23,7 +23,7 @@
 
   async function downloadWebM(btn) {
     if (!('MediaRecorder' in window) || !HTMLCanvasElement.prototype.captureStream) {
-      alert('This browser can’t record WebM — use the HTML download instead.'); return;
+      alert('This browser can’t record WebM. Use the HTML download instead.'); return;
     }
     var label = btn.textContent; btn.textContent = '● rec…'; btn.disabled = true;
     try {
@@ -48,7 +48,7 @@
       })();
       await done;
       save(new Blob(blobs, { type: 'video/webm' }), 'hello-paint-' + slug + '.webm');
-    } catch (e) { alert('WebM capture failed — the HTML download still works.'); }
+    } catch (e) { alert('WebM capture failed, the HTML download still works.'); }
     btn.textContent = label; btn.disabled = false;
   }
 
