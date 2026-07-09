@@ -292,4 +292,50 @@
     var fails = out.filter(function (o) { return o.error || !o.svgOk || !o.pngOk; });
     return { page: HERE, tested: out.length, of: reg.length, fails: fails.length, failDetail: fails, results: out };
   };
+
+  /* deep links + smooth in-page anchors -----------------------------------
+     The asset library builds its 12 sections in JavaScript, so the browser's
+     native jump to a #hash can run before those sections exist. This makes
+     every section link reliable: it scrolls to the target once it is really
+     in the DOM (on load and on hashchange), and turns same-page anchor clicks
+     into a smooth scroll instead of a reload. It only ever acts on a #id that
+     matches a real element, so any page without that id is left untouched. */
+  function hpScrollToId(id, smooth) {
+    if (!id) return false;
+    var el = document.getElementById(id);
+    if (!el) return false;
+    var y = el.getBoundingClientRect().top + (window.scrollY || document.documentElement.scrollTop || 0) - 12;
+    try { window.scrollTo({ top: y, behavior: smooth ? 'smooth' : 'auto' }); }
+    catch (e) { window.scrollTo(0, y); }
+    return true;
+  }
+  function hpScrollToHash(smooth) {
+    if (!location.hash) return;
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (hpScrollToId(id, smooth)) {
+      setTimeout(function () { hpScrollToId(id, false); }, 300);
+    }
+  }
+  if (location.hash) {
+    if (document.readyState === 'complete') hpScrollToHash(false);
+    else window.addEventListener('load', function () { hpScrollToHash(false); });
+  }
+  window.addEventListener('hashchange', function () { hpScrollToHash(true); });
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest && e.target.closest('a[href]');
+    if (!a) return;
+    if (a.closest('[data-motion]') || a.closest('.hp-search') || a.closest('#hp-kit-results')) return;
+    var href = a.getAttribute('href');
+    if (!href || href.indexOf('#') === -1) return;
+    var parts = href.split('#'), pathN = parts[0].replace(/\.html$/, ''), id = parts[1];
+    if (!id) return;
+    var here = (location.pathname.split('/').pop() || 'index.html').replace(/\.html$/, '');
+    if (pathN !== '' && pathN !== here) return;
+    if (!document.getElementById(decodeURIComponent(id))) return;
+    e.preventDefault();
+    if (window.history && history.replaceState) history.replaceState(null, '', '#' + id);
+    else location.hash = id;
+    hpScrollToId(decodeURIComponent(id), true);
+  }, false);
+
 })();
