@@ -25,6 +25,7 @@
       ]
     },
     { href: 'social-templates.html', n: '', label: 'Social showcase', top: true, star: true },
+    { href: 'listing-pack.html', n: '', label: 'Listing pack', top: true },
     { href: 'motion.html', n: '', label: 'Motion gallery', top: true },
     { href: 'copy-vault.html', n: '', label: 'Copy vault', top: true }
   ];
