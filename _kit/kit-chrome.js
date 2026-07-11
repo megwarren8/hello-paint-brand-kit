@@ -34,6 +34,9 @@
     { href: 'motion.html', n: '', label: 'Motion gallery', top: true },
     { href: 'copy-vault.html', n: '', label: 'Copy vault', top: true }
   ];
+  // exposed so a page's own script (the homepage hero search) can reuse the
+  // same page map without duplicating it
+  window.HP_NAV = NAV;
 
   function svgMark() {
     return '<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M21 49 Q50 80 79 49" fill="none" stroke="#E64C81" stroke-width="14" stroke-linecap="round"/><path d="M47 36 Q61 28 75 30" fill="none" stroke="#15A39A" stroke-width="5.4" stroke-linecap="round"/><path d="M81 16 L83.4 19.6 L87 22 L83.4 24.4 L81 28 L78.6 24.4 L75 22 L78.6 19.6 Z" fill="#F6C744"/></svg>';

@@ -1,13 +1,17 @@
 # Security headers for every response (Cloudflare Pages reads this file).
-# Deliberately conservative: no Content-Security-Policy yet, because the kit
-# uses inline <script> and <style>, srcdoc iframes for the motion players,
-# data: fonts, and blob: downloads, so a CSP needs testing before it ships.
-# The four below add real protection with no risk of breaking the kit.
+# The motion previews used to phone Google Fonts, which was the one thing
+# stopping a real lockdown; now every page (including the motion srcdoc
+# previews) reads its fonts from /fonts locally, so nothing on the site
+# reaches out to another host. That's what makes the CSP below safe:
+# 'unsafe-inline' is still needed for script-src/style-src since every page
+# is hand-authored with inline <script>/<style>/style="" (no nonce/hash
+# build step), but there is nothing left to allowlist from elsewhere.
 /*
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   X-Frame-Options: SAMEORIGIN
   Permissions-Policy: geolocation=(), camera=(), microphone=(), payment=()
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'
 
 # Self-hosted fonts keep stable filenames, so cache them for a year.
 /fonts/*

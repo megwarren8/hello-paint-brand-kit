@@ -491,7 +491,7 @@
               '<g transform="translate(70 95) scale(1.5)">' + HP.snapshot(INK) + '</g>' +
               HP.wordmark({ x: 255, y: 305, size: 76 }) + tag(258, 345, 26, MUTED, 'your photo, painted by you') +
               '<line x1="70" y1="470" x2="980" y2="470" stroke="' + LINE + '" stroke-width="2"/>' +
-              '<text x="70" y="528" font-family="' + NS + '" font-weight="700" font-size="25" fill="' + INK + '">hello@hellopaint.studio</text>' +
+              '<text x="70" y="528" font-family="' + NS + '" font-weight="700" font-size="25" fill="' + INK + '">@hellopaint</text>' +
               HP.dots(869, 518, 10, 34))
           },
           {
@@ -507,7 +507,7 @@
               HP.wordmark({ x: 220, y: 175, size: 60 }) + tag(222, 210, 22, MUTED, 'your photo, painted by you') +
               '<line x1="80" y1="250" x2="970" y2="250" stroke="' + LINE + '" stroke-width="2"/>' +
               '<line x1="80" y1="1330" x2="970" y2="1330" stroke="' + LINE + '" stroke-width="2"/>' +
-              '<text x="80" y="1388" font-family="' + NS + '" font-weight="700" font-size="22" fill="' + MUTED + '">hello@hellopaint.studio</text>' +
+              '<text x="80" y="1388" font-family="' + NS + '" font-weight="700" font-size="22" fill="' + MUTED + '">@hellopaint</text>' +
               '<text x="970" y="1388" text-anchor="end" font-family="' + NS + '" font-weight="700" font-size="22" fill="' + MUTED + '">hellopaint.studio</text>' +
               HP.dots(456, 1382, 9, 34))
           },

@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>hello paint · brand kit</title>
-<meta name="description" content="hello paint's complete brand kit: brand book, 200+ downloadable assets, a social template showcase, brand motion, and the full copy vault. Built by Megan Warren.">
+<meta name="description" content="hello paint's complete brand kit: brand book, 140 downloadable assets, a social template showcase, brand motion, and the full copy vault. Built by Megan Warren.">
 <link rel="canonical" href="https://hellopaint.megan-warren.com/">
 <meta name="theme-color" content="#FBF4E8">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="hello paint · brand kit">
 <meta property="og:title" content="hello paint · brand kit">
-<meta property="og:description" content="hello paint's complete brand kit: brand book, 200+ downloadable assets, a social template showcase, brand motion, and the full copy vault. Built by Megan Warren.">
+<meta property="og:description" content="hello paint's complete brand kit: brand book, 140 downloadable assets, a social template showcase, brand motion, and the full copy vault. Built by Megan Warren.">
 <meta property="og:url" content="https://hellopaint.megan-warren.com/">
 <meta property="og:image" content="https://hellopaint.megan-warren.com/hello-paint-og.png">
 <meta property="og:image:width" content="1200">
@@ -15,7 +15,7 @@
 <meta property="og:image:alt" content="hello paint brand kit">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="hello paint · brand kit">
-<meta name="twitter:description" content="hello paint's complete brand kit: brand book, 200+ downloadable assets, a social template showcase, brand motion, and the full copy vault.">
+<meta name="twitter:description" content="hello paint's complete brand kit: brand book, 140 downloadable assets, a social template showcase, brand motion, and the full copy vault.">
 <meta name="twitter:image" content="https://hellopaint.megan-warren.com/hello-paint-og.png">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="stylesheet" href="fonts/fonts.css">
@@ -30,7 +30,7 @@ a{color:var(--deepteal);}
 
 .hero{text-align:center;padding:74px 0 40px;}
 .hero .av{width:104px;height:104px;margin:0 auto 22px;display:block;}
-.hero .kick{font-weight:900;font-size:12px;letter-spacing:0.22em;text-transform:uppercase;color:var(--berry);}
+.hero .kick{font-weight:900;font-size:12px;letter-spacing:0.22em;text-transform:uppercase;color:var(--deepberry);}
 .hero h1{font-size:clamp(38px,7vw,72px);margin:16px 0 0;}
 .hero h1 .b{color:var(--berry);}
 .hero p{max-width:60ch;margin:16px auto 0;color:var(--muted);font-size:18px;}
@@ -38,6 +38,13 @@ a{color:var(--deepteal);}
 .bigsearch input{width:100%;box-sizing:border-box;font-family:"Nunito Sans";font-weight:700;font-size:15px;padding:16px 20px 16px 48px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);outline:none;}
 .bigsearch input:focus{border-color:var(--berry);}
 .bigsearch svg{position:absolute;left:20px;top:50%;transform:translateY(-50%);width:17px;height:17px;stroke:var(--muted);fill:none;stroke-width:2;}
+#hp-home-results{position:absolute;left:0;right:0;top:calc(100% + 10px);z-index:40;background:var(--card);border-radius:16px;box-shadow:0 16px 44px rgba(49,43,61,.2);max-height:360px;overflow:auto;display:none;text-align:left;}
+#hp-home-results.open{display:block;}
+#hp-home-results a{display:block;padding:12px 18px;text-decoration:none;color:var(--ink);font-weight:700;font-size:14px;border-bottom:1px solid var(--line);}
+#hp-home-results a:last-child{border-bottom:none;}
+#hp-home-results a small{display:block;color:var(--muted);font-weight:600;font-size:11.5px;margin-top:2px;}
+#hp-home-results a:hover,#hp-home-results a.sel{background:var(--paper);}
+#hp-home-results .hp-noresult{padding:14px 18px;font-size:13px;color:var(--muted);}
 .dots{display:flex;gap:10px;justify-content:center;margin-top:26px;}
 .dots i{width:14px;height:14px;border-radius:999px;display:block;}
 
@@ -49,14 +56,14 @@ a{color:var(--deepteal);}
 .card p{color:var(--muted);font-size:14px;margin:0;}
 .card.star{background:linear-gradient(160deg,#FCEAF0,var(--card) 60%);border-color:#F4C9D9;}
 .card.star h2{color:var(--deepberry);}
-.card .tag{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--berry);background:#FCEAF0;border:1px solid #F4C9D9;border-radius:999px;padding:3px 10px;margin-bottom:10px;}
+.card .tag{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--deepberry);background:#FCEAF0;border:1px solid #F4C9D9;border-radius:999px;padding:3px 10px;margin-bottom:10px;}
 
 .map{margin-top:70px;}
 .map h2{font-size:clamp(22px,3.4vw,30px);text-align:center;}
 .map p.sub{text-align:center;color:var(--muted);margin:10px auto 30px;max-width:60ch;}
 .maplist{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;}
 .maplist a{display:flex;gap:10px;align-items:baseline;text-decoration:none;color:var(--ink);font-weight:700;font-size:13.5px;padding:10px 14px;border:1px solid var(--line);border-radius:12px;background:var(--card);}
-.maplist a:hover{border-color:var(--berry);color:var(--berry);}
+.maplist a:hover{border-color:var(--berry);color:var(--deepberry);}
 .maplist a .n{color:var(--muted);font-weight:800;font-size:11.5px;min-width:16px;}
 
 .foot{color:var(--muted);font-size:13px;padding-top:60px;line-height:1.8;text-align:center;border-top:1px solid var(--line);margin-top:60px;}
@@ -69,10 +76,13 @@ a{color:var(--deepteal);}
   <svg class="av" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="#FBF4E8"/><g transform="translate(16 20) scale(0.68)"><rect x="14" y="14" width="72" height="52" rx="18" fill="#FFFDF8" stroke="#312B3D" stroke-width="3"/><path d="M30 60 L24 82 L46 64 Z" fill="#FFFDF8"/><path d="M30 60 L24 82 L46 64" fill="none" stroke="#312B3D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="35" cy="33" r="5.6" fill="#E64C81"/><circle cx="50" cy="30" r="5.6" fill="#15A39A"/><circle cx="65" cy="33" r="5.6" fill="#F6C744"/><circle cx="42" cy="47" r="5.6" fill="#5BA86B"/><circle cx="58" cy="47" r="5.6" fill="#312B3D"/></g></svg>
   <div class="kick">brand kit</div>
   <h1><span class="b">hello</span> paint</h1>
-  <p>Your photo, painted by you. This is the complete hello paint brand system: the brand book, over two hundred downloadable assets, a social template showcase, brand motion, and every word of shop copy, all in one place.</p>
+  <p>Your photo, painted by you. This is the complete hello paint brand system: the brand book, 140 downloadable assets, a social template showcase, brand motion, and every word of shop copy, all in one place.</p>
   <div class="bigsearch">
     <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.2" y2="16.2"/></svg>
-    <input id="hp-home-search" placeholder="Search the kit… logos, templates, colors, copy" autocomplete="off">
+    <input id="hp-home-search" placeholder="Search the kit… logos, templates, colors, copy" autocomplete="off"
+      role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="hp-home-results">
+    <div id="hp-home-results" role="listbox" aria-label="search results"></div>
+    <span id="hp-home-live" aria-live="polite" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;"></span>
   </div>
   <div class="dots"><i style="background:#E64C81"></i><i style="background:#15A39A"></i><i style="background:#F6C744"></i><i style="background:#5BA86B"></i></div>
 </header>
@@ -133,12 +143,80 @@ a{color:var(--deepteal);}
 </div>
 <script src="_kit/kit-chrome.js"></script>
 <script>
-document.getElementById('hp-home-search').addEventListener('focus', function () {
-  document.getElementById('hp-search-input') && document.getElementById('hp-search-input').focus();
-});
-document.getElementById('hp-home-search').addEventListener('input', function (e) {
-  var input = document.getElementById('hp-search-input');
-  if (input) { input.value = e.target.value; input.dispatchEvent(new Event('input')); }
-});
+// The hero search used to just hand focus off to the sidebar's own search
+// box, so on desktop typing here landed in a box you weren't looking at,
+// and on mobile (where the sidebar is a closed drawer) it looked dead.
+// This builds real results right here, from the same page map the sidebar
+// search already uses (window.HP_NAV, exposed by _kit/kit-chrome.js).
+(function () {
+  var input = document.getElementById('hp-home-search');
+  var results = document.getElementById('hp-home-results');
+  var live = document.getElementById('hp-home-live');
+  if (!input || !results) return;
+
+  var idx = [];
+  (window.HP_NAV || []).forEach(function (item) {
+    idx.push({ label: item.label, sub: 'Page', href: item.href });
+    if (item.kids) item.kids.forEach(function (k) {
+      idx.push({ label: k.label, sub: 'Asset library · section ' + k.n, href: k.href });
+    });
+  });
+
+  var selIndex = -1;
+  function expanded(on) { input.setAttribute('aria-expanded', on ? 'true' : 'false'); }
+  function anchorsNow() { return Array.prototype.slice.call(results.querySelectorAll('a')); }
+  function close() {
+    results.classList.remove('open'); expanded(false); selIndex = -1;
+    input.removeAttribute('aria-activedescendant');
+  }
+  function highlight() {
+    var anchors = anchorsNow();
+    anchors.forEach(function (a, i) {
+      var on = i === selIndex;
+      a.classList.toggle('sel', on);
+      a.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    if (selIndex >= 0 && anchors[selIndex]) {
+      anchors[selIndex].scrollIntoView({ block: 'nearest' });
+      input.setAttribute('aria-activedescendant', anchors[selIndex].id);
+    } else {
+      input.removeAttribute('aria-activedescendant');
+    }
+  }
+  function render(list) {
+    selIndex = -1;
+    if (!list.length) {
+      results.innerHTML = '<div class="hp-noresult">No matches.</div>';
+      results.classList.add('open'); expanded(true); live.textContent = 'no matches';
+      return;
+    }
+    var shown = list.slice(0, 8);
+    results.innerHTML = shown.map(function (r, i) {
+      return '<a id="hp-home-opt-' + i + '" role="option" aria-selected="false" href="' + r.href + '"><b>' + r.label + '</b><small>' + r.sub + '</small></a>';
+    }).join('');
+    results.classList.add('open'); expanded(true);
+    live.textContent = shown.length + (shown.length === 1 ? ' match' : ' matches');
+  }
+  input.addEventListener('input', function () {
+    var q = input.value.trim().toLowerCase();
+    if (!q) { close(); return; }
+    render(idx.filter(function (r) { return r.label.toLowerCase().indexOf(q) !== -1; }));
+  });
+  input.addEventListener('keydown', function (e) {
+    var anchors = results.classList.contains('open') ? anchorsNow() : [];
+    if (e.key === 'ArrowDown' && anchors.length) {
+      e.preventDefault(); selIndex = Math.min(selIndex + 1, anchors.length - 1); highlight();
+    } else if (e.key === 'ArrowUp' && anchors.length) {
+      e.preventDefault(); selIndex = Math.max(selIndex - 1, 0); highlight();
+    } else if (e.key === 'Enter' && selIndex >= 0 && anchors[selIndex]) {
+      e.preventDefault(); anchors[selIndex].click();
+    } else if (e.key === 'Escape') {
+      close();
+    }
+  });
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.bigsearch')) close();
+  });
+})();
 </script>
 </body></html>

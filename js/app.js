@@ -293,8 +293,8 @@
     return '<svg width="68" height="68" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="#FBF4E8"/><g transform="translate(2 6) scale(0.96)">' +
       HP.bubble() + '</g></svg>';
   }
-  var SIG_DEF = { name: 'Megan Warren', title: 'founder & chief painter', email: 'megan@hellopaint.studio', site: 'hellopaint.studio', ig: '@hellopaint', tag: 'your photo, painted by you' };
-  var SIG_LABELS = { 'sig-name': 'your name', 'sig-title': 'your title', 'sig-email': 'your email', 'sig-site': 'your website', 'sig-ig': 'your instagram handle', 'sig-tag': 'your tagline' };
+  var SIG_DEF = { name: 'Megan Warren', title: 'founder & chief painter', site: 'hellopaint.studio', ig: '@hellopaint', tag: 'your photo, painted by you' };
+  var SIG_LABELS = { 'sig-name': 'your name', 'sig-title': 'your title', 'sig-site': 'your website', 'sig-ig': 'your instagram handle', 'sig-tag': 'your tagline' };
   function sigEsc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
   function sigLoad() {
     try { return Object.assign({}, SIG_DEF, JSON.parse(localStorage.getItem('hp-sig') || '{}')); }
@@ -302,7 +302,7 @@
   }
   function sigRead() {
     function v(id, d) { var el = document.getElementById(id); var t = el ? el.textContent.replace(/\s+/g, ' ').trim() : ''; return t || d; }
-    return { name: v('sig-name', SIG_DEF.name), title: v('sig-title', SIG_DEF.title), email: v('sig-email', SIG_DEF.email), site: v('sig-site', SIG_DEF.site), ig: v('sig-ig', SIG_DEF.ig), tag: v('sig-tag', SIG_DEF.tag) };
+    return { name: v('sig-name', SIG_DEF.name), title: v('sig-title', SIG_DEF.title), site: v('sig-site', SIG_DEF.site), ig: v('sig-ig', SIG_DEF.ig), tag: v('sig-tag', SIG_DEF.tag) };
   }
   // editable=true -> contenteditable spans (for the on-page card)
   // editable=false -> clean <a> links with computed hrefs (for copy/export)
@@ -314,7 +314,6 @@
       return '<span id="' + id + '"' + (editable ? ' contenteditable="true" spellcheck="false" role="textbox" aria-label="edit ' + (SIG_LABELS[id] || 'field') + '" class="sig-ce"' : '') +
         (extra ? ' style="' + extra + '"' : '') + '>' + sigEsc(txt) + '</span>';
     }
-    var emailEl = editable ? f('sig-email', v.email, link) : '<a href="mailto:' + sigEsc(v.email) + '" style="' + link + '">' + sigEsc(v.email) + '</a>';
     var siteEl = editable ? f('sig-site', v.site, link) : '<a href="https://' + sigEsc(v.site) + '" style="' + link + '">' + sigEsc(v.site) + '</a>';
     var igEl = editable ? f('sig-ig', v.ig, link) : '<a href="https://instagram.com/' + sigEsc(ig) + '" style="' + link + '">@' + sigEsc(ig) + '</a>';
     return '<table cellpadding="0" cellspacing="0" border="0" role="presentation" style="font-family:\'Nunito Sans\',sans-serif;color:#312B3D;background:#FFFDF8;border:1px solid #EADCC6;border-radius:14px;padding:20px 22px;">' +
@@ -323,7 +322,7 @@
       '<div style="font-size:16px;font-weight:800;">' + f('sig-name', v.name) + '</div>' +
       '<div style="font-size:12px;font-weight:700;color:#6E6576;padding:2px 0 6px;">' + f('sig-title', v.title) + '</div>' +
       '<div style="font-size:18px;font-weight:800;letter-spacing:-0.03em;padding-bottom:6px;"><span style="color:#E64C81;">hello</span> <span style="color:#312B3D;">paint</span></div>' +
-      '<div style="font-size:12px;line-height:1.7;">' + emailEl + '<br>' + siteEl + ' <span style="color:#EADCC6;">|</span> ' + igEl + '</div>' +
+      '<div style="font-size:12px;line-height:1.7;">' + siteEl + ' <span style="color:#EADCC6;">|</span> ' + igEl + '</div>' +
       '<div style="padding-top:8px;font-family:Georgia,serif;font-style:italic;font-size:12px;color:#B83A66;">' + f('sig-tag', v.tag) + '</div></td></tr></table>';
   }
 
