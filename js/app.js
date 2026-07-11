@@ -57,7 +57,7 @@
   async function downloadPNG(svg, w, h, file, btn) {
     var label = btn.textContent; btn.textContent = '…'; btn.disabled = true;
     try { saveBlob(await svgToPngBlob(svg, w, h), file + '.png'); }
-    catch (e) { alert('PNG export failed, the SVG download still works.'); }
+    catch (e) { if (window.HPToast) window.HPToast('PNG export failed, the SVG download still works'); else alert('PNG export failed, the SVG download still works.'); }
     btn.textContent = label; btn.disabled = false;
   }
 
@@ -89,7 +89,7 @@
       }
       files.push({ name: r.file + '-strip.svg', data: enc.encode(r.svg) });
       saveBlob(zipStore(files), r.file + '-0-9.zip');
-    } catch (e) { alert('Zip failed, the individual SVG/PNG buttons still work.'); }
+    } catch (e) { if (window.HPToast) window.HPToast('Zip failed, the individual SVG and PNG buttons still work'); else alert('Zip failed, the individual SVG/PNG buttons still work.'); }
     btn.textContent = label; btn.disabled = false;
   }
 
@@ -116,7 +116,7 @@
         }
       }
       saveBlob(zipStore(files), 'hello-paint-' + secId + '.zip');
-    } catch (e) { alert('Zip failed, the individual SVG/PNG buttons still work.'); }
+    } catch (e) { if (window.HPToast) window.HPToast('Zip failed, the individual SVG and PNG buttons still work'); else alert('Zip failed, the individual SVG/PNG buttons still work.'); }
     btn.textContent = label; btn.disabled = false;
   }
   function seczipBtn(secId) {
@@ -218,7 +218,7 @@
     html += '<figure class="asset"><div class="stage" style="background:#FFFDF8"><div style="width:200px" id="qr-stage">' + qrBuilt.svg + '</div></div>' +
       '<figcaption><b>qr code</b><span>scannable · bubble center · edit the link, then share</span>' +
       '<div class="qredit"><label for="qr-url">points to</label><input id="qr-url" type="text" inputmode="url" spellcheck="false" autocomplete="off" maxlength="900" value="' + escAttr(qrLink) + '"></div>' +
-      '<div class="dl"><button class="dlb" id="qr-copylink" type="button">Copy link</button>' + dlRow(qrI) + '</div></figcaption></figure>';
+      '<div class="dl"><button class="dlb" id="qr-copylink" type="button">Copy link</button><button class="dlb" id="qr-reset" type="button">Reset</button>' + dlRow(qrI) + '</div></figcaption></figure>';
     html += '<figure class="asset"><div class="stage" id="sigwrap">' + emailSig(sigLoad(), true) + '</div>' +
       '<figcaption><b>email signature</b><span>click any field to edit, then copy</span>' +
       '<div class="dl"><button class="dlb" data-act="copysig">Copy HTML</button>' +
@@ -269,6 +269,15 @@
         navigator.clipboard.writeText(v).then(function () { flash(copyBtn, 'Copied!'); if (window.HPToast) window.HPToast('Link copied'); }, function () { fallbackCopyText(v, copyBtn); });
       } else fallbackCopyText(v, copyBtn);
     });
+    var resetBtn = document.getElementById('qr-reset');
+    if (resetBtn) resetBtn.addEventListener('click', function () {
+      input.value = QR_DEFAULT;
+      try {
+        var built = buildQrSvg(QR_DEFAULT, REG[qrI].w);
+        REG[qrI].svg = built.svg; stage.innerHTML = built.svg; qrSave(QR_DEFAULT);
+      } catch (e) {}
+      flash(resetBtn, 'Reset');
+    });
   }
   function fallbackCopyText(text, btn) {
     var ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
@@ -285,6 +294,7 @@
       HP.bubble() + '</g></svg>';
   }
   var SIG_DEF = { name: 'Megan Warren', title: 'founder & chief painter', email: 'megan@hellopaint.studio', site: 'hellopaint.studio', ig: '@hellopaint', tag: 'your photo, painted by you' };
+  var SIG_LABELS = { 'sig-name': 'your name', 'sig-title': 'your title', 'sig-email': 'your email', 'sig-site': 'your website', 'sig-ig': 'your instagram handle', 'sig-tag': 'your tagline' };
   function sigEsc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
   function sigLoad() {
     try { return Object.assign({}, SIG_DEF, JSON.parse(localStorage.getItem('hp-sig') || '{}')); }
@@ -301,7 +311,7 @@
     var link = 'color:#0F756D;text-decoration:none;font-weight:700;';
     var ig = v.ig.replace(/^@+/, '');
     function f(id, txt, extra) {
-      return '<span id="' + id + '"' + (editable ? ' contenteditable="true" spellcheck="false" class="sig-ce"' : '') +
+      return '<span id="' + id + '"' + (editable ? ' contenteditable="true" spellcheck="false" role="textbox" aria-label="edit ' + (SIG_LABELS[id] || 'field') + '" class="sig-ce"' : '') +
         (extra ? ' style="' + extra + '"' : '') + '>' + sigEsc(txt) + '</span>';
     }
     var emailEl = editable ? f('sig-email', v.email, link) : '<a href="mailto:' + sigEsc(v.email) + '" style="' + link + '">' + sigEsc(v.email) + '</a>';
