@@ -207,7 +207,9 @@
 
     // ---- EXTRAS: QR + email signature ----
     var qrLink = qrLoad();
-    var qrBuilt = buildQrSvg(qrLink, 512);
+    var qrBuilt;
+    // a bad saved link must never blank the whole library render, so fall back to the kit URL
+    try { qrBuilt = buildQrSvg(qrLink, 512); } catch (e) { qrBuilt = buildQrSvg(QR_DEFAULT, 512); }
     var qrI = REG.push({ svg: qrBuilt.svg, w: qrBuilt.size, h: qrBuilt.size, file: 'qr-code' }) - 1;
     html += '<section class="sec" id="extras" data-screen-label="QR & email signature">';
     html += '<p class="kicker">11 · extras</p><h2>QR code &amp; email signature</h2>';
@@ -215,7 +217,7 @@
     html += '<div class="gal extras">';
     html += '<figure class="asset"><div class="stage" style="background:#FFFDF8"><div style="width:200px" id="qr-stage">' + qrBuilt.svg + '</div></div>' +
       '<figcaption><b>qr code</b><span>scannable · bubble center · edit the link, then share</span>' +
-      '<div class="qredit"><label for="qr-url">points to</label><input id="qr-url" type="text" inputmode="url" spellcheck="false" autocomplete="off" value="' + escAttr(qrLink) + '"></div>' +
+      '<div class="qredit"><label for="qr-url">points to</label><input id="qr-url" type="text" inputmode="url" spellcheck="false" autocomplete="off" maxlength="900" value="' + escAttr(qrLink) + '"></div>' +
       '<div class="dl"><button class="dlb" id="qr-copylink" type="button">Copy link</button>' + dlRow(qrI) + '</div></figcaption></figure>';
     html += '<figure class="asset"><div class="stage" id="sigwrap">' + emailSig(sigLoad(), true) + '</div>' +
       '<figcaption><b>email signature</b><span>click any field to edit, then copy</span>' +
@@ -253,10 +255,12 @@
       clearTimeout(deb);
       deb = setTimeout(function () {
         var v = input.value.trim() || QR_DEFAULT;
-        var built = buildQrSvg(v, REG[qrI].w);
-        REG[qrI].svg = built.svg;
-        stage.innerHTML = built.svg;
-        qrSave(v);
+        try {
+          var built = buildQrSvg(v, REG[qrI].w);
+          REG[qrI].svg = built.svg;
+          stage.innerHTML = built.svg;
+          qrSave(v);
+        } catch (e) { if (window.HPToast) window.HPToast('that link is too long for a qr code'); }
       }, 260);
     });
     if (copyBtn) copyBtn.addEventListener('click', function () {
@@ -445,6 +449,7 @@
   function closeMotion() {
     var modal = document.getElementById('motion-modal'); if (!modal) return;
     modal.hidden = true; var f = document.getElementById('mm-frame'); if (f) f.srcdoc = '';
+    if (window.__hpMotionReturn) { try { window.__hpMotionReturn.focus(); } catch (e) {} window.__hpMotionReturn = null; }
   }
   document.addEventListener('click', function (e) {
     var open = e.target.closest('[data-motion]');
@@ -454,7 +459,11 @@
       if (doc) {
         e.preventDefault();
         var f = document.getElementById('mm-frame'); var modal = document.getElementById('motion-modal');
-        if (f && modal) { f.srcdoc = doc; modal.hidden = false; }
+        if (f && modal) {
+          window.__hpMotionReturn = document.activeElement;
+          f.srcdoc = doc; modal.hidden = false;
+          var mx = modal.querySelector('.mm-x'); if (mx) mx.focus();
+        }
       }
       return;
     }

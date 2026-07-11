@@ -83,12 +83,20 @@
     burger.onclick = function () { rail.classList.toggle('open'); };
     document.body.appendChild(burger);
 
+    // tapping outside the open mobile drawer closes it (before, only the burger did)
+    document.addEventListener('click', function (e) {
+      if (rail.classList.contains('open') && !e.target.closest('#hp-kit-rail') && !e.target.closest('#hp-kit-burger')) {
+        rail.classList.remove('open');
+      }
+    });
+
     var reopen = document.createElement('button');
     reopen.id = 'hp-rail-reopen'; reopen.setAttribute('aria-label', 'Show menu'); reopen.title = 'Show menu';
     reopen.innerHTML = svgMark() + '<span>menu</span>';
     document.body.appendChild(reopen);
 
     var toast = document.createElement('div'); toast.id = 'hp-toast';
+    toast.setAttribute('role', 'status'); toast.setAttribute('aria-live', 'polite');
     document.body.appendChild(toast);
     window.HPToast = function (msg) {
       toast.textContent = msg; toast.classList.add('show');
@@ -222,6 +230,8 @@
               r.scrollTarget.style.outline = '3px solid #F6C744';
               setTimeout(function () { r.scrollTarget.style.outline = ''; }, 1400);
               ui.results.classList.remove('open'); ui.input.value = '';
+              var railSel = document.getElementById('hp-kit-rail');
+              if (railSel) railSel.classList.remove('open');
             }
           });
         }
@@ -336,6 +346,8 @@
     e.preventDefault();
     if (window.history && history.replaceState) history.replaceState(null, '', '#' + id);
     else location.hash = id;
+    var railAnchor = document.getElementById('hp-kit-rail');
+    if (railAnchor) railAnchor.classList.remove('open');
     hpScrollToId(decodeURIComponent(id), true);
   }, false);
 

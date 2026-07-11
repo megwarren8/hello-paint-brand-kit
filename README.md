@@ -4,16 +4,16 @@ Live at [hellopaint.megan-warren.com](https://hellopaint.megan-warren.com). Publ
 
 ## What's here
 
-- `index.html` — the hub: hero, search, the six-page map.
-- `brand-book.html` — the idea, the three marks (Snapshot, Bubble, Smile), the redesign story, color, type, voice, applications, do & don't.
-- `asset-library.html` — the whole generator, twelve numbered sections (logos through motion), every tile downloads as an editable SVG or a native PNG. Numbers export a full zip of digits 0 to 9.
-- `social-templates.html` — the showcase: twenty social templates (feed posts, pins, stories, tagline posts, video thumb, review card, link-share card) shown in real phone/card frames, with per-item and per-group zip downloads.
-- `motion.html` — all fifteen looping brand animations in one gallery; each opens standalone with its own WebM and offline-HTML export buttons.
-- `copy-vault.html` — forty pastable copy blocks (bios, the Etsy listing, launch posts, customer message templates, the voice card) plus the asset cheat sheet, every block has its own copy button.
-- `js/` — the asset-generator engine (`marks.js`, `data.js`, `icons.js`, `qr.js`, `motions-embed.js`, `app.js`): every asset is defined once as an SVG string and rendered, downloaded, and PNG-rasterized from that same source, so nothing drifts.
-- `motion/` — the 15 standalone motion demo pages plus `export.js` (WebM capture + offline HTML export).
-- `fonts/` — Fraunces and Nunito Sans, self-hosted as woff2 (OFL licensed), so the whole kit works fully offline with zero CDN dependency.
-- `_kit/` — the shared rail, search, and toast chrome injected on every page.
+- `index.html`: the hub: hero, search, the six-page map.
+- `brand-book.html`: the idea, the three marks (Snapshot, Bubble, Smile), the redesign story, colour, type, voice, applications, do & don't.
+- `asset-library.html`: the whole generator, twelve numbered sections (logos through motion), every tile downloads as an editable SVG or a native PNG. Numbers export a full zip of digits 0 to 9.
+- `social-templates.html`: the showcase: twenty social templates (feed posts, pins, stories, tagline posts, video thumb, review card, link-share card) shown in real phone/card frames, with per-item and per-group zip downloads.
+- `motion.html`: all fifteen looping brand animations in one gallery; each opens standalone with its own WebM and offline-HTML export buttons.
+- `copy-vault.html`: forty pastable copy blocks (bios, the Etsy listing, launch posts, customer message templates, the voice card) plus the asset cheat sheet, every block has its own copy button.
+- `js/`: the asset-generator engine (`marks.js`, `data.js`, `icons.js`, `qr.js`, `motions-embed.js`, `app.js`): every asset is defined once as an SVG string and rendered, downloaded, and PNG-rasterized from that same source, so nothing drifts.
+- `motion/`: the 15 standalone motion demo pages plus `export.js` (WebM capture + offline HTML export).
+- `fonts/`: Fraunces and Nunito Sans, self-hosted as woff2 (OFL licensed), so the whole kit works fully offline with zero CDN dependency.
+- `_kit/`: the shared rail, search, and toast chrome injected on every page.
 
 ## Architecture note
 
