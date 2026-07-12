@@ -400,7 +400,7 @@
             name: 'instagram-post', sub: '1080×1080', w: 1080, h: 1080, cls: 'tall', file: 'instagram-post-1080',
             svg: HP.svg(1080, 1080, '<rect width="1080" height="1080" fill="' + PAPER + '"/>' + HP.confetti(1080, 1080, 22, 0.13, 2) +
               '<g transform="translate(64 60) scale(0.86)">' + HP.smile() + '</g>' +
-              '<text x="1010" y="118" text-anchor="end" font-family="' + NS + '" font-weight="800" font-size="34" fill="' + INK + '">@hellopaint</text>' +
+              '<text x="1010" y="118" text-anchor="end" font-family="' + NS + '" font-weight="800" font-size="34" fill="' + INK + '">@hellopaintart</text>' +
               '<rect data-dropzone="1" x="90" y="210" width="900" height="590" rx="30" fill="#FFFFFF" stroke="' + DROP + '" stroke-width="3" stroke-dasharray="12 10"/>' +
               '<g data-dropzone-label="1">' + dropIcon(540, 463, 38, DROP) +
               '<text x="540" y="548" font-family="' + NS + '" font-weight="800" font-size="27" letter-spacing="0.4" fill="' + MUTED + '" text-anchor="middle">drop your before &amp; after</text></g>' +
@@ -417,7 +417,7 @@
               '<text x="500" y="922" font-family="' + NS + '" font-weight="800" font-size="25" letter-spacing="0.4" fill="' + MUTED + '" text-anchor="middle">drop your before &amp; after</text></g>' +
               '<g transform="translate(388 1330) scale(0.78)">' + HP.smile() + '</g>' +
               HP.wordmark({ x: 448, y: 1388, size: 56 }) +
-              '<text x="500" y="1452" text-anchor="middle" font-family="' + NS + '" font-weight="700" font-size="28" letter-spacing="1" fill="' + MUTED + '">hellopaint.studio</text>')
+              '<text x="500" y="1452" text-anchor="middle" font-family="' + NS + '" font-weight="700" font-size="28" letter-spacing="1" fill="' + MUTED + '">hellopaintart.com</text>')
           },
           {
             name: 'etsy-listing', sub: '2000×2000', w: 2000, h: 2000, cls: 'tall', file: 'etsy-listing-2000',
@@ -491,14 +491,14 @@
               '<g transform="translate(70 95) scale(1.5)">' + HP.snapshot(INK) + '</g>' +
               HP.wordmark({ x: 255, y: 305, size: 76 }) + tag(258, 345, 26, MUTED, 'your photo, painted by you') +
               '<line x1="70" y1="470" x2="980" y2="470" stroke="' + LINE + '" stroke-width="2"/>' +
-              '<text x="70" y="528" font-family="' + NS + '" font-weight="700" font-size="25" fill="' + INK + '">@hellopaint</text>' +
+              '<text x="70" y="528" font-family="' + NS + '" font-weight="700" font-size="25" fill="' + INK + '">@hellopaintart</text>' +
               HP.dots(869, 518, 10, 34))
           },
           {
             name: 'business card · back', sub: '1050×600', w: 1050, h: 600, file: 'business-card-back',
             svg: HP.svg(1050, 600, '<rect width="1050" height="600" fill="' + BERRY + '"/>' +
               '<g transform="translate(435 150) scale(1.8)">' + HP.smile({ mouth: '#FFFDF8', eye: '#FFFDF8', spark: '#FFFDF8' }) + '</g>' +
-              '<text x="525" y="430" text-anchor="middle" font-family="' + NS + '" font-weight="800" font-size="40" letter-spacing="1" fill="#FFFFFF">hellopaint.studio</text>')
+              '<text x="525" y="430" text-anchor="middle" font-family="' + NS + '" font-weight="800" font-size="40" letter-spacing="1" fill="#FFFFFF">hellopaintart.com</text>')
           },
           {
             name: 'letterhead', sub: '1050×1485 · A4', w: 1050, h: 1485, cls: 'tall', file: 'letterhead-a4',
@@ -507,8 +507,8 @@
               HP.wordmark({ x: 220, y: 175, size: 60 }) + tag(222, 210, 22, MUTED, 'your photo, painted by you') +
               '<line x1="80" y1="250" x2="970" y2="250" stroke="' + LINE + '" stroke-width="2"/>' +
               '<line x1="80" y1="1330" x2="970" y2="1330" stroke="' + LINE + '" stroke-width="2"/>' +
-              '<text x="80" y="1388" font-family="' + NS + '" font-weight="700" font-size="22" fill="' + MUTED + '">@hellopaint</text>' +
-              '<text x="970" y="1388" text-anchor="end" font-family="' + NS + '" font-weight="700" font-size="22" fill="' + MUTED + '">hellopaint.studio</text>' +
+              '<text x="80" y="1388" font-family="' + NS + '" font-weight="700" font-size="22" fill="' + MUTED + '">@hellopaintart</text>' +
+              '<text x="970" y="1388" text-anchor="end" font-family="' + NS + '" font-weight="700" font-size="22" fill="' + MUTED + '">hellopaintart.com</text>' +
               HP.dots(456, 1382, 9, 34))
           },
           {

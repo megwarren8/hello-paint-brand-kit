@@ -293,7 +293,7 @@
     return '<svg width="68" height="68" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="#FBF4E8"/><g transform="translate(2 6) scale(0.96)">' +
       HP.bubble() + '</g></svg>';
   }
-  var SIG_DEF = { name: 'Megan Warren', title: 'founder & chief painter', site: 'hellopaint.studio', ig: '@hellopaint', tag: 'your photo, painted by you' };
+  var SIG_DEF = { name: 'Megan Warren', title: 'founder & chief painter', site: 'hellopaintart.com', ig: '@hellopaintart', tag: 'your photo, painted by you' };
   var SIG_LABELS = { 'sig-name': 'your name', 'sig-title': 'your title', 'sig-site': 'your website', 'sig-ig': 'your instagram handle', 'sig-tag': 'your tagline' };
   function sigEsc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
   function sigLoad() {
