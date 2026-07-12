@@ -565,7 +565,7 @@
             name: 'watermark · center', sub: '1080 · centered', w: 1080, h: 1080, cls: 'square', file: 'watermark-center',
             svg: HP.svg(1080, 1080, '<g opacity="0.16"><g transform="translate(476 360) scale(2)">' + HP.smile({ mouth: INK, eye: INK, spark: INK }) + '</g>' +
               HP.wordmark({ x: 540, y: 660, size: 96, anchor: 'middle', paint: INK, hello: INK }) +
-              '<text x="540" y="724" text-anchor="middle" font-family="' + NS + '" font-weight="800" font-size="26" letter-spacing="3" fill="' + INK + '">HELLOPAINT.STUDIO</text></g>', 'class="diecut"')
+              '<text x="540" y="724" text-anchor="middle" font-family="' + NS + '" font-weight="800" font-size="26" letter-spacing="3" fill="' + INK + '">HELLOPAINTART.COM</text></g>', 'class="diecut"')
           },
           {
             name: 'watermark · tiled', sub: '1080 · repeat pattern', w: 1080, h: 1080, cls: 'square', file: 'watermark-tiled',

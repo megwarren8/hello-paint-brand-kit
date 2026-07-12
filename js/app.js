@@ -124,7 +124,7 @@
   }
 
   /* ---------- QR: live-generated, editable link, bubble at its heart ---- */
-  var QR_DEFAULT = 'https://hellopaint.megan-warren.com';
+  var QR_DEFAULT = 'https://hellopaintart.com';
   function qrLoad() {
     try { return localStorage.getItem('hp-qr-link') || QR_DEFAULT; } catch (e) { return QR_DEFAULT; }
   }
