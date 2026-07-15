@@ -130,7 +130,7 @@
     [{ t: 'your photo,' }, { t: 'painted by you.', accent: true }],
     [{ t: 'no skills.' }, { t: 'just numbers.' }],
     [{ t: 'paint the' }, { t: 'photo you love.' }],
-    [{ t: 'every color,' }, { t: 'one studio.', accent: true }],
+    [{ t: 'every colour,' }, { t: 'matched by hand.', accent: true }],
     [{ t: 'made by you,' }, { t: 'from your photo.' }],
     [{ t: 'turn the page,' }, { t: 'start at one.', accent: true }],
     [{ t: 'the best gift' }, { t: 'is one you make.' }]
@@ -317,7 +317,7 @@
             { name: 'icon · snapshot', sub: 'main · before & after', w: 512, h: 512, cls: 'alpha icon', file: 'icon-snapshot', svg: HP.svg(100, 100, HP.snapshot(INK), 'width="512" height="512"') },
             { name: 'icon · bubble', sub: 'avatar mark', w: 512, h: 512, cls: 'alpha icon', file: 'icon-bubble', svg: HP.svg(100, 100, HP.bubble(), 'width="512" height="512"') },
             { name: 'icon · smile', sub: 'sticker mark', w: 512, h: 512, cls: 'alpha icon', file: 'icon-smile', svg: HP.svg(100, 100, HP.smile(), 'width="512" height="512"') },
-            { name: 'stamp · one-color', sub: 'plum · seals', w: 512, h: 512, cls: 'alpha icon', file: 'stamp-one-color', svg: HP.svg(100, 100, HP.smile({ mouth: INK, eye: INK, spark: INK }), 'width="512" height="512"') }
+            { name: 'stamp · one-colour', sub: 'plum · seals', w: 512, h: 512, cls: 'alpha icon', file: 'stamp-one-color', svg: HP.svg(100, 100, HP.smile({ mouth: INK, eye: INK, spark: INK }), 'width="512" height="512"') }
           ]
         }
       ]
@@ -333,7 +333,7 @@
           { name: 'maskable', sub: '512 · Android', w: 512, h: 512, cls: 'icon', file: 'maskable-icon-512', svg: appIcon(512, 0, HP.bubble(), 3, 48) },
           { name: 'favicon', sub: '64 · tab', w: 64, h: 64, cls: 'icon', file: 'favicon-64', svg: appIcon(64, 13, HP.bubble(), 0.5, 48) },
           { name: 'favicon · smile', sub: '64 · tab · smile', w: 64, h: 64, cls: 'icon', file: 'favicon-smile-64', svg: appIcon(64, 13, HP.smile(), 0.62, 40) },
-          { name: 'favicon · smile mono', sub: '64 · tab · one-color', w: 64, h: 64, cls: 'icon', file: 'favicon-smile-mono-64', svg: appIcon(64, 13, HP.smile({ mouth: INK, eye: INK, spark: INK }), 0.62, 40) }
+          { name: 'favicon · smile mono', sub: '64 · tab · one-colour', w: 64, h: 64, cls: 'icon', file: 'favicon-smile-mono-64', svg: appIcon(64, 13, HP.smile({ mouth: INK, eye: INK, spark: INK }), 0.62, 40) }
         ]
       }]
     },
