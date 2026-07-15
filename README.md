@@ -4,9 +4,9 @@ Live at [hellopaint.megan-warren.com](https://hellopaint.megan-warren.com). Publ
 
 ## What's here
 
-- `index.html`: the hub: hero, search, the six-page map.
+- `index.html`: the hub: hero, a "find hello paint everywhere" contact strip (the website, the Etsy shop, and the one handle used on every platform), search, and the grouped, numbered map.
 - `brand-book.html`: the idea, the three marks (Snapshot, Bubble, Smile), the redesign story, colour, type, voice, applications, do & don't.
-- `asset-library.html`: the whole generator, twelve numbered sections (logos through motion), every tile downloads as an editable SVG or a native PNG. Numbers export a full zip of digits 0 to 9.
+- `asset-library.html`: the whole generator, twelve numbered sections in three real groups (A. brand marks, B. marketing & print, C. utility & motion), every tile downloads as an editable SVG or a native PNG. Numbers export a full zip of digits 0 to 9. Section 11 ("contact & handles") is the single canonical record of the website, Etsy shop, and the one handle (@hellopaintart) used across every platform; it used to be labeled "QR & email signature" and never stated the identity itself, which is why the same handles kept drifting or going missing elsewhere in the kit.
 - `social-templates.html`: the showcase: twenty social templates (feed posts, pins, stories, tagline posts, video thumb, review card, link-share card) shown in real phone/card frames, with per-item and per-group zip downloads.
 - `motion.html`: all fifteen looping brand animations in one gallery; each opens standalone with its own WebM and offline-HTML export buttons.
 - `copy-vault.html`: forty pastable copy blocks (bios, the Etsy listing, launch posts, customer message templates, the voice card) plus the asset cheat sheet, every block has its own copy button.
@@ -25,6 +25,15 @@ This kit was rebuilt from what had been called "V7," the real interactive asset-
 - A shared rail + search + toast layer (`_kit/`) ties every page together with one numbered map.
 
 The 6-day launch checklist, the Etsy SEO playbook, and the engine's internal production-desk / design-handoff material are **not** in this repo on purpose. Those are Megan's own operating documents for running the shop and fixing the separate photo-to-kit product, not brand-kit content, and they live in their own folder instead (see the canonical iCloud copy's sibling `hello-paint-production-and-launch/` folder).
+
+## 2026-07-15 reorganization
+
+The kit had grown by bolt-on (each new asset type or page added to whatever was already there) until the structure looked organized, numbered sections, a persistent rail, a search box, but wasn't: two rail items (`social-templates.html`, `motion.html`) were flat top-level peers even though they're really just alternate views of the asset library's own sections 05 and 12, and the business's actual social handles were never stated as a canonical record anywhere on the live site (they were scattered across bios, an email-signature card, and a private design-handoff doc that isn't part of the kit at all). Fixed without deleting any content:
+
+- Section 11 was renamed from "QR & email signature" to "Contact & handles" and now leads with the canonical identity table (website, Etsy shop, and the one `@hellopaintart` handle used across Instagram/X/Threads/TikTok/YouTube), each with its own copy button, before the existing QR and email-signature generators.
+- The rail nav (`_kit/kit-chrome.js`) now groups the 12 sections into three real clusters (A. brand marks, B. marketing & print, C. utility & motion) and nests `social-templates.html` / `motion.html` as sub-links under their real sections instead of flat peers.
+- `index.html` leads with a "find hello paint everywhere" strip so the identity record is the first thing on the hub, not something to go hunting for.
+- `copy-vault.html`'s email-signature entry and asset cheat sheet now point back to section 11 as the source of truth instead of restating handles independently.
 
 ## Deploy
 

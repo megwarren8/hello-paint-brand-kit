@@ -10,28 +10,40 @@
     return (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) ? 'auto' : 'smooth';
   }
 
+  // The asset library's 12 numbered sections fall into three real clusters
+  // (the marks themselves, where they get used, and the reference layer).
+  // Two pages elsewhere in the kit are really just alternate views of one of
+  // those sections (social-templates.html = section 05 styled in phone
+  // frames, motion.html = section 12's full gallery), not sibling top-level
+  // destinations, so they're nested here as "sub" links right after their
+  // section instead of appearing as flat rail peers. That flat-peer listing
+  // was the exact "looks organized, isn't" problem: a numbered map with two
+  // items that don't actually belong at that level.
   var NAV = [
     { href: 'index.html', n: '', label: 'Hub', top: true },
     { href: 'brand-book.html', n: '', label: 'Brand book', top: true },
     {
       href: 'asset-library.html', n: '', label: 'Asset library', top: true, kids: [
+        { kind: 'group', label: 'Brand marks' },
         { href: 'asset-library.html#logos', n: '01', label: 'Logos & lockups' },
         { href: 'asset-library.html#app-icons', n: '02', label: 'App & favicons' },
         { href: 'asset-library.html#avatars', n: '03', label: 'Profile pictures' },
+        { kind: 'group', label: 'Marketing & print' },
         { href: 'asset-library.html#headers', n: '04', label: 'Social & email covers' },
         { href: 'asset-library.html#templates', n: '05', label: 'Social templates' },
+        { kind: 'sub', href: 'social-templates.html', label: 'Styled showcase', star: true },
         { href: 'asset-library.html#diecut', n: '06', label: 'Die-cut stickers' },
         { href: 'asset-library.html#stationery', n: '07', label: 'Print & packaging' },
+        { kind: 'group', label: 'Utility & motion' },
         { href: 'asset-library.html#numbers', n: '08', label: 'Number sets' },
         { href: 'asset-library.html#watermarks', n: '09', label: 'Watermarks' },
         { href: 'asset-library.html#icons', n: '10', label: 'Icons & symbols' },
-        { href: 'asset-library.html#extras', n: '11', label: 'QR & email signature' },
-        { href: 'asset-library.html#motion', n: '12', label: 'Brand motion' }
+        { href: 'asset-library.html#contact', n: '11', label: 'Contact & handles' },
+        { href: 'asset-library.html#motion', n: '12', label: 'Brand motion' },
+        { kind: 'sub', href: 'motion.html', label: 'Full motion gallery' }
       ]
     },
-    { href: 'social-templates.html', n: '', label: 'Social showcase', top: true, star: true },
     { href: 'listing-pack.html', n: '', label: 'Listing pack', top: true },
-    { href: 'motion.html', n: '', label: 'Motion gallery', top: true },
     { href: 'copy-vault.html', n: '', label: 'Copy vault', top: true }
   ];
   // exposed so a page's own script (the homepage hero search) can reuse the
@@ -70,9 +82,17 @@
       nav.appendChild(a);
       if (item.kids) {
         item.kids.forEach(function (k) {
+          if (k.kind === 'group') {
+            var label = document.createElement('div');
+            label.className = 'hp-navsec'; label.textContent = k.label;
+            nav.appendChild(label);
+            return;
+          }
           var ka = document.createElement('a');
-          ka.href = k.href; ka.className = 'hp-kid' + (isOn(k.href) ? ' on' : '');
-          ka.innerHTML = '<span class="hp-n">' + k.n + '</span> ' + k.label;
+          ka.href = k.href;
+          ka.className = 'hp-kid' + (k.kind === 'sub' ? ' hp-kid-sub' : '') + (isOn(k.href) ? ' on' : '');
+          var prefix = k.n ? '<span class="hp-n">' + k.n + '</span> ' : (k.kind === 'sub' ? (k.star ? '★ ' : '→ ') : '');
+          ka.innerHTML = prefix + k.label;
           nav.appendChild(ka);
         });
       }
@@ -214,7 +234,10 @@
     var idx = [];
     NAV.forEach(function (item) {
       idx.push({ label: item.label, sub: 'Page', href: item.href });
-      if (item.kids) item.kids.forEach(function (k) { idx.push({ label: k.label, sub: 'Asset library · section ' + k.n, href: k.href }); });
+      if (item.kids) item.kids.forEach(function (k) {
+        if (k.kind === 'group') return;
+        idx.push({ label: k.label, sub: k.n ? 'Asset library · section ' + k.n : 'Asset library · ' + item.label, href: k.href });
+      });
     });
     // scan this page's own asset cards / headings for deep search
     document.querySelectorAll('.asset figcaption b').forEach(function (b) {

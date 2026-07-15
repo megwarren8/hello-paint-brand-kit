@@ -123,6 +123,18 @@
     return '<button class="seczip" data-seczip="' + secId + '">Download this whole section (.zip)</button>';
   }
 
+  /* ---------- contact & handles: the one canonical identity record ------ */
+  var CONTACT_ROWS = [
+    { label: 'Founder', val: 'Megan Warren &middot; founder &amp; chief painter' },
+    { label: 'Website', val: 'hellopaintart.com', copy: 'hellopaintart.com' },
+    { label: 'Etsy shop', val: 'hellopaintart', copy: 'hellopaintart' },
+    { label: 'Instagram', val: '@hellopaintart', copy: '@hellopaintart' },
+    { label: 'X', val: '@hellopaintart', copy: '@hellopaintart' },
+    { label: 'Threads', val: '@hellopaintart', copy: '@hellopaintart' },
+    { label: 'TikTok', val: '@hellopaintart', copy: '@hellopaintart' },
+    { label: 'YouTube', val: '@hellopaintart', copy: '@hellopaintart' }
+  ];
+
   /* ---------- QR: live-generated, editable link, bubble at its heart ---- */
   var QR_DEFAULT = 'https://hellopaintart.com';
   function qrLoad() {
@@ -170,10 +182,21 @@
       '<figcaption><b>' + it.name + '</b><span>' + it.sub + '</span>' + dl + '</figcaption></figure>';
   }
 
+  /* ---------- the three real clusters the 12 sections fall into --------- */
+  var SECTION_GROUPS = {
+    logos: { n: 'A', label: 'Brand marks', desc: 'The marks themselves: logos, app icons, avatars.' },
+    headers: { n: 'B', label: 'Marketing & print', desc: 'Where the marks get used: covers, templates, stickers, stationery.' },
+    numbers: { n: 'C', label: 'Utility & motion', desc: 'The reference layer: numbers, watermarks, icons, the one contact record, and motion.' }
+  };
+  function groupHeaderHtml(g) {
+    return '<div class="secgroup"><span class="sgn">' + g.n + '</span><div><h3>' + g.label + '</h3><p>' + g.desc + '</p></div></div>';
+  }
+
   /* ---------- render sections ------------------------------------------ */
   function render() {
     var app = document.getElementById('app'), html = '';
     HP.SECTIONS.forEach(function (sec) {
+      if (SECTION_GROUPS[sec.id]) html += groupHeaderHtml(SECTION_GROUPS[sec.id]);
       var startIdx = REG.length;
       html += '<section class="sec" id="' + sec.id + '" data-screen-label="' + sec.title.replace(/&amp;/g, '&') + '">';
       html += '<p class="kicker">' + sec.kicker + '</p><h2>' + sec.title + '</h2>';
@@ -211,9 +234,14 @@
     // a bad saved link must never blank the whole library render, so fall back to the kit URL
     try { qrBuilt = buildQrSvg(qrLink, 512); } catch (e) { qrBuilt = buildQrSvg(QR_DEFAULT, 512); }
     var qrI = REG.push({ svg: qrBuilt.svg, w: qrBuilt.size, h: qrBuilt.size, file: 'qr-code' }) - 1;
-    html += '<section class="sec" id="extras" data-screen-label="QR & email signature">';
-    html += '<p class="kicker">11 · extras</p><h2>QR code &amp; email signature</h2>';
-    html += '<p class="intro">A real, scannable QR with the bubble at its heart, and a copy-paste email signature.</p>';
+    html += '<section class="sec" id="contact" data-screen-label="Contact & handles">';
+    html += '<p class="kicker">11 · contact</p><h2>Contact &amp; handles</h2>';
+    html += '<p class="intro">Every real place hello paint lives, in one spot. This is the single source of truth for the business identity, everything else in the kit (bios, signatures, stationery) should match this table, not the other way around.</p>';
+    html += '<div class="contact-card">' + CONTACT_ROWS.map(function (r) {
+      return '<div class="crow"><span class="clabel">' + r.label + '</span><span class="cval">' + r.val +
+        (r.copy ? ' <button class="dlb" data-copyval="' + escAttr(r.copy) + '">Copy</button>' : '') + '</span></div>';
+    }).join('') + '<p class="cnote">same handle everywhere on purpose, so the shop is findable from any platform. If a handle ever changes, fix it here first, then match every other mention in the kit (bios, stationery, watermarks) to this table.</p></div>';
+    html += '<p class="subhead" style="margin-top:30px;">QR code &amp; email signature</p>';
     html += '<div class="gal extras">';
     html += '<figure class="asset"><div class="stage" style="background:#FFFDF8"><div style="width:200px" id="qr-stage">' + qrBuilt.svg + '</div></div>' +
       '<figcaption><b>qr code</b><span>scannable · bubble center · edit the link, then share</span>' +
@@ -416,6 +444,13 @@
     var secBtn = e.target.closest('[data-seczip]');
     if (secBtn) { downloadSectionZip(secBtn.dataset.seczip, secBtn); return; }
     var b = e.target.closest('.dlb'); if (!b) return;
+    if (b.dataset.copyval != null) {
+      var val = b.dataset.copyval;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(val).then(function () { flash(b, 'Copied!'); if (window.HPToast) window.HPToast('Copied ' + val); }, function () { fallbackCopy(val, b); });
+      } else fallbackCopy(val, b);
+      return;
+    }
     var act = b.dataset.act;
     if (act === 'copysig') {
       var tmp = document.createElement('div'); tmp.innerHTML = emailSig(sigRead(), false);
