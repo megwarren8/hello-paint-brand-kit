@@ -1,8 +1,3 @@
 .claude/
 .DS_Store
 
-# The plaintext listing pack. listing-pack.html is the ENCRYPTED build output
-# (tools/gate_listing_pack.mjs); this is what it is built FROM. Cloudflare
-# Pages deploys everything in the repo, so committing this would publish the
-# very page the passphrase exists to protect.
-listing-pack.source.html
