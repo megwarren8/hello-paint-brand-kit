@@ -50,6 +50,34 @@
   // same page map without duplicating it
   window.HP_NAV = NAV;
 
+  // deep entries the NAV map cannot carry: the listing pack's kit lanes and
+  // the copy vault's numbered sections, so a search for a kit or a copy
+  // section works from ANY page, not just the one you are standing on
+  window.HP_SEARCH_EXTRA = [
+    { href: 'listing-pack.html#kiwi', label: 'kiwi boards & zips', sub: 'Listing pack' },
+    { href: 'listing-pack.html#mushrooms', label: 'mushrooms boards & zips', sub: 'Listing pack' },
+    { href: 'listing-pack.html#fresh', label: 'fresh boards & zips', sub: 'Listing pack' },
+    { href: 'listing-pack.html#cozy', label: 'cozy boards & zips', sub: 'Listing pack' },
+    { href: 'listing-pack.html#colorful', label: 'colorful boards & zips', sub: 'Listing pack' },
+    { href: 'listing-pack.html#cappy', label: 'cappy boards & zips', sub: 'Listing pack' },
+    { href: 'listing-pack.html#citrus', label: 'citrus boards & zips', sub: 'Listing pack' },
+    { href: 'listing-pack.html#custom', label: 'custom boards & video', sub: 'Listing pack' },
+    { href: 'copy-vault.html#sec-1', label: 'shop bios, every field', sub: 'Copy vault · §1' },
+    { href: 'copy-vault.html#sec-2', label: 'the rename announcement', sub: 'Copy vault · §2' },
+    { href: 'copy-vault.html#sec-3', label: 'the custom listing', sub: 'Copy vault · §3' },
+    { href: 'copy-vault.html#sec-4', label: 'launch-day posts', sub: 'Copy vault · §4' },
+    { href: 'copy-vault.html#sec-5', label: 'evergreen posts', sub: 'Copy vault · §5' },
+    { href: 'copy-vault.html#sec-6', label: 'why us, not them', sub: 'Copy vault · §6' },
+    { href: 'copy-vault.html#sec-7', label: 'customer messages', sub: 'Copy vault · §7' },
+    { href: 'copy-vault.html#sec-8', label: 'small print & finishing touches', sub: 'Copy vault · §8' },
+    { href: 'copy-vault.html#sec-9', label: 'the voice card', sub: 'Copy vault · §9' },
+    { href: 'copy-vault.html#sec-10', label: 'asset sizes cheat sheet', sub: 'Copy vault · §10' },
+    { href: 'copy-vault.html#sec-11', label: 'premade kits · paper copy', sub: 'Copy vault · §11' },
+    { href: 'copy-vault.html#sec-12', label: 'custom kits · by subject copy', sub: 'Copy vault · §12' },
+    { href: 'copy-vault.html#sec-premade', label: 'premade kit listings copy', sub: 'Copy vault' },
+    { href: 'copy-vault.html#sec-procreate', label: 'premade kits · ipad copy', sub: 'Copy vault' }
+  ];
+
   function svgMark() {
     return '<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M21 49 Q50 80 79 49" fill="none" stroke="#E64C81" stroke-width="14" stroke-linecap="round"/><path d="M47 36 Q61 28 75 30" fill="none" stroke="#15A39A" stroke-width="5.4" stroke-linecap="round"/><path d="M81 16 L83.4 19.6 L87 22 L83.4 24.4 L81 28 L78.6 24.4 L75 22 L78.6 19.6 Z" fill="#F6C744"/></svg>';
   }
@@ -326,7 +354,13 @@
     ui.input.addEventListener('input', function () {
       var q = ui.input.value.trim().toLowerCase();
       if (!q) { closeResults(); return; }
-      render(_hpSearchIdx.filter(function (r) { return r.label.toLowerCase().indexOf(q) !== -1; }));
+      // every word of the query must appear in label+sub, so "kiwi copy"
+      // and "custom boards" both land instead of demanding one exact string
+      var toks = q.split(/\s+/);
+      render(_hpSearchIdx.filter(function (r) {
+        var hay = (r.label + ' ' + (r.sub || '')).toLowerCase();
+        return toks.every(function (t) { return hay.indexOf(t) !== -1; });
+      }));
     });
     // arrow keys move a highlight, Enter opens it, Escape closes the list
     ui.input.addEventListener('keydown', function (e) {

@@ -191,6 +191,8 @@ a{color:var(--deepteal);}
       idx.push({ label: k.label, sub: k.n ? 'Asset library · section ' + k.n : 'Asset library · ' + item.label, href: k.href });
     });
   });
+  // the deep entries (kit lanes, vault sections) shared with the sidebar search
+  (window.HP_SEARCH_EXTRA || []).forEach(function (e) { idx.push(e); });
 
   var selIndex = -1;
   function expanded(on) { input.setAttribute('aria-expanded', on ? 'true' : 'false'); }
@@ -230,7 +232,11 @@ a{color:var(--deepteal);}
   input.addEventListener('input', function () {
     var q = input.value.trim().toLowerCase();
     if (!q) { close(); return; }
-    render(idx.filter(function (r) { return r.label.toLowerCase().indexOf(q) !== -1; }));
+    var toks = q.split(/\s+/);
+    render(idx.filter(function (r) {
+      var hay = (r.label + ' ' + (r.sub || '')).toLowerCase();
+      return toks.every(function (t) { return hay.indexOf(t) !== -1; });
+    }));
   });
   input.addEventListener('keydown', function (e) {
     var anchors = results.classList.contains('open') ? anchorsNow() : [];
