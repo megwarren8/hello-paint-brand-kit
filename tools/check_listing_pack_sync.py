@@ -175,10 +175,17 @@ def check_live():
         with urllib.request.urlopen(req, timeout=30) as r:
             return r.read()
 
-    page = fetch("listing-pack")
-    for probe in (b"12 boards", b"custom-02-your-proof"):
-        if probe not in page:
-            problems.append(f"live: page is missing expected marker {probe!r}")
+    page = fetch("listing-pack").decode("utf-8", "ignore")
+    local = (REPO / "listing-pack.html").read_text()
+    # compare structure to the repo instead of hardcoding counts that rot
+    live_kits = re.findall(r'<section class="kit" id="([a-z]+)"', page)
+    local_kits = re.findall(r'<section class="kit" id="([a-z]+)"', local)
+    if live_kits != local_kits:
+        problems.append(f"live: kit lanes {live_kits} != repo {local_kits}")
+    live_tiles = len(re.findall(r'class="tile"', page))
+    local_tiles = len(re.findall(r'class="tile"', local))
+    if live_tiles != local_tiles:
+        problems.append(f"live: {live_tiles} tiles != repo {local_tiles}")
     targets = sorted((REPO / "listing-images").glob("*-01-hero.png")) \
         + sorted((REPO / "listing-images").glob("custom-*.png"))
     for p in targets:
