@@ -1,0 +1,12 @@
+#!/bin/sh
+# pre-push gate for hello-paint-brand-kit: refuse to push a drifted listing
+# pack. Install into any clone with:
+#   cp tools/pre-push.hook .git/hooks/pre-push && chmod +x .git/hooks/pre-push
+# Runs the fast local checks only; after the deploy goes green, verify the
+# site itself with:  python3 tools/check_listing_pack_sync.py --live
+python3 "$(git rev-parse --show-toplevel)/tools/check_listing_pack_sync.py" || {
+  echo "push blocked: the listing pack does not match the canonical boards." >&2
+  echo "run the sync (hello-paint-procreate-kits/tools/sync_brand_kit_listing_images.py)" >&2
+  echo "or fix the finding above, then push again." >&2
+  exit 1
+}
