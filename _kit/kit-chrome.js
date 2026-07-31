@@ -3,6 +3,10 @@
    content (or its render script) so DOM search-scan sees real content. */
 (function () {
   var HERE = location.pathname.split('/').pop() || 'index.html';
+  // the live site serves extensionless clean URLs ("/listing-pack"), the repo
+  // links carry ".html"; every comparison must strip the extension or the
+  // rail never highlights the current page outside local file:// viewing
+  function pageName(s) { return (s || '').replace(/\.html$/, '') || 'index'; }
   var HASH = location.hash;
 
   // honour a reader's reduced-motion setting for every scripted scroll
@@ -84,7 +88,7 @@
 
   function isOn(href) {
     var h = href.split('#')[0];
-    if (h !== HERE) return false;
+    if (pageName(h) !== pageName(HERE)) return false;
     if (href.indexOf('#') === -1) return true;
     return ('#' + href.split('#')[1]) === HASH;
   }
@@ -204,7 +208,7 @@
   function scrollspyLinks() {
     var links = Array.prototype.filter.call(document.querySelectorAll('#hp-kit-rail nav a'), function (a) {
       var href = a.getAttribute('href') || '';
-      return href.split('#')[0] === HERE && href.indexOf('#') !== -1;
+      return pageName(href.split('#')[0]) === pageName(HERE) && href.indexOf('#') !== -1;
     });
     var byId = {}, targets = [];
     links.forEach(function (a) {

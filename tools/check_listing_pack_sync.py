@@ -141,10 +141,30 @@ def check_page():
              re.findall(rf'href="({SITE}/listing-images/[^"]+)"', html)}
     on_disk = {f"listing-images/{p.name}" for p in (REPO / "listing-images").iterdir()
                if p.suffix in (".png", ".zip", ".mp4")}
+    on_disk |= {f"listing-images/thumbs/{p.name}"
+                for p in (REPO / "listing-images/thumbs").glob("*.jpg")}
     for s in sorted(srcs - on_disk):
         problems.append(f"page: references missing file {s}")
     for s in sorted(on_disk - srcs):
         problems.append(f"page: {s} is deployed but not on the page (orphan)")
+    # every board must have its 400px thumb, or the grid shows a broken tile
+    for p in (REPO / "listing-images").glob("*.png"):
+        if not (REPO / f"listing-images/thumbs/{p.stem}.jpg").exists():
+            problems.append(f"page: no thumb for {p.name}")
+    # structure: every kit lane must sit INSIDE .wrap and BEFORE the foot.
+    # On 2026-07-31 three lanes sat after </div> and the footer, rendering
+    # edge-to-edge below the copyright line, and the byte checks all passed.
+    wrap_open = html.find('<div class="wrap"')
+    foot = html.find('<p class="foot"')
+    sections = [m.start() for m in re.finditer(r'<section class="kit"', html)]
+    if wrap_open < 0 or foot < 0:
+        problems.append("page: wrap or foot marker missing")
+    else:
+        for s in sections:
+            if not (wrap_open < s < foot):
+                problems.append("page: a kit lane sits outside .wrap or after the foot")
+        if len(sections) < 8:
+            problems.append(f"page: only {len(sections)} kit lanes, expected at least 8")
 
 
 def check_live():
