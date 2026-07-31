@@ -149,7 +149,10 @@ def check_page():
 
 def check_live():
     def fetch(path):
-        with urllib.request.urlopen(f"{SITE}/{path}", timeout=30) as r:
+        # Cloudflare 403s urllib's default Python-urllib agent; curl passes.
+        req = urllib.request.Request(f"{SITE}/{path}",
+                                     headers={"User-Agent": "listing-pack-gate/1.0"})
+        with urllib.request.urlopen(req, timeout=30) as r:
             return r.read()
 
     page = fetch("listing-pack")
