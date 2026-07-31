@@ -127,7 +127,7 @@
   var CONTACT_ROWS = [
     { label: 'Founder', val: 'Megan Warren &middot; founder &amp; chief painter' },
     { label: 'Website', val: 'hellopaintart.com', copy: 'hellopaintart.com' },
-    { label: 'Etsy shop', val: 'hellopaintart', copy: 'hellopaintart' },
+    { label: 'Etsy shop', val: 'hellopaintart.etsy.com', copy: 'https://hellopaintart.etsy.com' },
     { label: 'Instagram', val: '@hellopaintart', copy: '@hellopaintart' },
     { label: 'X', val: '@hellopaintart', copy: '@hellopaintart' },
     { label: 'Threads', val: '@hellopaintart', copy: '@hellopaintart' },
