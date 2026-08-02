@@ -39,6 +39,8 @@ REPO = pathlib.Path(os.environ.get("CHECK_REPO",
                                    pathlib.Path(__file__).resolve().parent.parent))
 CANON = pathlib.Path(os.environ.get("CHECK_CANON",
                                     pathlib.Path.home() / "Documents/hello-paint-listing-images"))
+READY = pathlib.Path(os.environ.get("CHECK_READY",
+                                    pathlib.Path.home() / "Documents/hello-paint-etsy-ready"))
 SITE = "https://hellopaint.megan-warren.com"
 KITS = ["kiwi", "mushrooms", "fresh", "cozy", "colorful", "cappy", "citrus"]
 LANES = ["hand", "ipad"]
@@ -212,6 +214,13 @@ def main():
         print("listing-pack gate: CHECK_FORCE_FAIL is set (hook self-test)")
         return 1
     check_dups(REPO / "listing-images", "repo")
+    # The canonical folders and the etsy-ready upload folders were never swept
+    # for iCloud conflict copies, only the repo was. On 2026-08-02 iCloud left
+    # 145 of them across those two trees while boards were being rewritten:
+    # "07-print-it-and-go 2.png" would have uploaded as a duplicate photo, in
+    # filename order, right in the middle of the designed sequence.
+    check_dups(CANON, "canonical")
+    check_dups(READY, "etsy-ready")
     check_canonical_self()
     check_repo_vs_canonical()
     check_page()
