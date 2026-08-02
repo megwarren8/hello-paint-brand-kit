@@ -129,9 +129,19 @@ def check_repo_vs_canonical():
     v, cv = REPO / "listing-images/custom-video.mp4", cfolder / "video.mp4"
     if v.exists() and cv.exists() and md5(v) != md5(cv):
         problems.append("repo: custom-video.mp4 != canonical video.mp4")
-    if (CANON / "custom-ipad").is_dir() and not list((REPO / "listing-images").glob("custom-ipad-*.png")):
-        warnings.append("note: canonical custom-ipad boards exist but the pack has no "
-                        "custom-ipad lane yet (pending work, not a drift)")
+    # the custom-ipad lane joined the pack on 2026-08-02: hold it to the same
+    # byte discipline as the custom lane
+    ci = CANON / "custom-ipad"
+    canon_ci = {tail(x.name): x for x in canonical_boards(ci)}
+    repo_ci = {m.group(1): x for x in (REPO / "listing-images").glob("custom-ipad-*.png")
+               if (m := re.match(r"custom-ipad-(\d\d-[a-z-]+\.png)$", x.name))}
+    for t_ in sorted(canon_ci.keys() - repo_ci.keys()):
+        problems.append(f"repo: missing custom-ipad-{t_}")
+    for t_ in sorted(repo_ci.keys() - canon_ci.keys()):
+        problems.append(f"repo: extra custom-ipad-{t_}")
+    for t_ in sorted(canon_ci.keys() & repo_ci.keys()):
+        if md5(repo_ci[t_]) != md5(canon_ci[t_]):
+            problems.append(f"repo: stale custom-ipad-{t_} != canonical")
 
 
 def check_page():
