@@ -132,7 +132,12 @@
     { label: 'X', val: '@hellopaintart', copy: '@hellopaintart' },
     { label: 'Threads', val: '@hellopaintart', copy: '@hellopaintart' },
     { label: 'TikTok', val: '@hellopaintart', copy: '@hellopaintart' },
-    { label: 'YouTube', val: '@hellopaintart', copy: '@hellopaintart' }
+    { label: 'YouTube', val: '@hellopaintart', copy: '@hellopaintart' },
+    // Pinterest is the ONE handle that is not @hellopaintart. It was missing
+    // from this record entirely until 2026-08-05, which let the pattern
+    // "identical everywhere" be read as covering it: an empty hellopaintart
+    // profile also exists, so checking the wrong one looks like a real answer.
+    { label: 'Pinterest', val: 'pinterest.com/hello_paint', copy: 'https://www.pinterest.com/hello_paint/' }
   ];
 
   /* ---------- QR: live-generated, editable link, bubble at its heart ---- */
