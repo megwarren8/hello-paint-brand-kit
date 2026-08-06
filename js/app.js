@@ -133,11 +133,12 @@
     { label: 'Threads', val: '@hellopaintart', copy: '@hellopaintart' },
     { label: 'TikTok', val: '@hellopaintart', copy: '@hellopaintart' },
     { label: 'YouTube', val: '@hellopaintart', copy: '@hellopaintart' },
-    // Pinterest is the ONE handle that is not @hellopaintart. It was missing
-    // from this record entirely until 2026-08-05, which let the pattern
-    // "identical everywhere" be read as covering it: an empty hellopaintart
-    // profile also exists, so checking the wrong one looks like a real answer.
-    { label: 'Pinterest', val: 'pinterest.com/hello_paint', copy: 'https://www.pinterest.com/hello_paint/' }
+    // Pinterest joined the matching-handle set on 2026-08-06: Megan recovered
+    // the hellopaintart login and the profile was set up properly (brand name,
+    // bio, site link, boards). The old hello_paint account keeps its first 14
+    // pins, because a published pin's image can never be replaced; nothing new
+    // goes there.
+    { label: 'Pinterest', val: 'pinterest.com/hellopaintart', copy: 'https://www.pinterest.com/hellopaintart/' }
   ];
 
   /* ---------- QR: live-generated, editable link, bubble at its heart ---- */
