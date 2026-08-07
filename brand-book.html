@@ -474,6 +474,80 @@
     </div>
   </section>
 
+
+  <!-- LEGIBILITY -->
+  <section id="legibility" data-screen-label="legibility">
+    <p class="kicker">legibility</p>
+    <p class="muted" style="max-width:62ch;margin:0 0 18px;font-size:15px;">
+      Added 2026-08-07, after <b>130 of 224</b> shipped listing photos measured a typical
+      line under the readable bar and Megan reported she could not read them at a normal
+      distance from her screen. These are the numbers that decide it, and
+      <code>~/Documents/publish-check</code> measures them off the pixels.
+    </p>
+
+    <h3 style="margin:0 0 8px;">Ink is not font size</h3>
+    <p class="muted" style="max-width:62ch;margin:0 0 16px;font-size:15px;">
+      A surface shows an image at a fixed width, and that width decides everything. What
+      gets measured is <b>ink</b>: the height of a line of lowercase type from the top of
+      an ascender to the bottom of a descender. Measured in Nunito Sans on 2026-08-07,
+      ink is about <b>0.92</b> of the font size for a line carrying both. So the type
+      floor is always higher than the ink floor, and confusing the two is how the first
+      draft of this shipped at 41px and still missed.
+    </p>
+
+    <div class="scale typecard">
+      <div class="row"><div class="meta">etsy listing, phone</div><div>shown 390 pt wide &middot; needs <b>41 px of ink</b> &middot; set type at <b>45 px</b> &middot; zooms</div></div>
+      <div class="row"><div class="meta">etsy listing, desktop</div><div>shown 700 pt wide &middot; needs 23 px of ink &middot; zooms</div></div>
+      <div class="row"><div class="meta">etsy search row</div><div>shown 186 pt wide &middot; needs <b>86 px of ink</b> &middot; does NOT zoom &middot; hero only</div></div>
+      <div class="row"><div class="meta">pinterest feed</div><div>shown 180 pt wide &middot; needs <b>89 px of ink</b> &middot; does NOT zoom</div></div>
+      <div class="row"><div class="meta">instagram feed / story</div><div>shown 390 pt wide &middot; needs 41 px of ink &middot; does NOT zoom</div></div>
+      <div class="row"><div class="meta">instagram profile grid</div><div>shown 129 pt wide &middot; needs 124 px of ink &middot; does NOT zoom</div></div>
+    </div>
+
+    <p class="muted" style="max-width:62ch;margin:16px 0 0;font-size:15px;">
+      <b>Small print is only ever a choice on a surface that zooms.</b> On anything scrolled
+      past it is a mistake. And a warning that fires on most of a fleet is a failure, not
+      noise: publish-check reported "0 failing" while more than half the boards were
+      unreadable at a glance, because an etsy gallery image technically zooms.
+    </p>
+
+    <h3 style="margin:22px 0 8px;">The five rules a public-facing image has to pass</h3>
+    <div class="do">
+      <div class="col do1">
+        <h3>Do</h3>
+        <ul>
+          <li><b>45 px type floor</b> on a 2000 px board, 66 px on a hero. If a board
+              cannot hold its content at 45, it is carrying too much: show fewer rows
+              bigger. Never lower the floor to make something fit.</li>
+          <li><b>Choose every line break.</b> <code>text-wrap: balance</code> on headings,
+              captions and short blocks, <code>pretty</code> on body copy, and an explicit
+              <code>&amp;nbsp;</code> where a phrase must hold together. A break in the
+              wrong place makes a confident sentence look accidental.</li>
+          <li><b>Every card carries an image.</b> A slot spent on words alone is a slot
+              spent on nothing.</li>
+          <li><b>Clean grounds, or art that is calm at full bleed.</b> The kit's own line
+              art at 18% reads as paper. A busy painting under a heavy colour scrim is
+              neither picture nor ground.</li>
+          <li><b>Measure, do not trust.</b> Type size, safe box and text-on-text overlap
+              are all checked at build time, on every board, not on the one board someone
+              worried about.</li>
+        </ul>
+      </div>
+      <div class="col do2">
+        <h3>Don't</h3>
+        <ul>
+          <li>Scope a gate to one artefact. It reports green for the whole family.</li>
+          <li>Set a fixed row height on a table. Two match tables printed colour names on
+              top of the row below that way, independently.</li>
+          <li>Let a container size to its widest child. After a type lift that stops being
+              the picture and starts being the caption.</li>
+          <li>Crop a 2000 px board for a different surface. Re-render at the target size.</li>
+          <li>Say an image reads well without running publish-check on it.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
   <!-- DO / DON'T -->
   <section id="do-dont" data-screen-label="do and dont" style="border-bottom:none;">
     <p class="kicker">do &amp; don't</p>
