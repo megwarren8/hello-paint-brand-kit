@@ -129,7 +129,11 @@
     { label: 'Website', val: 'hellopaintart.com', copy: 'hellopaintart.com' },
     { label: 'Etsy shop', val: 'hellopaintart.etsy.com', copy: 'https://hellopaintart.etsy.com' },
     { label: 'Instagram', val: '@hellopaintart', copy: '@hellopaintart' },
-    { label: 'X', val: '@hellopaintart', copy: '@hellopaintart' },
+    // X is deliberately absent. x.com/@hellopaintart is NOT this brand: it is
+    // somebody's 2014 account about school, checked 2026-08-06. It was listed
+    // here and in the hub's sameAs until 2026-08-07, which is the same
+    // pattern-matching mistake that had pinterest pointing at hello_paint.
+    // Do not add it back without checking the live account first.
     { label: 'Threads', val: '@hellopaintart', copy: '@hellopaintart' },
     { label: 'TikTok', val: '@hellopaintart', copy: '@hellopaintart' },
     { label: 'YouTube', val: '@hellopaintart', copy: '@hellopaintart' },
