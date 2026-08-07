@@ -511,7 +511,7 @@
       unreadable at a glance, because an etsy gallery image technically zooms.
     </p>
 
-    <h3 style="margin:22px 0 8px;">The five rules a public-facing image has to pass</h3>
+    <h3 style="margin:22px 0 8px;">The six rules a public-facing image has to pass</h3>
     <div class="do">
       <div class="col do1">
         <h3>Do</h3>
@@ -528,9 +528,12 @@
           <li><b>Clean grounds, or art that is calm at full bleed.</b> The kit's own line
               art at 18% reads as paper. A busy painting under a heavy colour scrim is
               neither picture nor ground.</li>
-          <li><b>Measure, do not trust.</b> Type size, safe box and text-on-text overlap
-              are all checked at build time, on every board, not on the one board someone
-              worried about.</li>
+          <li><b>Measure, do not trust.</b> Type size, safe box, text-on-text overlap,
+              contrast and card containment are all checked at build time, on every board,
+              not on the one board someone worried about.</li>
+          <li><b>A correction becomes a gate.</b> Every word or fact Megan retires goes
+              into <code>retired_wording.json</code> and is checked against every surface
+              that ships. Remembering is not a mechanism.</li>
         </ul>
       </div>
       <div class="col do2">
@@ -541,8 +544,16 @@
               top of the row below that way, independently.</li>
           <li>Let a container size to its widest child. After a type lift that stops being
               the picture and starts being the caption.</li>
-          <li>Crop a 2000 px board for a different surface. Re-render at the target size.</li>
+          <li>Crop a 2000 px board for a different surface. Re-render at the target size.
+              And never crop <em>into</em> text to fill a frame: cropping makes the type
+              bigger, so what looked like a fix was the board getting worse.</li>
           <li>Say an image reads well without running publish-check on it.</li>
+          <li>Cap a card's height. Eight <code>max-height</code> rules quietly clipped
+              their own cards as the copy grew inside them.</li>
+          <li>Find-and-replace across a sentence built from two joined strings. One did
+              exactly half a sentence and left the retired half on a live board.</li>
+          <li>Give a wording rule an exemption so a variable name can keep the word.
+              Rename the variable.</li>
         </ul>
       </div>
     </div>
