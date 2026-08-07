@@ -15,7 +15,7 @@ python3 "$(git rev-parse --show-toplevel)/tools/check_listing_pack_sync.py" || {
 # trust wording, the designed photo order, no iCloud conflict copies...) are
 # re-proved on the SHIPPING files, because on 2026-08-02 an unversioned file
 # silently reverted to an older copy and nothing noticed for hours.
-PROMISES="$HOME/Documents/hello-paint-procreate-kits/tools/check_promises.py"
+PROMISES="$HOME/Projects/hello-paint-procreate-kits/tools/check_promises.py"
 if [ -f "$PROMISES" ]; then
   python3 "$PROMISES" || {
     echo "push blocked: a standing promise is broken (see above)." >&2

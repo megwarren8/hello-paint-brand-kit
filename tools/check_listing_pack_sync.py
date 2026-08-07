@@ -2,7 +2,7 @@
 """Fail loudly when the listing pack drifts from the canonical boards.
 
 The listing pack (listing-images/ + listing-pack.html) is a hand-synced COPY
-of ~/Documents/hello-paint-listing-images. On 2026-07-30 the heroes were
+of ~/Projects/hello-paint-listing-images. On 2026-07-30 the heroes were
 rebuilt an hour after the copy was taken and nobody re-ran the sync, so the
 public site served a superseded hero for a day, and the zips (both here and in
 the canonical folder) kept serving it even longer because rebuilding a board
@@ -38,9 +38,9 @@ import zipfile
 REPO = pathlib.Path(os.environ.get("CHECK_REPO",
                                    pathlib.Path(__file__).resolve().parent.parent))
 CANON = pathlib.Path(os.environ.get("CHECK_CANON",
-                                    pathlib.Path.home() / "Documents/hello-paint-listing-images"))
+                                    pathlib.Path.home() / "Projects/hello-paint-listing-images"))
 READY = pathlib.Path(os.environ.get("CHECK_READY",
-                                    pathlib.Path.home() / "Documents/hello-paint-etsy-ready"))
+                                    pathlib.Path.home() / "Projects/hello-paint-etsy-ready"))
 SITE = "https://hellopaint.megan-warren.com"
 # Derived from the canonical folder, never listed. Glob, do not list: a
 # hardcoded seven meant a new kit was simply invisible to this gate, which is
