@@ -18,9 +18,26 @@ python3 "$(git rev-parse --show-toplevel)/tools/check_listing_pack_sync.py" || {
 # check_wording came first on 2026-08-07: it holds every phrase and fact Megan
 # has retired, and it exists because remembering was not working. A retired
 # phrase must not be able to reach a listing even if nobody remembers it.
+#
+# A MISSING GATE BLOCKS THE PUSH. It used to `continue`, which turned an
+# absent file into a silent pass, and on 2026-08-07 that is exactly what
+# happened: the INSTALLED copy of this hook still pointed at
+# ~/Documents/hello-paint-procreate-kits, the tree moved to ~/Projects that
+# morning, and check_promises quietly skipped on every push for the rest of
+# the day while the hook reported success. A gate you cannot find is a gate
+# that is not protecting you, and it must be as loud as one that fails.
+#
+# python3 here, not the venv: these two gates are stdlib-only on purpose so a
+# push works from any shell. Anything needing numpy or PIL belongs in
+# ship_boards.sh, which runs on the paint_by_numbers venv.
 for GATE in check_wording check_promises; do
   G="$HOME/Projects/hello-paint-procreate-kits/tools/$GATE.py"
-  [ -f "$G" ] || continue
+  if [ ! -f "$G" ]; then
+    echo "push blocked: $GATE.py not found at $G" >&2
+    echo "the gate cannot run, so this push is not verified. Fix the path or" >&2
+    echo "restore the file; do not comment this check out." >&2
+    exit 1
+  fi
   python3 "$G" || {
     echo "push blocked: $GATE failed (see above)." >&2
     exit 1
