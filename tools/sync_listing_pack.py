@@ -34,7 +34,10 @@ LANES = {
     "custom-ipad": [(None, "custom-ipad-")],
     "palette": [(None, "palette-")],
 }
-for kit in ("kiwi", "mushrooms", "fresh", "cozy", "colorful", "cappy", "citrus"):
+# Glob, do not list. A hardcoded seven would leave a new kit's boards untiled,
+# which is exactly the orphaning this script exists to stop.
+_KITS = sorted({p.name.split("-hand-")[0] for p in IMAGES.glob("*-hand-01-hero.png")})
+for kit in _KITS:
     LANES[kit] = [("paper kit", f"{kit}-hand-"), ("ipad / procreate kit", f"{kit}-ipad-")]
 
 

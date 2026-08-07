@@ -42,7 +42,13 @@ CANON = pathlib.Path(os.environ.get("CHECK_CANON",
 READY = pathlib.Path(os.environ.get("CHECK_READY",
                                     pathlib.Path.home() / "Documents/hello-paint-etsy-ready"))
 SITE = "https://hellopaint.megan-warren.com"
-KITS = ["kiwi", "mushrooms", "fresh", "cozy", "colorful", "cappy", "citrus"]
+# Derived from the canonical folder, never listed. Glob, do not list: a
+# hardcoded seven meant a new kit was simply invisible to this gate, which is
+# the failure mode that let boards orphan in the first place. A kit is real here
+# when its paper hero exists in the canonical tree.
+KITS = sorted({d.name[:-5] for d in CANON.iterdir() if d.is_dir() and d.name.endswith("-hand")})
+if not KITS:
+    raise SystemExit(f"no kits found in {CANON}: expected <kit>-hand/ folders")
 LANES = ["hand", "ipad"]
 DUP = re.compile(r" \d+\.(png|zip|mp4)$")
 
