@@ -87,7 +87,9 @@
     });
     // smile mark above wordmark
     inner += '<g transform="translate(496 760) scale(0.9)">' + HP.smile(dark ? { mouth: '#FFFFFF', eye: '#FFFFFF', spark: SUN } : {}) + '</g>';
-    inner += HP.wordmark({ x: cx, y: 990, size: 56, anchor: 'middle', paint: dark ? '#FFFFFF' : INK, hello: (bg === BERRY) ? '#FFFFFF' : BERRY });
+    // Owner rule (2026-08-08): on green or teal grounds the whole mark goes
+    // white; berry "hello" only sits on its non-green, non-teal grounds.
+    inner += HP.wordmark({ x: cx, y: 990, size: 56, anchor: 'middle', paint: dark ? '#FFFFFF' : INK, hello: (bg === BERRY || bg === LEAF || bg === TEAL) ? '#FFFFFF' : BERRY });
     return HP.svg(1080, 1080, inner);
   }
 
@@ -158,7 +160,8 @@
     inner += '<rect data-dropzone="1" x="140" y="540" width="800" height="800" rx="30" fill="' + dropFill + '" stroke="' + dropStroke + '" stroke-width="3" stroke-dasharray="14 12"/>';
     inner += '<g data-dropzone-label="1">' + dropIcon(540, 892, 42, dropStroke) +
       '<text x="540" y="982" font-family="' + NS + '" font-weight="800" font-size="26" letter-spacing="0.5" fill="' + dropTxt + '" text-anchor="middle">drop before &amp; after</text></g>';
-    inner += HP.wordmark({ x: cx, y: 1640, size: 92, anchor: 'middle', paint: dark ? '#FFFFFF' : INK, hello: (col.id === 'berry') ? '#FFFFFF' : BERRY });
+    // Owner rule (2026-08-08): all-white mark on green and teal grounds too.
+    inner += HP.wordmark({ x: cx, y: 1640, size: 92, anchor: 'middle', paint: dark ? '#FFFFFF' : INK, hello: (col.id === 'berry' || col.id === 'green' || col.id === 'teal') ? '#FFFFFF' : BERRY });
     inner += tag(cx, 1710, 34, dark ? SUN : MUTED, 'your photo, painted by you', 'middle');
     inner += HP.dots(cx - 84, 1790, 15, 56, dark ? '#FFFDF8' : INK);
     return HP.svg(1080, 1920, inner);
