@@ -122,7 +122,18 @@ document.addEventListener('click', function(e){
   } else {
     text = block.textContent.trim();
   }
-  if (navigator.clipboard && navigator.clipboard.writeText) {
+  // Both clipboard flavors (2026-08-10, owner rule): rich targets like Notes,
+  // Word and Gmail keep real paragraphs; plain targets like Etsy get clean
+  // text with blank lines. One without the other loses formatting somewhere.
+  var htmlBody = paras.length
+    ? Array.prototype.map.call(paras, function (p) { return '<p>' + p.innerHTML + '</p>'; }).join('')
+    : '<p>' + block.innerHTML + '</p>';
+  if (navigator.clipboard && navigator.clipboard.write && window.ClipboardItem) {
+    navigator.clipboard.write([new ClipboardItem({
+      'text/html': new Blob([htmlBody], { type: 'text/html' }),
+      'text/plain': new Blob([text], { type: 'text/plain' })
+    })]).then(function(){ flashCopied(b); }, function(){ fallbackCopy(text, b); });
+  } else if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(text).then(function(){ flashCopied(b); }, function(){ fallbackCopy(text, b); });
   } else {
     fallbackCopy(text, b);
