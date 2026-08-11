@@ -138,7 +138,7 @@
     [{ t: 'the best gift' }, { t: 'is one you make.' }]
   ];
   var STORY_EYEBROWS = [
-    'your worst pet photo, welcome',
+    'say hello, send a photo',
     'drop your before & after',
     'from photo to painting',
     'every memory, painted',
