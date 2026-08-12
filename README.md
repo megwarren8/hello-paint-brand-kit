@@ -5,7 +5,7 @@ Live at [hellopaint.megan-warren.com](https://hellopaint.megan-warren.com). Publ
 ## What's here
 
 - `index.html`: the hub: hero, a "find hello paint everywhere" contact strip (the website, the Etsy shop, and the one handle used on every platform), search, and the grouped, numbered map.
-- `brand-book.html`: the idea, the three marks (Snapshot, Bubble, Smile), the redesign story, colour, type, voice, applications, do & don't.
+- `brand-book.html`: the idea, the three marks (Snapshot, Bubble, Smile), the redesign story, color, type, voice, applications, do & don't.
 - `asset-library.html`: the whole generator, twelve numbered sections in three real groups (A. brand marks, B. marketing & print, C. utility & motion), every tile downloads as an editable SVG or a native PNG. Numbers export a full zip of digits 0 to 9. Section 11 ("contact & handles") is the single canonical record of the website, Etsy shop, and the one handle (@hellopaintart) used across every platform; it used to be labeled "QR & email signature" and never stated the identity itself, which is why the same handles kept drifting or going missing elsewhere in the kit.
 - `social-templates.html`: the showcase: twenty social templates (feed posts, pins, stories, tagline posts, video thumb, review card, link-share card) shown in real phone/card frames, with per-item and per-group zip downloads.
 - `motion.html`: all fifteen looping brand animations in one gallery; each opens standalone with its own WebM and offline-HTML export buttons.

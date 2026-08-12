@@ -61,7 +61,7 @@
   };
 
   // ---- wordmark text (Nunito Sans 800) ----------------------------------
-  // opts: {x,y,size,anchor,paint} paint = colour of "paint"
+  // opts: {x,y,size,anchor,paint} paint = color of "paint"
   HP.wordmark = function (o) {
     o = o || {};
     var size = o.size || 150, x = o.x || 0, y = o.y || 0;
@@ -94,7 +94,7 @@
   };
 
   // ---- numbered badge (paint-by-number dot) ----------------------------
-  // d=digit, fill=circle colour, txt=number colour, ring optional stroke
+  // d=digit, fill=circle color, txt=number color, ring optional stroke
   HP.digitBadge = function (d, cx, cy, r, fill, txt, ring) {
     var c = '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="' + fill + '"' +
       (ring ? ' stroke="' + ring + '" stroke-width="' + (r * 0.06) + '"' : '') + '/>';

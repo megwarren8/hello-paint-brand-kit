@@ -116,7 +116,7 @@
     return HP.svg(W, H, inner, 'class="diecut"');
   }
 
-  /* ---------- colour set used everywhere -------------------------------- */
+  /* ---------- color set used everywhere -------------------------------- */
   // dark = needs light foreground
   var COLORS = [
     { id: 'tan', label: 'tan', bg: PAPER, dark: false },
@@ -132,7 +132,7 @@
     [{ t: 'your photo,' }, { t: 'painted by you.', accent: true }],
     [{ t: 'no skills.' }, { t: 'just numbers.' }],
     [{ t: 'paint the' }, { t: 'photo you love.' }],
-    [{ t: 'every colour,' }, { t: 'matched by hand.', accent: true }],
+    [{ t: 'every color,' }, { t: 'matched by hand.', accent: true }],
     [{ t: 'made by you,' }, { t: 'from your photo.' }],
     [{ t: 'turn the page,' }, { t: 'start at one.', accent: true }],
     [{ t: 'the best gift' }, { t: 'is one you make.' }]
@@ -147,7 +147,7 @@
     'the gift they keep forever'
   ];
 
-  /* ---------- Instagram story, one per colour --------------------------- */
+  /* ---------- Instagram story, one per color --------------------------- */
   function storyCard(col, eyebrow) {
     var dark = col.dark, cx = 540, fg = dark ? '#FFFFFF' : INK;
     var dropFill = dark ? 'rgba(255,255,255,0.06)' : '#FFFFFF';
@@ -184,7 +184,7 @@
   // palette silhouette (kidney/oval with thumb notch)
   var PALETTE_SIL = 'M50 16 C74 16 90 32 90 52 C90 66 80 74 70 74 C63 74 60 70 54 70 C47 70 44 78 44 84 C30 84 10 70 10 50 C10 30 26 16 50 16 Z';
 
-  /* ---------- number set: 0-9 in one colour ----------------------------- */
+  /* ---------- number set: 0-9 in one color ----------------------------- */
   function numberSet(col) {
     var dark = col.dark, txt = dark ? '#FFFDF8' : INK;
     var light = (col.id === 'tan');               // paper needs a ring to read
@@ -195,7 +195,7 @@
     return HP.svg(W, H, inner, 'class="diecut"');
   }
 
-  /* ---------- sticker sheet: one die-cut per colour --------------------- */
+  /* ---------- sticker sheet: one die-cut per color --------------------- */
   function stickerForColor(col, mark) {
     if (mark === 'bubble') return HP.bubble('#FFFDF8', INK, SKY);
     if (mark === 'dab') return HP.ICONS.find(function (i) { return i.id === 'dab'; }).inner;
@@ -320,7 +320,7 @@
             { name: 'icon · snapshot', sub: 'main · before & after', w: 512, h: 512, cls: 'alpha icon', file: 'icon-snapshot', svg: HP.svg(100, 100, HP.snapshot(INK), 'width="512" height="512"') },
             { name: 'icon · bubble', sub: 'avatar mark', w: 512, h: 512, cls: 'alpha icon', file: 'icon-bubble', svg: HP.svg(100, 100, HP.bubble(), 'width="512" height="512"') },
             { name: 'icon · smile', sub: 'sticker mark', w: 512, h: 512, cls: 'alpha icon', file: 'icon-smile', svg: HP.svg(100, 100, HP.smile(), 'width="512" height="512"') },
-            { name: 'stamp · one-colour', sub: 'plum · seals', w: 512, h: 512, cls: 'alpha icon', file: 'stamp-one-color', svg: HP.svg(100, 100, HP.smile({ mouth: INK, eye: INK, spark: INK }), 'width="512" height="512"') }
+            { name: 'stamp · one-color', sub: 'plum · seals', w: 512, h: 512, cls: 'alpha icon', file: 'stamp-one-color', svg: HP.svg(100, 100, HP.smile({ mouth: INK, eye: INK, spark: INK }), 'width="512" height="512"') }
           ]
         }
       ]
@@ -336,7 +336,7 @@
           { name: 'maskable', sub: '512 · Android', w: 512, h: 512, cls: 'icon', file: 'maskable-icon-512', svg: appIcon(512, 0, HP.bubble(), 3, 48) },
           { name: 'favicon', sub: '64 · tab', w: 64, h: 64, cls: 'icon', file: 'favicon-64', svg: appIcon(64, 13, HP.bubble(), 0.5, 48) },
           { name: 'favicon · smile', sub: '64 · tab · smile', w: 64, h: 64, cls: 'icon', file: 'favicon-smile-64', svg: appIcon(64, 13, HP.smile(), 0.62, 40) },
-          { name: 'favicon · smile mono', sub: '64 · tab · one-colour', w: 64, h: 64, cls: 'icon', file: 'favicon-smile-mono-64', svg: appIcon(64, 13, HP.smile({ mouth: INK, eye: INK, spark: INK }), 0.62, 40) }
+          { name: 'favicon · smile mono', sub: '64 · tab · one-color', w: 64, h: 64, cls: 'icon', file: 'favicon-smile-mono-64', svg: appIcon(64, 13, HP.smile({ mouth: INK, eye: INK, spark: INK }), 0.62, 40) }
         ]
       }]
     },
@@ -445,13 +445,13 @@
           ]
         },
         {
-          sub: 'Instagram stories · one per colour', cls: 'templates',
+          sub: 'Instagram stories · one per color', cls: 'templates',
           items: COLORS.map(function (c, i) {
             return { name: 'story · ' + c.label, sub: '1080×1920', w: 1080, h: 1920, cls: 'tall', file: 'instagram-story-' + c.id, svg: storyCard(c, STORY_EYEBROWS[i]) };
           })
         },
         {
-          sub: 'Tagline posts · one per colour', cls: 'templates',
+          sub: 'Tagline posts · one per color', cls: 'templates',
           items: COLORS.map(function (c, i) {
             return { name: 'post · ' + c.label, sub: '1080×1080', w: 1080, h: 1080, cls: 'tall', file: 'post-' + c.id, svg: taglineCard(c.bg, POST_LINES[i], { dark: c.dark, seed: 9 + i * 4, size: 96 }) };
           })
@@ -533,7 +533,7 @@
               HP.wordmark({ x: 750, y: 900, size: 44, anchor: 'middle' }))
           },
           {
-            name: 'sticker sheet', sub: '1080 · one per colour', w: 1080, h: 1080, cls: 'square', file: 'sticker-sheet-1080',
+            name: 'sticker sheet', sub: '1080 · one per color', w: 1080, h: 1080, cls: 'square', file: 'sticker-sheet-1080',
             svg: stickerSheet()
           }
         ]
@@ -542,7 +542,7 @@
 
     {
       id: 'numbers', num: '08', kicker: '08 · numbers', title: 'Number sets',
-      intro: 'Paint-by-number digits 0\u20139, drawn as brand dots in every colour. Use them for kit steps, swatches, captions, and count-up reels. Download the whole row, or grab a zip of all ten cut individually.',
+      intro: 'Paint-by-number digits 0\u20139, drawn as brand dots in every color. Use them for kit steps, swatches, captions, and count-up reels. Download the whole row, or grab a zip of all ten cut individually.',
       groups: [{
         cls: 'numbers', items: COLORS.map(function (c) {
           var W = 60 * 2 + 96 * 9, H = 130;

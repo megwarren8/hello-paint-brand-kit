@@ -1,5 +1,5 @@
 /* hello paint · 60 brand icons / symbols / emoji
-   Each lives in a 0 0 100 100 box. Plum (#312B3D) line work, brand-colour dabs.
+   Each lives in a 0 0 100 100 box. Plum (#312B3D) line work, brand-color dabs.
    `inner` is wrapped by the renderer into a standalone <svg>.               */
 (function (root) {
   var HP = root.HP || (root.HP = {});
